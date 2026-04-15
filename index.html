@@ -206,8 +206,7 @@
             <div class="menu-label">Advanced Tools</div>
             <a href="tradingview.html">Live Market Terminal</a>
             <a href="calc.html">Wealth Projection</a>
-
-            <div class="menu-label">The Firm</div>
+            <a href="clock.html">Market Clock</a> <div class="menu-label">The Firm</div>
             <a href="aboutus.html">About Us</a>
         </div>
     </div>
@@ -271,10 +270,12 @@
             const m = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerText = d.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+            if (document.getElementById("days")) {
+                document.getElementById("days").innerText = d.toString().padStart(2, '0');
+                document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+                document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+                document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+            }
 
             if (timeLeft < 0) {
                 clearInterval(countdownInterval);
