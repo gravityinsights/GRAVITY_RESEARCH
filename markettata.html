@@ -1,93 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Market Analysis | gRaviTy Research</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Analysis | gRaviTy Research</title>
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #000;
-    color: #e5e5e5;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+            color: #e5e5e5;
+            line-height: 1.6;
+        }
 
-/* NAV */
-.nav {
-    padding: 18px;
-    text-align: center;
-    background: #000;
-    border-bottom: 1px solid #1f1f1f;
-    color: #d4af37;
-    font-weight: bold;
-}
+        /* NAV */
+        .nav {
+            padding: 18px;
+            text-align: center;
+            background: #000;
+            border-bottom: 1px solid #1f1f1f;
+            color: #d4af37;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
 
-/* CONTAINER */
-.container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 20px;
-}
+        /* CONTAINER */
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
 
-/* HEADINGS */
-h1, h2, h3 {
-    color: #d4af37;
-    font-family: 'Playfair Display', serif;
-}
+        /* HEADINGS */
+        h1, h2, h3 {
+            color: #d4af37;
+            margin-top: 0;
+        }
 
-/* CARD */
-.card {
-    background: #0a0a0a;
-    border: 1px solid #1f1f1f;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 15px 0;
-}
+        /* CARD */
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #1f1f1f;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
 
-/* SIMPLE BAR CHART */
-.bar {
-    height: 18px;
-    background: #1f1f1f;
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 8px 0;
-}
+        /* BAR CHART STYLING */
+        .chart-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
 
-.fill {
-    height: 100%;
-    background: linear-gradient(90deg, #d4af37, #f5d76e);
-}
+        .percentage {
+            color: #d4af37;
+            font-weight: bold;
+        }
 
-/* BUTTON */
-.btn {
-    padding: 10px 18px;
-    background: transparent;
-    border: 1px solid #d4af37;
-    color: #d4af37;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 20px;
-    text-decoration: none;
-    display: inline-block;
-}
+        .bar {
+            height: 12px;
+            background: #1f1f1f;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
 
-.btn:hover {
-    background: #d4af37;
-    color: black;
-}
+        .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #f5d76e);
+            border-radius: 10px;
+        }
 
-/* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
 
-@media(max-width: 768px){
-    .grid { grid-template-columns: 1fr; }
-}
-</style>
+        .stat-card {
+            background: #111;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #1f1f1f;
+            text-align: center;
+        }
+
+        /* BUTTON */
+        .btn {
+            padding: 10px 22px;
+            background: transparent;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #d4af37;
+            color: black;
+        }
+
+        /* INFO TEXT */
+        .extra-info {
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #1f1f1f;
+            padding-top: 15px;
+            margin-top: 20px;
+        }
+
+        .info-item b {
+            color: #d4af37;
+        }
+
+        @media(max-width: 768px){
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 
 <body>
@@ -96,82 +135,77 @@ h1, h2, h3 {
 
 <div class="container">
 
-<!-- OVERVIEW -->
-<div class="card">
-<h2>Industry Overview (Auto Sector India)</h2>
-<p>Analysis of Indian Automobile Industry with focus on Tata Motors PV segment (FY 2020–2030 outlook).</p>
-</div>
+    <div class="card">
+        <h2>Industry Overview (Auto Sector India)</h2>
+        <p>Strategic analysis of the Indian Automobile Industry with a primary focus on the Tata Motors PV segment (FY 2020–2030 outlook).</p>
+    </div>
 
-<!-- GROWTH CHART -->
-<div class="card">
-<h2>Market Growth Trend</h2>
+    <div class="card">
+        <h2>Market Growth Trend</h2>
 
-<p>Production Growth</p>
-<div class="bar"><div class="fill" style="width:45%"></div></div>
+        <div class="chart-label"><span>Production Growth</span> <span class="percentage">45%</span></div>
+        <div class="bar"><div class="fill" style="width:45%"></div></div>
 
-<p>PV Sales Growth</p>
-<div class="bar"><div class="fill" style="width:70%"></div></div>
+        <div class="chart-label"><span>PV Sales Growth</span> <span class="percentage">70%</span></div>
+        <div class="bar"><div class="fill" style="width:70%"></div></div>
 
-<p>EV Adoption</p>
-<div class="bar"><div class="fill" style="width:90%"></div></div>
-</div>
+        <div class="chart-label"><span>EV Adoption</span> <span class="percentage">90%</span></div>
+        <div class="bar"><div class="fill" style="width:90%"></div></div>
+    </div>
 
-<!-- TATA PERFORMANCE -->
-<div class="card">
-<h2>Tata Motors Performance</h2>
+    <div class="card">
+        <h2>Tata Motors Performance</h2>
+        <div class="grid">
+            <div class="stat-card">
+                <h3>EV Market Share</h3>
+                <p style="font-size:24px;color:#d4af37;margin:0;">65–70%</p>
+            </div>
+            <div class="stat-card">
+                <h3>PV Market Share</h3>
+                <p style="font-size:24px;color:#d4af37;margin:0;">~14%</p>
+            </div>
+            <div class="stat-card">
+                <h3>Investment (FY26–30)</h3>
+                <p style="font-size:24px;color:#d4af37;margin:0;">₹33,000 Cr</p>
+            </div>
+            <div class="stat-card">
+                <h3>Patents Filed</h3>
+                <p style="font-size:24px;color:#d4af37;margin:0;">250+</p>
+            </div>
+        </div>
+    </div>
 
-<div class="grid">
+    <div class="card">
+        <h2>EV Market Outlook</h2>
+        <p>EV growth is projected to be exponential, driven by infrastructure and policy support.</p>
 
-<div class="card">
-<h3>EV Market Share</h3>
-<p style="font-size:24px;color:#d4af37;">65–70%</p>
-</div>
+        <div class="chart-label"><span>2022 Performance</span> <span class="percentage">30%</span></div>
+        <div class="bar"><div class="fill" style="width:30%"></div></div>
 
-<div class="card">
-<h3>PV Market Share</h3>
-<p style="font-size:24px;color:#d4af37;">~14%</p>
-</div>
+        <div class="chart-label"><span>2025 Projection</span> <span class="percentage">60%</span></div>
+        <div class="bar"><div class="fill" style="width:60%"></div></div>
 
-<div class="card">
-<h3>Investment (FY26–30)</h3>
-<p style="font-size:24px;color:#d4af37;">₹33,000 Cr</p>
-</div>
+        <div class="chart-label"><span>2030 Target</span> <span class="percentage">95%</span></div>
+        <div class="bar"><div class="fill" style="width:95%"></div></div>
+    </div>
 
-<div class="card">
-<h3>Patents Filed</h3>
-<p style="font-size:24px;color:#d4af37;">250+</p>
-</div>
+    <div class="card">
+        <h2>2030 Forecast Scenarios</h2>
+        <p>📈 <b>Bull Case:</b> 18–20% Market Share</p>
+        <p>📊 <b>Base Case:</b> 16–18% Market Share</p>
+        <p>📉 <b>Bear Case:</b> 12–14% Market Share</p>
 
-</div>
-</div>
+        <div class="extra-info">
+            <h3>Knowledge Hub: Market Scenarios</h3>
+            <div class="info-item">
+                <p><b>Bull Case:</b> The "Best Case" scenario. It assumes everything goes right—strong economic growth, high consumer demand, and peak operational efficiency.</p>
+                <p><b>Base Case:</b> The "Most Likely" scenario. This is the grounded expectation based on current trends and planned institutional growth.</p>
+                <p><b>Bear Case:</b> The "Worst Case" scenario. It accounts for potential risks like economic downturns, regulatory hurdles, or increased competition.</p>
+            </div>
+        </div>
+    </div>
 
-<!-- EV OUTLOOK -->
-<div class="card">
-<h2>EV Market Outlook</h2>
-
-<p>EV growth is exponential, not linear.</p>
-
-<div class="bar"><div class="fill" style="width:30%"></div></div>
-<p>2022</p>
-
-<div class="bar"><div class="fill" style="width:60%"></div></div>
-<p>2025</p>
-
-<div class="bar"><div class="fill" style="width:95%"></div></div>
-<p>2030 Projection</p>
-</div>
-
-<!-- FUTURE SCENARIOS -->
-<div class="card">
-<h2>2030 Scenarios</h2>
-
-<p>📈 Bull Case: 18–20% Market Share</p>
-<p>📊 Base Case: 16–18%</p>
-<p>📉 Bear Case: 12–14%</p>
-</div>
-
-<!-- BUTTON BACK -->
-<a class="btn" href="index.html">← Back to Home</a>
+    <a class="btn" href="index.html">← Back to Home</a>
 
 </div>
 
