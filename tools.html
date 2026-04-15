@@ -5,6 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coming Soon | gRaviTy Research</title>
     <style>
+        /* --- SIDEBAR NAVIGATION --- */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(15px);
+    overflow-x: hidden;
+    transition: 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    padding-top: 60px;
+    border-right: 1px solid #1f1f1f;
+}
+
+.sidebar a {
+    padding: 15px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #9ca3af;
+    display: block;
+    transition: 0.3s;
+    font-weight: 300;
+    white-space: nowrap;
+}
+
+.sidebar a:hover { color: #d4af37; padding-left: 40px; }
+
+.sidebar .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 36px;
+    cursor: pointer;
+    color: #d4af37;
+}
+
+.menu-label {
+    padding: 10px 32px;
+    font-size: 11px;
+    color: #d4af37;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 20px;
+}
+
+/* --- MENU ICON --- */
+.menu-icon {
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.menu-icon span {
+    display: block;
+    width: 5px;
+    height: 5px;
+    background-color: #d4af37;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.menu-icon:hover span { transform: scale(1.4); background-color: #fff; }
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
         
         body {
@@ -71,6 +137,26 @@
     </style>
 </head>
 <body>
+    <div id="mySidebar" class="sidebar">
+    <span class="close-btn" onclick="closeNav()">&times;</span>
+    <div class="menu-label">Insights</div>
+    <a href="markettata.html">Tata Market Analysis</a>
+    <a href="insights.html">General Insights</a>
+    <div class="menu-label">Explore Features</div>
+    <a href="reports.html">Reports</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="tools.html">Calculators</a>
+</div>
+
+<div class="nav">
+    <div class="menu-icon" onclick="openNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <a href="index.html"><img src="logo.png" alt="gRaviTy Logo" style="width:140px;"></a>
+    <div style="width: 30px;"></div> 
+</div>
     <div class="orb"></div>
     <div class="container">
         <h1>Coming Soon</h1>
