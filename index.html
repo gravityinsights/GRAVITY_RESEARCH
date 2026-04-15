@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gRaviTy Research</title>
+    <title>gRaviTy Research | Understanding Market Forces</title>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
@@ -27,7 +27,7 @@
             top: 0;
             left: 0;
             background-color: rgba(10, 10, 10, 0.98);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             overflow-x: hidden;
             transition: 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
             padding-top: 60px;
@@ -66,16 +66,7 @@
             opacity: 0.7;
         }
 
-        /* --- MINI TOOL BOX --- */
-        .mini-tool {
-            background: rgba(212, 175, 55, 0.05);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            margin-top: 10px;
-        }
-
-        /* --- NAV --- */
+        /* --- NAVIGATION BAR --- */
         .nav {
             padding: 10px 25px;
             display: flex;
@@ -105,12 +96,15 @@
             transition: 0.3s;
         }
 
+        .menu-icon:hover span { transform: scale(1.4); background-color: #ffffff; }
+
         .nav img { width: 140px; }
 
-        /* HERO & CONTENT */
-        .hero { text-align: center; padding: 100px 20px; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 48px; color: #d4af37; margin-bottom: 15px; }
-        
+        /* --- HERO SECTION --- */
+        .hero { text-align: center; padding: 120px 20px; position: relative; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 8vw, 64px); color: #d4af37; margin-bottom: 20px; line-height: 1.1; }
+        .hero p { max-width: 700px; margin: 0 auto 40px auto; font-size: 18px; color: #9ca3af; line-height: 1.8; }
+
         .btn {
             margin: 10px;
             padding: 14px 32px;
@@ -118,16 +112,41 @@
             border: 1px solid #d4af37;
             border-radius: 8px;
             color: #d4af37;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.4s;
             text-decoration: none;
             display: inline-block;
-            transition: 0.4s;
         }
 
-        .btn:hover { background: #d4af37; color: black; }
+        .btn:hover { background: #d4af37; color: black; box-shadow: 0 0 25px rgba(212, 175, 55, 0.3); }
 
-        .footer { text-align: center; padding: 40px; font-size: 12px; color: #6b7280; border-top: 1px solid #1f1f1f; }
-        
-        .gold-orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; width: 400px; height: 400px; background: radial-gradient(circle, rgba(212,175,55,0.1), transparent 70%); top: 10%; left: -5%; }
+        /* --- SECTIONS & CARDS --- */
+        .section { padding: 80px 20px; text-align: center; }
+        .section h2 { font-family: 'Playfair Display', serif; color: #d4af37; font-size: 32px; margin-bottom: 40px; }
+
+        .card {
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(8px);
+            padding: 40px;
+            margin: 25px auto;
+            border-radius: 16px;
+            max-width: 650px;
+            border: 1px solid #1f1f1f;
+            color: #d1d5db;
+            transition: 0.5s ease;
+            line-height: 1.7;
+        }
+        .card:hover { border-color: #d4af37; transform: translateY(-8px); }
+
+        .footer { text-align: center; padding: 60px; font-size: 12px; color: #6b7280; border-top: 1px solid #1f1f1f; letter-spacing: 1px; }
+
+        /* --- BACKGROUND ORBS --- */
+        .gold-orb { position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0; }
+        .orb1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,175,55,0.1), transparent 70%); top: 10%; left: -10%; }
+        .orb2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(212,175,55,0.05), transparent 70%); bottom: 10%; right: -5%; }
+
+        body > * { position: relative; z-index: 1; }
     </style>
 </head>
 
@@ -135,60 +154,89 @@
 
     <div id="mySidebar" class="sidebar">
         <span class="close-btn" onclick="closeNav()">&times;</span>
-        
         <div class="sidebar-content">
             <div class="menu-label">Market Insights</div>
             <a href="markettata.html">Tata Analysis</a>
             <a href="insights.html">General Insights</a>
             
             <div class="menu-label">Advanced Tools</div>
-            <a href="tradingview.html">Live Market Charts</a>
-            <a href="calc.html">Wealth Calculator</a>
-            
-            <div class="menu-label">Quick Preview</div>
-            <div class="mini-tool">
-                <p style="font-size: 12px; color: #9ca3af; margin: 0;">Market Ticker</p>
-                <div style="height: 40px; overflow: hidden; margin-top: 5px;">
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-                    {
-                      "symbols": [{ "proName": "NSE:NIFTY", "title": "Nifty 50" }],
-                      "colorTheme": "dark",
-                      "isTransparent": true,
-                      "displayMode": "adaptive",
-                      "locale": "en"
-                    }
-                    </script>
-                </div>
-            </div>
+            <a href="tradingview.html">Live Market Terminal</a>
+            <a href="calc.html">Wealth Projection</a>
+
+            <div class="menu-label">The Firm</div>
+            <a href="aboutus.html">About Us</a>
         </div>
     </div>
 
-    <div class="gold-orb"></div>
+    <div class="gold-orb orb1"></div>
+    <div class="gold-orb orb2"></div>
 
     <div class="nav">
         <div class="menu-icon" onclick="openNav()">
             <span></span><span></span><span></span>
         </div>
-        <img src="logo.png" alt="gRaviTy Logo">
+        <a href="index.html"><img src="logo.png" alt="gRaviTy Research Logo"></a>
         <div style="width: 30px;"></div> 
     </div>
 
     <div class="hero">
-        <h1>Understanding Market Forces</h1>
-        <p style="color: #9ca3af; max-width: 600px; margin: 0 auto 30px auto;">Professional market research, simplified for the modern investor.</p>
-        <a href="insights.html" class="btn">Start Exploring</a>
+        <h1>Decoding the Pulse <br>of the Market</h1>
+        <p>
+            gRaviTy Research provides structural clarity in a world of financial noise. 
+            We specialize in Indian automotive trends, EV transition, and equity analysis.
+        </p>
+        <div class="btn-group">
+            <a href="insights.html" class="btn">Explore Insights</a>
+            <a href="aboutus.html" class="btn" style="border-color: rgba(212,175,55,0.2); color: #9ca3af;">Our Story</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>The Core Philosophy</h2>
+        <div class="card">
+            We believe that markets are governed by predictable forces. Our job is to measure the 
+            "gravity" of value, momentum, and industrial shifts to give you a clearer view of the 
+            financial horizon.
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Explore Our Platform</h2>
+        <a href="markettata.html" style="text-decoration: none;">
+            <div class="card">
+                <h3 style="color: #d4af37; margin-top: 0;">Market Analysis Reports</h3>
+                <p style="margin-bottom: 0;">Deep dives into Tata Motors and the Indian PV segment.</p>
+            </div>
+        </a>
+        <a href="tradingview.html" style="text-decoration: none;">
+            <div class="card">
+                <h3 style="color: #d4af37; margin-top: 0;">Live Market Terminal</h3>
+                <p style="margin-bottom: 0;">Advanced technical charts and real-time equity data.</p>
+            </div>
+        </a>
     </div>
 
     <div class="footer">
-        © 2026 gRaviTy Research | All Rights Reserved
+        © 2026 gRaviTy Research | Private Analysis Firm <br>
+        <span style="font-size: 10px; opacity: 0.5; margin-top: 10px; display: block;">All market investments are subject to risk. Analyze carefully.</span>
     </div>
 
     <script>
-        function openNav() { document.getElementById("mySidebar").style.width = "350px"; }
-        function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "350px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+
+        // Close sidebar if user clicks on the main page while sidebar is open
         window.onclick = function(event) {
-            if (event.target == document.getElementById("mySidebar")) { closeNav(); }
+            if (event.target == document.getElementById("mySidebar")) {
+                closeNav();
+            }
         }
     </script>
+
 </body>
 </html>
