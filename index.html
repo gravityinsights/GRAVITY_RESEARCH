@@ -1,224 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>gRaviTy Research</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gRaviTy Research</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
 
-body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: #000;
-    color: #ffffff;
-}
+        /* 1. SMOOTH SCROLLING */
+        html {
+            scroll-behavior: smooth;
+        }
 
-/* NAV */
-.nav {
-    padding: 20px;
-    text-align: center;
-    background: #000;
-    border-bottom: 1px solid #1f1f1f;
-}
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #ffffff;
+            overflow-x: hidden; /* Prevents orbs from causing scrollbars */
+        }
 
-.nav img {
-    width: 180px;
-}
+        /* NAV */
+        .nav {
+            padding: 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px); /* Smooth blurred header */
+            border-bottom: 1px solid #1f1f1f;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-/* HERO */
-.hero {
-    text-align: center;
-    padding: 80px 20px;
-}
+        .nav img {
+            width: 180px;
+        }
 
-.hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    color: #d4af37;
-}
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 120px 20px; /* More breathing room */
+        }
 
-.hero p {
-    max-width: 700px;
-    margin: 20px auto;
-    font-size: 18px;
-    color: #9ca3af;
-}
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
 
-/* BUTTON */
-.btn {
-    margin-top: 15px;
-    padding: 12px 25px;
-    background: transparent;
-    border: 1px solid #d4af37;
-    border-radius: 8px;
-    color: #d4af37;
-    font-weight: 500;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        .hero p {
+            max-width: 700px;
+            margin: 20px auto;
+            font-size: 18px;
+            color: #9ca3af;
+            line-height: 1.8;
+        }
 
-.btn:hover {
-    background: #d4af37;
-    color: black;
-}
+        /* 2. SMOOTH BUTTONS */
+        .btn {
+            margin: 10px;
+            padding: 14px 30px;
+            background: transparent;
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            color: #d4af37;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Professional easing */
+            text-decoration: none;
+            display: inline-block;
+        }
 
-/* SECTION */
-.section {
-    padding: 60px 20px;
-    text-align: center;
-}
+        .btn:hover {
+            background: #d4af37;
+            color: black;
+            transform: translateY(-3px); /* Smooth lift */
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        }
 
-.section h2 {
-    font-family: 'Playfair Display', serif;
-    color: #d4af37;
-}
+        /* SECTION */
+        .section {
+            padding: 80px 20px;
+            text-align: center;
+        }
 
-/* CARD */
-.card {
-    background: #0a0a0a;
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 12px;
-    max-width: 600px;
-    border: 1px solid #1f1f1f;
-    color: #d1d5db;
-}
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
 
-/* FOOTER */
-.footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 12px;
-    color: #6b7280;
-}
+        /* 3. SMOOTH CARDS */
+        .card {
+            background: rgba(10, 10, 10, 0.6); /* Semi-transparent for glass effect */
+            backdrop-filter: blur(5px);
+            padding: 30px;
+            margin: 20px auto;
+            border-radius: 16px;
+            max-width: 600px;
+            border: 1px solid #1f1f1f;
+            color: #d1d5db;
+            transition: all 0.5s ease;
+        }
 
-/* TEXT ENTRY ANIMATION */
-.fade-up {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeUp 1s ease forwards;
-}
+        .card:hover {
+            border-color: #d4af37;
+            transform: translateY(-5px) scale(1.01);
+            background: rgba(15, 15, 15, 0.8);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
 
-.fade-up.delay {
-    animation-delay: 0.4s;
-}
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 12px;
+            color: #6b7280;
+            border-top: 1px solid #1f1f1f;
+        }
 
-.fade-up.delay2 {
-    animation-delay: 0.8s;
-}
+        /* 4. REFINED FADE-UP ANIMATION */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
 
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        .delay { animation-delay: 0.2s; }
+        .delay2 { animation-delay: 0.4s; }
 
-/* GOLD MOVING ORB */
-.gold-orb {
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(212,175,55,0.25), transparent 70%);
-    border-radius: 50%;
-    filter: blur(60px);
-    pointer-events: none;
-    z-index: 0;
-}
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.orb1 { animation: move1 18s linear infinite; }
-.orb2 { width: 250px; height: 250px; animation: move2 25s linear infinite; opacity: 0.7; }
-.orb3 { width: 200px; height: 200px; animation: move3 30s linear infinite; opacity: 0.5; }
+        /* GOLD MOVING ORBS (Optimized) */
+        .gold-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform; /* Helps browser keep it smooth */
+        }
 
-@keyframes move1 {
-    0%   { top: 10%; left: 10%; }
-    25%  { top: 70%; left: 20%; }
-    50%  { top: 60%; left: 80%; }
-    75%  { top: 20%; left: 70%; }
-    100% { top: 10%; left: 10%; }
-}
+        .orb1 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(212,175,55,0.15), transparent 70%); animation: move1 25s linear infinite; }
+        .orb2 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(212,175,55,0.1), transparent 70%); animation: move2 35s linear infinite; }
 
-@keyframes move2 {
-    0%   { top: 80%; left: 80%; }
-    25%  { top: 20%; left: 70%; }
-    50%  { top: 30%; left: 10%; }
-    75%  { top: 70%; left: 20%; }
-    100% { top: 80%; left: 80%; }
-}
+        @keyframes move1 {
+            0% { transform: translate(0, 0); }
+            33% { transform: translate(100vw, 50vh); }
+            66% { transform: translate(50vw, 100vh); }
+            100% { transform: translate(0, 0); }
+        }
 
-@keyframes move3 {
-    0%   { top: 50%; left: 0%; }
-    25%  { top: 10%; left: 40%; }
-    50%  { top: 60%; left: 60%; }
-    75%  { top: 30%; left: 90%; }
-    100% { top: 50%; left: 0%; }
-}
+        @keyframes move2 {
+            0% { transform: translate(100vw, 100vh); }
+            50% { transform: translate(0, 50vh); }
+            100% { transform: translate(100vw, 100vh); }
+        }
 
-body > * {
-    position: relative;
-    z-index: 1;
-}
-</style>
+        body > * {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 </head>
 
 <body>
-<div class="gold-orb orb1"></div>
-<div class="gold-orb orb2"></div>
-<div class="gold-orb orb3"></div>
+    <div class="gold-orb orb1"></div>
+    <div class="gold-orb orb2"></div>
 
-<div class="nav">
-    <img src="logo.png" alt="gRaviTy Logo">
-</div>
-
-<div class="hero">
-    <h1 class="fade-up">Understanding Market Forces</h1>
-<a href="markettata.html">
-<button class="btn"> Tata Market Analysis</button>
-</a>
-    <p class="fade-up delay">
-        RaviTy Research is a market insights firm focused on understanding the forces that drive financial markets.
-        We break down businesses, trends, and market movements into clear, structured insights — making complex data simple and meaningful.
-    </p>
-
-    <div class="fade-up delay2">
-        <a href="insights.html">
-            <button class="btn"
-            style="transition:0.3s;"
-            onmouseover="this.style.background='#d4af37'; this.style.color='black'; this.style.boxShadow='0 0 12px #d4af37';"
-            onmouseout="this.style.background='transparent'; this.style.color='#d4af37'; this.style.boxShadow='none';">
-            Explore Insights
-            </button>
-        </a>
+    <div class="nav">
+        <img src="logo.png" alt="gRaviTy Logo">
     </div>
-</div>
 
-<div class="section">
-    <h2>Our Philosophy</h2>
-    <div class="card"
-    onmouseover="this.style.border='1px solid #d4af37'; this.style.transform='scale(1.02)';"
-    onmouseout="this.style.border='1px solid #1f1f1f'; this.style.transform='scale(1)';">
-        We analyze businesses, identify trends, and simplify financial complexity
-        so anyone can understand market behavior.
+    <div class="hero">
+        <h1 class="fade-up">Understanding Market Forces</h1>
+        
+        <p class="fade-up delay">
+            gRaviTy Research is a market insights firm focused on understanding the forces that drive financial markets.
+            We break down businesses, trends, and market movements into clear, structured insights.
+        </p>
+
+        <div class="fade-up delay2">
+            <a href="markettata.html" class="btn">Tata Market Analysis</a>
+            <a href="insights.html" class="btn">Explore Insights</a>
+        </div>
     </div>
-</div>
 
-<div class="section">
-    <h2>Future Features</h2>
-    <div class="card">Market Analysis Reports</div>
-    <div class="card">Stock Insights Dashboard</div>
-    <div class="card">Interactive Tools & Calculators</div>
-</div>
+    <div class="section" id="philosophy">
+        <h2 class="fade-up">Our Philosophy</h2>
+        <div class="card fade-up">
+            We analyze businesses, identify trends, and simplify financial complexity 
+            so anyone can understand market behavior.
+        </div>
+    </div>
 
-<div class="footer">
-    © 2026 gRaviTy Research | All Rights Reserved
-</div>
+    <div class="section">
+        <h2 class="fade-up">Future Features</h2>
+        <div class="card fade-up">Market Analysis Reports</div>
+        <div class="card fade-up delay">Stock Insights Dashboard</div>
+        <div class="card fade-up delay2">Interactive Tools & Calculators</div>
+    </div>
 
-<script>
-function goToInsights() {
-    window.location.href = "insights.html";
-}
-</script>
+    <div class="footer">
+        © 2026 gRaviTy Research | All Rights Reserved
+    </div>
+
 </body>
 </html>
