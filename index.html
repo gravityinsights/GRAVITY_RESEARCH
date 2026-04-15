@@ -250,82 +250,64 @@
         <span style="font-size: 10px; opacity: 0.5; margin-top: 10px; display: block;">Informational purposes only. All market investments are subject to risk.</span>
     </div>
 
-    <script>
-        // SIDEBAR NAVIGATION LOGIC
-        function openNav() {
-            document.getElementById("mySidebar").style.width = "350px";
-        }
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-        function closeNav() {
-            document.getElementById("mySidebar").style.width = "0";
-        }
+    // CACHE DOM
+    const sidebar = document.getElementById("mySidebar");
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+    const countdownBox = document.querySelector(".countdown-box");
 
-        // COUNTDOWN TIMER LOGIC
-        const targetDate = new Date("April 25, 2026 00:00:00").getTime();
-
-        const countdownInterval = setInterval(function() {
-            const now = new Date().getTime();
-            const timeLeft = targetDate - now;
-
-            const d = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const h = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-            if (document.getElementById("days")) {
-                document.getElementById("days").innerText = d.toString().padStart(2, '0');
-                document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-                document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
-                document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
-            }
-
-            if (timeLeft < 0) {
-                clearInterval(countdownInterval);
-                document.querySelector(".countdown-box").innerHTML = "<p style='color:#d4af37'>BUSINESS FULLY LAUNCHED</p>";
-            }
-        }, 1000);
-
-        // Sidebar close on outside click
-        window.onclick = function(event) {
-            if (event.target == document.getElementById("mySidebar")) {
-                closeNav();
-            }
-        }
-        window.addEventListener("load", function () {
-
-    const loader = document.getElementById("loader");
-
-    if (sessionStorage.getItem("visited")) {
-        loader.style.display = "none";
-    } else {
-        sessionStorage.setItem("visited", "true");
-
-        setTimeout(() => {
-            loader.style.opacity = "0";
-
-            setTimeout(() => {
-                loader.style.display = "none";
-            }, 600);
-
-        }, 1500);
+    // SIDEBAR NAVIGATION
+    window.openNav = function () {
+        sidebar.style.width = "350px";
     }
+
+    window.closeNav = function () {
+        sidebar.style.width = "0";
+    }
+
+    // CLICK OUTSIDE
+    document.addEventListener("click", function(event) {
+        if (event.target === sidebar) {
+            closeNav();
+        }
+    });
+
+    // COUNTDOWN TIMER
+    const targetTime = new Date("April 25, 2026 00:00:00").getTime();
+
+    const interval = setInterval(updateCountdown, 1000);
+
+    function updateCountdown() {
+        const now = Date.now();
+        const timeLeft = targetTime - now;
+
+        if (timeLeft <= 0) {
+            clearInterval(interval);
+            if (countdownBox) {
+                countdownBox.innerHTML = "<p style='color:#d4af37'>BUSINESS FULLY LAUNCHED</p>";
+            }
+            return;
+        }
+
+        const d = Math.floor(timeLeft / 86400000);
+        const h = Math.floor((timeLeft % 86400000) / 3600000);
+        const m = Math.floor((timeLeft % 3600000) / 60000);
+        const s = Math.floor((timeLeft % 60000) / 1000);
+
+        if (daysEl) daysEl.textContent = String(d).padStart(2, '0');
+        if (hoursEl) hoursEl.textContent = String(h).padStart(2, '0');
+        if (minutesEl) minutesEl.textContent = String(m).padStart(2, '0');
+        if (secondsEl) secondsEl.textContent = String(s).padStart(2, '0');
+    }
+
+    updateCountdown(); // instant render
 
 });
-        const particleContainer = document.querySelector(".particles");
-
-if (particleContainer) {
-    for (let i = 0; i < 20; i++) {
-        let p = document.createElement("span");
-
-        p.style.left = Math.random() * 100 + "%";
-        p.style.top = Math.random() * 100 + "%";
-
-        p.style.animationDelay = Math.random() * 2 + "s";
-
-        particleContainer.appendChild(p);
-    }
-}
-    </script>
-
+</script>
 </body>
 </html>
