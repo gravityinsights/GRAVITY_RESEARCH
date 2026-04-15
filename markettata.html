@@ -8,10 +8,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
 
-        /* SMOOTH SCROLLING & BASE */
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
@@ -31,13 +28,11 @@
             border-bottom: 1px solid #1f1f1f;
             color: #d4af37;
             font-weight: bold;
-            letter-spacing: 1px;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
-        /* CONTAINER */
         .container {
             max-width: 900px;
             margin: auto;
@@ -46,13 +41,9 @@
             z-index: 1;
         }
 
-        /* HEADINGS */
-        h1, h2, h3 {
-            color: #d4af37;
-            font-family: 'Playfair Display', serif;
-        }
+        h1, h2, h3 { color: #d4af37; font-family: 'Playfair Display', serif; }
 
-        /* GLASS CARD STYLING */
+        /* CARD STYLING */
         .card {
             background: rgba(10, 10, 10, 0.7);
             border: 1px solid #1f1f1f;
@@ -64,86 +55,19 @@
             animation: fadeUp 1s ease-out forwards;
         }
 
-        .card:hover {
-            border-color: #d4af37;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
+        .card:hover { border-color: #d4af37; transform: translateY(-5px); }
 
-        /* BAR CHART STYLING */
-        .chart-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
+        /* BAR CHART */
+        .chart-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95rem; }
+        .percentage { color: #d4af37; font-weight: bold; }
+        .bar { height: 10px; background: #1f1f1f; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+        .fill { height: 100%; background: linear-gradient(90deg, #d4af37, #f5d76e); border-radius: 10px; transition: 1.5s; }
 
-        .percentage {
-            color: #d4af37;
-            font-weight: bold;
-        }
+        /* GRID */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .stat-card { background: rgba(20, 20, 20, 0.5); padding: 20px; border-radius: 12px; border: 1px solid #1f1f1f; text-align: center; }
 
-        .bar {
-            height: 10px;
-            background: #1f1f1f;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .fill {
-            height: 100%;
-            background: linear-gradient(90deg, #d4af37, #f5d76e);
-            border-radius: 10px;
-            width: 0; /* Changed for animation effect */
-            transition: width 1.5s cubic-bezier(0.1, 0.5, 0.5, 1);
-        }
-
-        /* STAT GRID */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .stat-card {
-            background: rgba(20, 20, 20, 0.5);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #1f1f1f;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .stat-card:hover {
-            background: rgba(212, 175, 55, 0.05);
-            border-color: #d4af37;
-        }
-
-        /* SOURCE NOTES */
-        .source-note {
-            font-size: 0.75rem;
-            color: #666;
-            font-style: italic;
-            margin-top: -10px;
-            margin-bottom: 15px;
-        }
-
-        /* EXTRA INFO SECTION */
-        .extra-info {
-            font-size: 0.85rem;
-            color: #888;
-            border-top: 1px solid #1f1f1f;
-            padding-top: 20px;
-            margin-top: 25px;
-        }
-
-        .info-item b {
-            color: #d4af37;
-        }
-
-        /* BUTTON */
+        /* BUTTONS */
         .btn {
             padding: 12px 25px;
             background: transparent;
@@ -151,49 +75,34 @@
             color: #d4af37;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 20px;
+            margin: 10px 5px;
             text-decoration: none;
             display: inline-block;
             transition: 0.4s;
+            font-weight: 500;
         }
 
-        .btn:hover {
-            background: #d4af37;
-            color: black;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        .btn:hover { background: #d4af37; color: black; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
+
+        /* HIDDEN INFO SECTION */
+        #companyInfo {
+            display: none;
+            margin-top: 20px;
+            border-left: 2px solid #d4af37;
+            padding-left: 20px;
+            animation: fadeIn 0.5s ease-in;
         }
 
-        /* BACKGROUND ORBS */
-        .gold-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none;
-            z-index: 0;
-            will-change: transform;
-        }
+        .source-note { font-size: 0.75rem; color: #666; font-style: italic; margin-top: -10px; }
 
-        .orb1 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(212,175,55,0.1), transparent 70%); animation: move 20s infinite alternate; }
-        
-        @keyframes move {
-            from { transform: translate(-10%, -10%); }
-            to { transform: translate(80%, 80%); }
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media(max-width: 768px){
-            .grid { grid-template-columns: 1fr; }
-        }
+        @media(max-width: 768px){ .grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 
 <body>
-
-<div class="gold-orb orb1"></div>
 
 <div class="nav">gRaviTy Research — Market Analysis</div>
 
@@ -201,79 +110,70 @@
 
     <div class="card">
         <h2>Industry Overview (Auto Sector India)</h2>
-        <p>Strategic analysis of the Indian Automobile Industry with a primary focus on the Tata Motors Passenger Vehicle (PV) segment for the 2030 outlook.</p>
+        <p>Strategic analysis of the Indian Automobile Industry with a primary focus on the Tata Motors Passenger Vehicle (PV) segment.</p>
+        
+        <button class="btn" onclick="toggleInfo()">View Company Insights</button>
+
+        <div id="companyInfo">
+            <p>1. Over the last 3 years, Tata Motors has transformed from a laggard to a leader in the PV segment.</p>
+            <p>2. FY24 marked a turning point with the company achieving its highest-ever annual sales in the domestic market.</p>
+            <p>3. The 'New Forever' philosophy has successfully refreshed the portfolio (Nexon, Punch, Harrier, Safari).</p>
+            <p>4. Strategic demerger plans into Commercial (CV) and Passenger (PV) entities aim to unlock shareholder value.</p>
+            <p>5. EBITDA margins have seen consistent improvement, crossing the 6% mark in the PV business recently.</p>
+            <p>6. Market share in PVs climbed from 5% in FY20 to nearly 14% by FY24/25.</p>
+            <p>7. The company leads the EV race with over 150,000 EVs sold to date in India.</p>
+            <p>8. Massive capital expenditure is focused on a dedicated EV platform (Acti.ev) for future models.</p>
+            <p>9. Reduction in net automotive debt has been a key fiscal priority, nearing a "Zero Debt" goal.</p>
+            <p>10. Focus is now shifting toward premiumization and localized battery manufacturing for FY26-30.</p>
+        </div>
     </div>
 
     <div class="card">
         <h2>Market Growth Trend</h2>
-
         <div class="chart-label"><span>Production Growth</span> <span class="percentage">45%</span></div>
         <div class="bar"><div class="fill" style="width:45%"></div></div>
-
         <div class="chart-label"><span>PV Sales Growth</span> <span class="percentage">70%</span></div>
         <div class="bar"><div class="fill" style="width:70%"></div></div>
-
         <div class="chart-label"><span>EV Adoption</span> <span class="percentage">90%</span></div>
         <div class="bar"><div class="fill" style="width:90%"></div></div>
-
-        <p class="source-note">*Estimates based on industry production capacity and gRaviTy Research modeling.</p>
+        <p class="source-note">*Estimates based on gRaviTy Research modeling.</p>
     </div>
 
     <div class="card">
         <h2>Tata Motors Performance</h2>
         <div class="grid">
-            <div class="stat-card">
-                <h3>EV Market Share</h3>
-                <p style="font-size:28px; color:#d4af37; margin:0; font-weight:bold;">65–70%</p>
-            </div>
-            <div class="stat-card">
-                <h3>PV Market Share</h3>
-                <p style="font-size:28px; color:#d4af37; margin:0; font-weight:bold;">~14%</p>
-            </div>
-            <div class="stat-card">
-                <h3>Investment (FY26–30)</h3>
-                <p style="font-size:28px; color:#d4af37; margin:0; font-weight:bold;">₹33,000 Cr</p>
-            </div>
-            <div class="stat-card">
-                <h3>Patents Filed</h3>
-                <p style="font-size:28px; color:#d4af37; margin:0; font-weight:bold;">250+</p>
-            </div>
+            <div class="stat-card"><h3>EV Market Share</h3><p style="font-size:28px; color:#d4af37; margin:0; font-weight:bold;">65–70%</p></div>
+            <div class="stat-card"><h3>PV Market Share</h3><p style="font-size:28px; color:#d4af37; margin:0; font-weight:bold;">~14%</p></div>
+            <div class="stat-card"><h3>Investment (FY26–30)</h3><p style="font-size:28px; color:#d4af37; margin:0; font-weight:bold;">₹33,000 Cr</p></div>
+            <div class="stat-card"><h3>Patents Filed</h3><p style="font-size:28px; color:#d4af37; margin:0; font-weight:bold;">250+</p></div>
         </div>
     </div>
 
     <div class="card">
         <h2>EV Market Outlook</h2>
-        <p>The transition to electric mobility is projected to be exponential, supported by the PLI scheme and charging infrastructure expansion.</p>
-
         <div class="chart-label"><span>2022 Performance</span> <span class="percentage">30%</span></div>
         <div class="bar"><div class="fill" style="width:30%"></div></div>
-
         <div class="chart-label"><span>2025 Projection</span> <span class="percentage">60%</span></div>
         <div class="bar"><div class="fill" style="width:60%"></div></div>
-
         <div class="chart-label"><span>2030 Target</span> <span class="percentage">95%</span></div>
         <div class="bar"><div class="fill" style="width:95%"></div></div>
-
-        <p class="source-note">*Note: 2030 targets reflect a "Bull Case" scenario aligned with NITI Aayog's aggressive electrification goals.</p>
-    </div>
-
-    <div class="card">
-        <h2>2030 Forecast Scenarios</h2>
-        <p>📈 <b>Bull Case:</b> 18–20% Market Share</p>
-        <p>📊 <b>Base Case:</b> 16–18% Market Share</p>
-        <p>📉 <b>Bear Case:</b> 12–14% Market Share</p>
-
-        <div class="extra-info">
-            <h3>Knowledge Hub: Market Scenarios</h3>
-            <p><b>Bull Case:</b> The optimistic outlook. Assumes maximum government subsidies, rapid battery cost reduction, and high consumer sentiment.</p>
-            <p><b>Base Case:</b> The most realistic projection. Based on current policy trajectories and steady infrastructure growth.</p>
-            <p><b>Bear Case:</b> The conservative outlook. Accounts for potential supply chain disruptions, high interest rates, or slower-than-expected charging station deployment.</p>
-        </div>
+        <p class="source-note">*Note: 2030 targets reflect a "Bull Case" scenario.</p>
     </div>
 
     <a class="btn" href="index.html">← Back to Home</a>
 
 </div>
+
+<script>
+    function toggleInfo() {
+        var info = document.getElementById("companyInfo");
+        if (info.style.display === "block") {
+            info.style.display = "none";
+        } else {
+            info.style.display = "block";
+        }
+    }
+</script>
 
 </body>
 </html>
