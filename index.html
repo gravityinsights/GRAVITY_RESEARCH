@@ -66,30 +66,16 @@
             opacity: 0.7;
         }
 
-        /* --- CALCULATOR STYLING --- */
-        .calc-box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #1f1f1f;
+        /* --- MINI TOOL BOX --- */
+        .mini-tool {
+            background: rgba(212, 175, 55, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
             margin-top: 10px;
         }
 
-        .calc-box input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #333;
-            color: white;
-            padding: 10px 0;
-            margin-bottom: 15px;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .calc-box input:focus { border-bottom: 1px solid #d4af37; }
-
-        /* --- TOP NAV --- */
+        /* --- NAV --- */
         .nav {
             padding: 10px 25px;
             display: flex;
@@ -105,7 +91,6 @@
 
         .menu-icon {
             cursor: pointer;
-            padding: 10px;
             display: flex;
             flex-direction: column;
             gap: 5px;
@@ -120,15 +105,12 @@
             transition: 0.3s;
         }
 
-        .menu-icon:hover span { transform: scale(1.4); background-color: #ffffff; }
-
         .nav img { width: 140px; }
 
-        /* HERO & SECTIONS */
+        /* HERO & CONTENT */
         .hero { text-align: center; padding: 100px 20px; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 48px; color: #d4af37; margin-bottom: 15px; }
-        .hero p { max-width: 700px; margin: 20px auto; font-size: 18px; color: #9ca3af; line-height: 1.8; }
-
+        
         .btn {
             margin: 10px;
             padding: 14px 32px;
@@ -136,38 +118,16 @@
             border: 1px solid #d4af37;
             border-radius: 8px;
             color: #d4af37;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.4s;
             text-decoration: none;
             display: inline-block;
+            transition: 0.4s;
         }
 
-        .btn:hover { background: #d4af37; color: black; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
-
-        .section { padding: 60px 20px; text-align: center; }
-        .section h2 { font-family: 'Playfair Display', serif; color: #d4af37; font-size: 32px; margin-bottom: 40px; }
-
-        .card {
-            background: rgba(15, 15, 15, 0.6);
-            backdrop-filter: blur(8px);
-            padding: 35px;
-            margin: 25px auto;
-            border-radius: 16px;
-            max-width: 600px;
-            border: 1px solid #1f1f1f;
-            color: #d1d5db;
-            transition: 0.5s ease;
-        }
-        .card:hover { border-color: #d4af37; transform: translateY(-8px); }
+        .btn:hover { background: #d4af37; color: black; }
 
         .footer { text-align: center; padding: 40px; font-size: 12px; color: #6b7280; border-top: 1px solid #1f1f1f; }
-
-        /* ORB */
-        .gold-orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
-        .orb1 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(212,175,55,0.12), transparent 70%); top: 20%; left: 10%; }
-
-        body > * { position: relative; z-index: 1; }
+        
+        .gold-orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; width: 400px; height: 400px; background: radial-gradient(circle, rgba(212,175,55,0.1), transparent 70%); top: 10%; left: -5%; }
     </style>
 </head>
 
@@ -177,43 +137,33 @@
         <span class="close-btn" onclick="closeNav()">&times;</span>
         
         <div class="sidebar-content">
-            <div class="menu-label">Navigation</div>
-            <a href="markettata.html">Tata Market Analysis</a>
+            <div class="menu-label">Market Insights</div>
+            <a href="markettata.html">Tata Analysis</a>
             <a href="insights.html">General Insights</a>
-            <a href="reports.html">Reports</a>
             
-            <div class="menu-label">Market Ticker</div>
-            <div class="tradingview-widget-container">
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-                {
-                "symbols": [
-                    { "proName": "NSE:TATAMOTORS", "title": "Tata" },
-                    { "proName": "NSE:NIFTY", "title": "Nifty" }
-                ],
-                "colorTheme": "dark",
-                "isTransparent": true,
-                "displayMode": "adaptive",
-                "locale": "en"
-                }
-                </script>
-            </div>
-
-            <div class="menu-label">Wealth Projection</div>
-            <div class="calc-box">
-                <input type="number" id="monthlyAmount" placeholder="Monthly Invest (₹)">
-                <input type="number" id="expectedReturn" placeholder="Return % (e.g. 12)">
-                <input type="number" id="years" placeholder="Years">
-                <button class="btn" onclick="calculateWealth()" style="width: 100%; font-size: 12px; margin: 0;">Calculate</button>
-                
-                <div id="resultArea" style="display:none; margin-top: 20px; text-align: center;">
-                    <p style="font-size: 11px; color: #9ca3af; margin: 0; text-transform: uppercase;">Future Value</p>
-                    <span id="futureValue" style="color: #d4af37; font-weight: bold; font-size: 20px;"></span>
+            <div class="menu-label">Advanced Tools</div>
+            <a href="tradingview.html">Live Market Charts</a>
+            <a href="calc.html">Wealth Calculator</a>
+            
+            <div class="menu-label">Quick Preview</div>
+            <div class="mini-tool">
+                <p style="font-size: 12px; color: #9ca3af; margin: 0;">Market Ticker</p>
+                <div style="height: 40px; overflow: hidden; margin-top: 5px;">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                    {
+                      "symbols": [{ "proName": "NSE:NIFTY", "title": "Nifty 50" }],
+                      "colorTheme": "dark",
+                      "isTransparent": true,
+                      "displayMode": "adaptive",
+                      "locale": "en"
+                    }
+                    </script>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="gold-orb orb1"></div>
+    <div class="gold-orb"></div>
 
     <div class="nav">
         <div class="menu-icon" onclick="openNav()">
@@ -225,15 +175,8 @@
 
     <div class="hero">
         <h1>Understanding Market Forces</h1>
-        <p>gRaviTy Research breaks down businesses, trends, and movements into clear, structured insights.</p>
-        <a href="insights.html" class="btn">Get Started</a>
-    </div>
-
-    <div class="section">
-        <h2>Our Philosophy</h2>
-        <div class="card">
-            We analyze businesses and identify trends so anyone can understand market behavior.
-        </div>
+        <p style="color: #9ca3af; max-width: 600px; margin: 0 auto 30px auto;">Professional market research, simplified for the modern investor.</p>
+        <a href="insights.html" class="btn">Start Exploring</a>
     </div>
 
     <div class="footer">
@@ -241,33 +184,10 @@
     </div>
 
     <script>
-        function openNav() {
-            document.getElementById("mySidebar").style.width = "350px";
-        }
-
-        function closeNav() {
-            document.getElementById("mySidebar").style.width = "0";
-        }
-
-        function calculateWealth() {
-            const P = parseFloat(document.getElementById('monthlyAmount').value);
-            const r = (parseFloat(document.getElementById('expectedReturn').value) / 100) / 12;
-            const n = parseFloat(document.getElementById('years').value) * 12;
-            
-            if(!P || !r || !n) {
-                alert("Please fill all fields");
-                return;
-            }
-
-            const fv = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
-            document.getElementById('futureValue').innerText = "₹" + Math.round(fv).toLocaleString('en-IN');
-            document.getElementById('resultArea').style.display = 'block';
-        }
-
+        function openNav() { document.getElementById("mySidebar").style.width = "350px"; }
+        function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
         window.onclick = function(event) {
-            if (event.target == document.getElementById("mySidebar")) {
-                closeNav();
-            }
+            if (event.target == document.getElementById("mySidebar")) { closeNav(); }
         }
     </script>
 </body>
