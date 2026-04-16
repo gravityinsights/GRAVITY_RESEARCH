@@ -198,7 +198,7 @@
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #7fd3ff, #1b2a4a);
+    background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b, #3a2a00);
     box-shadow: 0 0 30px rgba(127, 211, 255, 0.4);
     animation: pulse 2s infinite ease-in-out;
 }
@@ -209,48 +209,43 @@
     50% { transform: scale(1.1); }
 }
 
-.letters
+.orbit
 {
-    margin-top: 30px;
-    display: flex;
-    gap: 10px;
+    width: 220px;
+    height: 220px;
+    position: relative;
+    animation: spin 6s linear infinite;
 }
 
-.letters span
+.orbit span
 {
-    font-size: 28px;
-    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 22px;
     font-weight: bold;
+    color: #ffffff;
+
+    transform:
+        rotate(calc(var(--i) * 51.5deg))
+        translate(110px)
+        rotate(calc(var(--i) * -51.5deg));
+
     opacity: 0;
-    transform: translateY(-120px) scale(0.5) rotate(180deg);
-    animation: dropIn 0.8s forwards;
+    animation: fadeIn 1s forwards;
+    animation-delay: calc(var(--i) * 0.15s);
 }
 
-.letters span:nth-child(1){ animation-delay: 0.2s; }
-.letters span:nth-child(2){ animation-delay: 0.35s; }
-.letters span:nth-child(3){ animation-delay: 0.5s; }
-.letters span:nth-child(4){ animation-delay: 0.65s; }
-.letters span:nth-child(5){ animation-delay: 0.8s; }
-.letters span:nth-child(6){ animation-delay: 0.95s; }
-.letters span:nth-child(7){ animation-delay: 1.1s; }
-
-@keyframes dropIn
+@keyframes spin
 {
-    0%
-    {
-        opacity: 0;
-        transform: translateY(-120px) scale(0.5) rotate(180deg);
-    }
-    70%
-    {
-        opacity: 1;
-        transform: translateY(10px) scale(1.1) rotate(0deg);
-    }
-    100%
-    {
-        opacity: 1;
-        transform: translateY(0) scale(1) rotate(0deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn
+{
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
     </style>
 </head>
@@ -258,14 +253,14 @@
 <div id="loader">
     <div class="planet"></div>
 
-    <div class="letters">
-        <span>G</span>
-        <span>R</span>
-        <span>A</span>
-        <span>V</span>
-        <span>I</span>
-        <span>T</span>
-        <span>Y</span>
+    <div class="orbit">
+        <span style="--i:0">G</span>
+        <span style="--i:1">R</span>
+        <span style="--i:2">A</span>
+        <span style="--i:3">V</span>
+        <span style="--i:4">I</span>
+        <span style="--i:5">T</span>
+        <span style="--i:6">Y</span>
     </div>
 </div>
 <div id="mySidebar" class="sidebar">
@@ -416,8 +411,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
-    <script>
-window.addEventListener("load", function()
+  <script>
+function showLoader()
 {
     const loader = document.getElementById("loader");
 
@@ -431,8 +426,22 @@ window.addEventListener("load", function()
             loader.style.display = "none";
         }, 800);
 
-    }, 2000); // keep loader visible minimum 2s
-});
+    }, 2000);
+}
+
+if (!sessionStorage.getItem("loaderShown"))
+{
+    sessionStorage.setItem("loaderShown", "true");
+    window.addEventListener("load", showLoader);
+}
+else
+{
+    document.addEventListener("DOMContentLoaded", function()
+    {
+        const loader = document.getElementById("loader");
+        loader.style.display = "none";
+    });
+}
 </script>
 </body>
 </html>
