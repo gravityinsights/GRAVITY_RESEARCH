@@ -20,9 +20,16 @@
             color: #ffffff;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            user-select: none; /* UNCOPYABLE */
+            
+            /* --- LOCKDOWN: UNCOPYABLE --- */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            cursor: default;
         }
 
+        /* --- NAVIGATION --- */
         .nav {
             padding: 20px 40px;
             display: flex;
@@ -38,28 +45,32 @@
 
         .nav img { height: 45px; width: auto; }
 
+        /* --- CONTAINER --- */
         .container {
             max-width: 900px;
             margin: 60px auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
             color: var(--gold);
-            font-size: 42px;
+            font-size: clamp(32px, 8vw, 42px);
             text-align: center;
             margin-bottom: 50px;
         }
 
+        /* --- DYNAMIC CARD STYLE --- */
         .insight-card {
             background: rgba(15,15,15,0.7);
             border: 1px solid rgba(255,255,255,0.05);
             padding: 40px;
             margin-bottom: 30px;
-            transition: 0.4s;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
         }
 
         .insight-card.loaded {
@@ -69,15 +80,16 @@
 
         .insight-card:hover {
             border-color: var(--gold);
-            background: rgba(20,20,20,0.9);
+            background: rgba(20,20,20,0.95);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #222;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
             padding-bottom: 15px;
         }
 
@@ -88,16 +100,18 @@
         }
 
         .price-info { text-align: right; }
-        .live-price { font-size: 18px; display: block; color: var(--gold); }
-        .pct-change { font-size: 12px; font-weight: 600; }
+        .live-price { font-size: 18px; display: block; color: #fff; font-weight: 200; }
+        .pct-change { font-size: 12px; font-weight: 600; margin-top: 5px; display: block; }
 
         .analysis-content {
-            line-height: 1.8;
+            line-height: 1.9;
             color: #bbb;
             font-size: 16px;
+            font-weight: 300;
         }
 
-        .back-nav { text-align: center; margin-top: 40px; padding-bottom: 60px; }
+        /* --- FOOTER NAV --- */
+        .back-nav { text-align: center; margin-top: 60px; padding-bottom: 80px; }
         .back-link { 
             color: var(--gold); 
             text-decoration: none; 
@@ -105,35 +119,57 @@
             letter-spacing: 2px; 
             text-transform: uppercase; 
             border: 1px solid var(--gold); 
-            padding: 12px 24px; 
-            transition: 0.3s; 
+            padding: 14px 28px; 
+            transition: 0.4s; 
         }
         .back-link:hover { background: var(--gold); color: #000; }
 
-        #loader { text-align: center; color: var(--gold); letter-spacing: 4px; font-size: 12px; margin-top: 100px; }
+        /* --- LOADING SYSTEM --- */
+        #loader { 
+            text-align: center; 
+            color: var(--gold); 
+            letter-spacing: 5px; 
+            font-size: 10px; 
+            margin-top: 100px; 
+            text-transform: uppercase;
+            animation: breathe 2s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* --- BACKGROUND ORBS --- */
+        .gold-orb { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 1; opacity: 0.15; }
+        .orb1 { width: 500px; height: 500px; background: var(--gold); top: -10%; left: -10%; }
+        .orb2 { width: 400px; height: 400px; background: var(--gold); bottom: -5%; right: -5%; }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
+
+<div class="gold-orb orb1"></div>
+<div class="gold-orb orb2"></div>
 
 <div class="nav">
     <div style="width: 22px;"></div>
-    <a href="index.html"><img src="logo.png" alt="Logo"></a>
+    <a href="index.html"><img src="logo.png" alt="gRaviTy Logo"></a>
     <div style="width: 22px;"></div> 
 </div>
 
 <div class="container">
     <h1>Market Insights</h1>
-    <div id="loader">SYNCHRONIZING WITH TERMINAL...</div>
+    <div id="loader">Establishing Encrypted Connection...</div>
     <div id="insights-container"></div>
 
     <div class="back-nav">
-        <a href="index.html" class="back-link">Return to Home</a>
+        <a href="index.html" class="back-link">Return to Command Center</a>
     </div>
 </div>
 
 <script>
     async function loadInsights() {
-        // YOUR UNIQUE API URL
+        // --- YOUR LIVE API ENDPOINT ---
         const SHEETY_URL = 'https://api.sheety.co/27bb86a119d2050ea00da106b6e33003/gRaviTyResearchTerminal/sheet1'; 
 
         try {
@@ -142,49 +178,64 @@
             const container = document.getElementById('insights-container');
             const loader = document.getElementById('loader');
 
+            // Hide loader once data is fetched
             loader.style.display = 'none';
 
-            // Sheety converts sheet names to property names. Your sheet is "sheet1"
+            // Accessing the 'sheet1' object from your Sheety response
             const rows = data.sheet1;
 
             rows.forEach((report, index) => {
+                // Formatting values for a clean UI
                 const priceVal = report.price ? report.price.toLocaleString('en-IN') : "0.00";
-                const changeVal = report.change ? (parseFloat(report.change) * 100).toFixed(2) : "0.00";
-                const color = parseFloat(changeVal) >= 0 ? '#00ff88' : '#ff4444';
-                const sign = parseFloat(changeVal) >= 0 ? '+' : '';
+                const rawChange = report.change ? parseFloat(report.change) * 100 : 0;
+                const changeDisplay = rawChange.toFixed(2);
+                const color = rawChange >= 0 ? '#00ff88' : '#ff4444';
+                const sign = rawChange >= 0 ? '+' : '';
 
                 const card = document.createElement('div');
                 card.className = 'insight-card';
-                card.style.transitionDelay = (index * 0.1) + 's';
+                
+                // Staggered entrance animation
+                card.style.transitionDelay = (index * 0.15) + 's';
 
                 card.innerHTML = `
                     <div class="card-header">
-                        <div class="company-name">${report.company || 'Unknown Firm'}</div>
+                        <div class="company-name">${report.company || 'Loading Asset...'}</div>
                         <div class="price-info">
                             <span class="live-price">₹${priceVal}</span>
-                            <span class="pct-change" style="color: ${color}">${sign}${changeVal}%</span>
+                            <span class="pct-change" style="color: ${color}">${sign}${changeDisplay}%</span>
                         </div>
                     </div>
                     <div class="analysis-content">
-                        ${report.analysis || 'Analysis pending synchronization...'}
+                        ${report.analysis || 'Awaiting deep-dive synchronization from the terminal...'}
                     </div>
                 `;
 
                 container.appendChild(card);
+                
+                // Slight delay to trigger the fade-in transform
                 setTimeout(() => card.classList.add('loaded'), 50);
             });
 
         } catch (error) {
             console.error("Connection Error:", error);
-            document.getElementById('loader').innerText = "TERMINAL OFFLINE. CHECK API STATUS.";
+            document.getElementById('loader').innerText = "TERMINAL OFFLINE. CHECK DATA SOURCE.";
         }
     }
 
+    // Initialize the feed
     loadInsights();
 
-    // Lockdown Scripts
+    // --- SECURITY LOCKDOWN ---
     document.onkeydown = function(e) {
-        if (e.keyCode === 123 || ((e.ctrlKey || e.metaKey) && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73))) return false;
+        // Block F12, Ctrl+U, Ctrl+S, Ctrl+Shift+I (Windows/Mac)
+        if (
+            e.keyCode === 123 || 
+            ((e.ctrlKey || e.metaKey) && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73)) ||
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 74 || e.keyCode === 67))
+        ) {
+            return false;
+        }
     };
 </script>
 </body>
