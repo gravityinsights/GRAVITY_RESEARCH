@@ -3,152 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | gRaviTy Research</title>
+    <title>Market Clock | gRaviTy Research</title>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;600&display=swap');
+
+        :root {
+            --gold: #d4af37;
+            --bg-black: #050505;
+        }
+
         body {
             margin: 0;
-            background: #000;
-            color: #fff;
+            padding: 0;
             font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* --- HEADER --- */
-        .header {
-            padding: 20px 30px;
+            background: var(--bg-black);
+            color: #ffffff;
+            height: 100vh;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(15px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            
+            /* --- PREVENT TEXT SELECTION --- */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            /* Prevents the "I-beam" cursor on text */
+            cursor: default;
         }
 
-        .btn-home {
-            color: #d4af37;
-            text-decoration: none;
-            font-size: 13px;
+        /* --- AMBIENT BACKGROUND --- */
+        .gold-orb { 
+            position: fixed; 
+            border-radius: 50%; 
+            filter: blur(140px); 
+            pointer-events: none; 
+            z-index: 1; 
+            opacity: 0.15; 
+        }
+        .orb1 { width: 600px; height: 600px; background: var(--gold); top: -20%; left: -10%; }
+        .orb2 { width: 500px; height: 500px; background: var(--gold); bottom: -10%; right: -10%; }
+
+        /* --- MINIMALIST CLOCK --- */
+        .clock-container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .launch-label {
+            font-size: 12px;
+            color: var(--gold);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            padding: 8px 18px;
-            border-radius: 5px;
+            letter-spacing: 12px;
+            margin-bottom: 30px;
+            font-weight: 300;
+            opacity: 0.7;
+            display: block;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; letter-spacing: 25px; }
+            to { opacity: 0.7; letter-spacing: 12px; }
+        }
+
+        .timer-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(10px, 4vw, 40px);
+            font-size: clamp(60px, 18vw, 180px);
+            font-weight: 100;
+            color: var(--gold);
+            line-height: 1;
+            letter-spacing: -5px;
+        }
+
+        .timer-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 0px transparent; opacity: 0.8; }
+            50% { text-shadow: 0 0 30px rgba(212, 175, 55, 0.4); opacity: 1; }
+        }
+
+        .timer-label {
+            font-size: 9px;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-top: 20px;
+            font-weight: 600;
+            transform: translateX(2.5px);
+        }
+
+        .separator {
+            opacity: 0.2;
+            font-weight: 100;
+            padding-bottom: 45px;
+        }
+
+        /* --- NAVIGATION --- */
+        .footer-nav {
+            position: absolute;
+            bottom: 40px;
+            z-index: 10;
+            opacity: 0.4;
             transition: 0.3s;
         }
 
-        .btn-home:hover { background: #d4af37; color: #000; }
+        .footer-nav:hover { opacity: 1; }
 
-        /* --- CONTENT --- */
-        .container {
-            max-width: 1000px;
-            margin: 60px auto;
-            padding: 0 20px;
+        .back-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .hero-text { text-align: center; margin-bottom: 80px; }
-        .hero-text h1 { font-family: 'Playfair Display'; font-size: 52px; color: #d4af37; margin: 0; }
-        .hero-text p { color: #9ca3af; font-size: 18px; margin-top: 15px; }
-
-        /* BENTO GRID LAYOUT */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-
-        .bento-item {
-            background: rgba(15, 15, 15, 0.6);
-            border: 1px solid #1f1f1f;
-            padding: 40px;
-            border-radius: 20px;
-            transition: 0.4s;
-        }
-
-        .bento-item:hover { border-color: #d4af37; transform: translateY(-5px); }
-
-        .full-width { grid-column: span 2; }
-
-        h3 { font-family: 'Playfair Display'; color: #d4af37; font-size: 24px; margin-top: 0; }
-        p { color: #d1d5db; line-height: 1.8; font-size: 15px; }
-
-        .accent-number {
-            font-size: 48px;
-            font-family: 'Playfair Display';
-            color: rgba(212, 175, 55, 0.2);
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        /* --- ORBS --- */
-        .orb {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.05), transparent 70%);
-            filter: blur(100px);
-            z-index: -1;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
-            .full-width { grid-column: span 1; }
-            .hero-text h1 { font-size: 38px; }
+        .back-link:hover {
+            border-color: var(--gold);
+            color: var(--gold);
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;"> 
 
-    <div class="header">
-        <img src="logo.png" alt="gRaviTy" style="width: 120px;">
-        <a href="index.html" class="btn-home">← Back to Home</a>
-    </div>
+<div class="gold-orb orb1"></div>
+<div class="gold-orb orb2"></div>
 
-    <div class="orb"></div>
-
-    <div class="container">
-        <div class="hero-text">
-            <h1>Defining the Force</h1>
-            <p>A mission to decode market complexity with precision.</p>
+<div class="clock-container">
+    <span class="launch-label">Time to Launch</span>
+    
+    <div class="timer-display">
+        <div class="timer-unit">
+            <span id="days">00</span>
+            <span class="timer-label">Days</span>
         </div>
-
-        <div class="grid">
-            <div class="bento-item full-width">
-                <h3>Our Core Purpose</h3>
-                <p>
-                    Financial markets aren't random; they are driven by the "gravity" of fundamental value, human psychology, and industrial shifts. <strong>gRaviTy Research</strong> was founded to bridge the gap between high-level institutional data and the modern retail investor. We don't chase hype; we follow the force.
-                </p>
-            </div>
-
-            <div class="bento-item">
-                <span class="accent-number">01.</span>
-                <h3>Deep Analysis</h3>
-                <p>We strip away the noise of the daily news cycle to focus on the balance sheets, supply chains, and fiscal policies that actually move the needle.</p>
-            </div>
-
-            <div class="bento-item">
-                <span class="accent-number">02.</span>
-                <h3>Industrial Focus</h3>
-                <p>Our primary lens is fixed on the Indian growth story, with a specialized vertical dedicated to the Automotive and EV transition (PV segment).</p>
-            </div>
-
-            <div class="bento-item full-width" style="text-align: center;">
-                <h3>"Intelligence is the ultimate hedge."</h3>
-                <p style="font-style: italic; color: #9ca3af;">— The gRaviTy Ethos</p>
-            </div>
+        <span class="separator">:</span>
+        <div class="timer-unit">
+            <span id="hours">00</span>
+            <span class="timer-label">Hours</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="timer-unit">
+            <span id="minutes">00</span>
+            <span class="timer-label">Minutes</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="timer-unit">
+            <span id="seconds">00</span>
+            <span class="timer-label">Seconds</span>
         </div>
     </div>
+</div>
 
-    <div style="text-align: center; padding: 60px 0; color: #666; font-size: 12px; border-top: 1px solid #1f1f1f;">
-        © 2026 gRaviTy Research | Private Analysis Firm
-    </div>
+<div class="footer-nav">
+    <a href="index.html" class="back-link">Return to Home</a>
+</div>
 
+<script>
+    const target = new Date("2026-04-25T00:00:00+05:30").getTime();
+
+    function updateClock() {
+        const now = new Date().getTime();
+        const diff = target - now;
+
+        if (diff <= 0) {
+            document.querySelector(".timer-display").innerHTML = "LIVE";
+            return;
+        }
+
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+
+        const dEl = document.getElementById("days");
+        const hEl = document.getElementById("hours");
+        const mEl = document.getElementById("minutes");
+        const sEl = document.getElementById("seconds");
+
+        if(dEl) dEl.innerText = d.toString().padStart(2, '0');
+        if(hEl) hEl.innerText = h.toString().padStart(2, '0');
+        if(mEl) mEl.innerText = m.toString().padStart(2, '0');
+        if(sEl) sEl.innerText = s.toString().padStart(2, '0');
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // PREVENT SOURCE VIEW / INSPECT
+    document.onkeydown = function(e) {
+        // Blocks F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+        if (
+            e.keyCode === 123 || 
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+            (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83))
+        ) {
+            return false;
+        }
+    };
+</script>
 </body>
 </html>
