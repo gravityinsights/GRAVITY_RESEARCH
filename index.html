@@ -12,7 +12,6 @@
             --gold: #d4af37;
             --gold-muted: rgba(212, 175, 55, 0.2);
             --bg-black: #050505;
-            --glass: rgba(15, 15, 15, 0.7);
         }
 
         html { scroll-behavior: smooth; }
@@ -26,40 +25,37 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- PREMIUM SIDEBAR --- */
+        /* --- PRE-ANIMATION STATE (Scroll Reveal) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px); /* Moves up roughly 1cm */
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- SIDEBAR --- */
         .sidebar {
             height: 100%;
             width: 0;
             position: fixed;
-            z-index: 2000; /* Higher priority */
+            z-index: 2000;
             top: 0;
             left: 0;
-            background-color: rgba(5, 5, 5, 0.95);
+            background-color: rgba(5, 5, 5, 0.98);
             backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
             overflow-x: hidden;
             transition: 0.6s cubic-bezier(0.85, 0, 0.15, 1);
             padding-top: 80px;
             border-right: 1px solid var(--gold-muted);
-            box-shadow: 20px 0 50px rgba(0,0,0,0.5);
         }
 
-        .sidebar.open {
-            width: 400px;
-        }
+        .sidebar.open { width: 400px; }
 
-        .sidebar-content { 
-            padding: 0 40px; 
-            min-width: 320px;
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: 0.4s 0.3s ease-out;
-        }
-
-        .sidebar.open .sidebar-content {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .sidebar-content { padding: 0 40px; min-width: 320px; }
 
         .sidebar a {
             padding: 14px 0;
@@ -67,17 +63,12 @@
             font-size: 17px;
             color: #888;
             display: block;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.4s;
             font-weight: 300;
-            letter-spacing: 0.5px;
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
 
-        .sidebar a:hover { 
-            color: var(--gold); 
-            padding-left: 12px;
-            letter-spacing: 1.5px;
-        }
+        .sidebar a:hover { color: var(--gold); padding-left: 12px; }
 
         .sidebar .close-btn {
             position: absolute;
@@ -86,11 +77,7 @@
             font-size: 32px;
             cursor: pointer;
             color: var(--gold);
-            transition: 0.3s;
-            line-height: 1;
         }
-
-        .sidebar .close-btn:hover { transform: rotate(90deg); color: #fff; }
 
         .menu-label {
             padding: 30px 0 10px 0;
@@ -99,36 +86,6 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             font-weight: 600;
-            opacity: 0.6;
-        }
-
-        /* --- PREMIUM COUNTDOWN --- */
-        .countdown-box {
-            background: linear-gradient(145deg, rgba(212, 175, 55, 0.08), rgba(0, 0, 0, 0));
-            border: 1px solid var(--gold-muted);
-            padding: 30px 15px;
-            border-radius: 4px; /* Sharper edges feel more "executive" */
-            margin: 25px 0;
-            text-align: center;
-        }
-
-        .timer-display {
-            font-family: 'Inter', sans-serif;
-            font-size: 22px;
-            color: var(--gold);
-            font-weight: 200;
-            letter-spacing: 2px;
-        }
-
-        .timer-unit { display: inline-block; min-width: 45px; }
-
-        .timer-label {
-            font-size: 9px;
-            color: #555;
-            text-transform: uppercase;
-            display: block;
-            margin-top: 8px;
-            letter-spacing: 1px;
         }
 
         /* --- NAVIGATION --- */
@@ -145,57 +102,17 @@
             z-index: 1000;
         }
 
-        .menu-icon {
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 10px;
-        }
+        .menu-icon { cursor: pointer; display: flex; flex-direction: column; gap: 6px; padding: 10px; }
+        .menu-icon span { display: block; width: 22px; height: 1px; background-color: var(--gold); transition: 0.4s; }
 
-        .menu-icon span {
-            display: block;
-            width: 20px; /* Changed to lines for a sleeker look */
-            height: 1px;
-            background-color: var(--gold);
-            transition: 0.4s;
-        }
-
-        .menu-icon:hover span:nth-child(2) { transform: translateX(5px); width: 25px; background-color: #fff; }
-
-        .nav img { width: 160px; filter: brightness(1.1); }
+        .nav img { width: 160px; }
 
         /* --- HERO --- */
-        .hero { 
-            text-align: center; 
-            padding: 160px 20px; 
-            position: relative; 
-            animation: fadeInHero 1.2s ease-out;
-        }
-        
-        @keyframes fadeInHero {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .hero { text-align: center; padding: 160px 20px; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 10vw, 82px); color: var(--gold); margin-bottom: 30px; line-height: 1.1; }
+        .hero p { max-width: 600px; margin: 0 auto 50px auto; font-size: 19px; color: #999; line-height: 1.8; }
 
-        .hero h1 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: clamp(42px, 10vw, 82px); 
-            color: var(--gold); 
-            margin-bottom: 30px; 
-            line-height: 1.05;
-            font-weight: 600;
-        }
-
-        .hero p { 
-            max-width: 600px; 
-            margin: 0 auto 50px auto; 
-            font-size: 19px; 
-            color: #999; 
-            line-height: 1.8; 
-            font-weight: 300;
-        }
-
+        /* --- BUTTONS --- */
         .btn {
             margin: 10px;
             padding: 16px 40px;
@@ -207,67 +124,40 @@
             letter-spacing: 2px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: 0.4s;
             text-decoration: none;
             display: inline-block;
-            position: relative;
-            overflow: hidden;
         }
 
-        .btn:hover { 
-            background: var(--gold); 
-            color: #000; 
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
-            transform: translateY(-3px);
-        }
+        .btn:hover { background: var(--gold); color: #000; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3); }
 
-        /* --- SECTION & CARDS --- */
-        .section { padding: 120px 20px; text-align: center; }
-        .section h2 { 
-            font-family: 'Playfair Display', serif; 
-            color: var(--gold); 
-            font-size: 38px; 
-            margin-bottom: 60px;
-            font-style: italic;
-        }
+        /* --- SECTIONS --- */
+        .section { padding: 100px 20px; text-align: center; }
+        .section h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 38px; margin-bottom: 40px; }
 
         .card {
-            background: linear-gradient(180deg, rgba(20,20,20,0.4) 0%, rgba(10,10,10,0.8) 100%);
+            background: rgba(15,15,15,0.6);
             padding: 60px 50px;
-            margin: 40px auto;
+            margin: 0 auto;
             max-width: 700px;
             border: 1px solid rgba(255,255,255,0.05);
             color: #bbb;
-            transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
             line-height: 1.9;
             font-size: 18px;
-            font-weight: 300;
-            position: relative;
         }
 
-        .card:hover { 
-            border-color: var(--gold); 
-            transform: scale(1.02);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            color: #eee;
-        }
+        .footer { padding: 80px; text-align: center; color: #444; font-size: 11px; letter-spacing: 2px; border-top: 1px solid #111; }
 
-        .footer { 
-            text-align: center; 
-            padding: 100px 60px; 
-            font-size: 11px; 
-            color: #444; 
-            border-top: 1px solid rgba(255,255,255,0.05); 
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
+        /* --- ORBS --- */
+        .gold-orb { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 0; opacity: 0.3; }
+        .orb1 { width: 600px; height: 600px; background: radial-gradient(circle, var(--gold), transparent 70%); top: -10%; left: -10%; }
+        .orb2 { width: 500px; height: 500px; background: radial-gradient(circle, var(--gold), transparent 70%); bottom: -5%; right: -5%; }
 
-        /* --- BACKGROUND ORBS --- */
-        .gold-orb { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 0; opacity: 0.4; }
-        .orb1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(212,175,55,0.15), transparent 70%); top: -10%; left: -10%; }
-        .orb2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,175,55,0.1), transparent 70%); bottom: -5%; right: -5%; }
+        /* --- TIMER --- */
+        .countdown-box { border: 1px solid var(--gold-muted); padding: 25px; margin: 20px 0; border-radius: 4px; }
+        .timer-display { color: var(--gold); font-size: 20px; font-weight: 200; }
+        .timer-label { font-size: 9px; color: #555; display: block; margin-top: 5px; }
 
-        body > * { position: relative; z-index: 1; }
     </style>
 </head>
 <body>
@@ -279,17 +169,11 @@
         <div class="menu-label">Full Launch Countdown</div>
         <div class="countdown-box">
             <div class="timer-display">
-                <span class="timer-unit"><span id="days">00</span><small class="timer-label">Days</small></span>
-                <span style="opacity: 0.3">:</span>
-                <span class="timer-unit"><span id="hours">00</span><small class="timer-label">Hrs</small></span>
-                <span style="opacity: 0.3">:</span>
-                <span class="timer-unit"><span id="minutes">00</span><small class="timer-label">Min</small></span>
-                <span style="opacity: 0.3">:</span>
-                <span class="timer-unit"><span id="seconds">00</span><small class="timer-label">Sec</small></span>
+                <span id="days">00</span><small class="timer-label">Days</small> :
+                <span id="hours">00</span><small class="timer-label">Hrs</small> :
+                <span id="minutes">00</span><small class="timer-label">Min</small> :
+                <span id="seconds">00</span><small class="timer-label">Sec</small>
             </div>
-            <p style="font-size: 9px; color: #555; margin-top: 20px; letter-spacing: 2px; font-weight: 700;">
-                ESTABLISHED APRIL 25, 2026
-            </p>
         </div>
 
         <div class="menu-label">Market Insights</div>
@@ -300,8 +184,7 @@
         <a href="calc.html">Wealth Projection</a>
         <a href="clock.html">Market Clock</a>
 
-        <div class="menu-label">The Firm</div>
-        <a href="vision.html">Our Vision</a>
+        <div class="menu-label">The Firm</div> <a href="vision.html">Our Vision</a>
         <a href="aboutus.html">About Us</a>
     </div>
 </div>
@@ -310,25 +193,22 @@
 <div class="gold-orb orb2"></div>
 
 <div class="nav">
-    <div class="menu-icon" id="menuBtn">
-        <span></span><span></span><span></span>
-    </div>
+    <div class="menu-icon" id="menuBtn"><span></span><span></span><span></span></div>
     <a href="index.html"><img src="logo.png" alt="gRaviTy Research Logo"></a>
     <div style="width: 30px;"></div> 
 </div>
 
-<div class="hero">
+<div class="hero reveal">
     <h1>Decoding the Pulse <br>of the Market</h1>
     <p>
         gRaviTy Research is a boutique market analysis firm. We synthesize industrial inertia with financial momentum to illuminate the path forward.
     </p>
     <div class="btn-group">
         <a href="insights.html" class="btn">Explore Insights</a>
-        <a href="vision.html" class="btn" style="border-color: rgba(255,255,255,0.1); color: #666;">Our Vision</a>
-    </div>
+        <a href="vision.html" class="btn">Our Vision</a> </div>
 </div>
 
-<div class="section">
+<div class="section reveal">
     <h2>The Core Philosophy</h2>
     <div class="card">
         We believe that markets are governed by predictable forces. Our job is to measure the 
@@ -338,69 +218,44 @@
 </div>
 
 <div class="footer">
-    © 2026 gRaviTy Research | Private Analysis Firm <br>
-    <span style="font-size: 9px; opacity: 0.3; margin-top: 15px; display: block; line-height: 2;">Informational purposes only. All market investments are subject to risk.</span>
+    © 2026 gRaviTy Research | Private Analysis Firm
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    // SCROLL REVEAL LOGIC
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            var elementVisible = 150;
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add("active");
+            }
+        }
+    }
+    window.addEventListener("scroll", reveal);
+    reveal(); // Run once on load
 
+    // SIDEBAR LOGIC
     const sidebar = document.getElementById("mySidebar");
     const menuBtn = document.getElementById("menuBtn");
     const closeBtn = document.getElementById("closeSidebar");
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
-    const countdownBox = document.querySelector(".countdown-box");
 
-    function openNav() { sidebar.classList.add("open"); }
-    function closeNav() { sidebar.classList.remove("open"); }
+    menuBtn.addEventListener("click", (e) => { e.stopPropagation(); sidebar.classList.add("open"); });
+    closeBtn.addEventListener("click", () => { sidebar.classList.remove("open"); });
+    document.addEventListener("click", (e) => { if(!sidebar.contains(e.target)) sidebar.classList.remove("open"); });
 
-    menuBtn.addEventListener("click", function(e) {
-        e.stopPropagation();
-        openNav();
-    });
-
-    closeBtn.addEventListener("click", function(e) {
-        e.stopPropagation();
-        closeNav();
-    });
-
-    document.addEventListener("click", function(event) {
-        if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
-            closeNav();
-        }
-    });
-
+    // COUNTDOWN
     const targetTime = new Date("April 25, 2026 00:00:00").getTime();
-    const interval = setInterval(updateCountdown, 1000);
-
-    function updateCountdown() {
+    setInterval(() => {
         const now = Date.now();
-        const timeLeft = targetTime - now;
-
-        if (timeLeft <= 0) {
-            clearInterval(interval);
-            if (countdownBox) {
-                countdownBox.innerHTML = "<p style='color:#d4af37; letter-spacing: 2px;'>SYSTEMS ONLINE</p>";
-            }
-            return;
-        }
-
-        const d = Math.floor(timeLeft / 86400000);
-        const h = Math.floor((timeLeft % 86400000) / 3600000);
-        const m = Math.floor((timeLeft % 3600000) / 60000);
-        const s = Math.floor((timeLeft % 60000) / 1000);
-
-        if (daysEl) daysEl.textContent = String(d).padStart(2, '0');
-        if (hoursEl) hoursEl.textContent = String(h).padStart(2, '0');
-        if (minutesEl) minutesEl.textContent = String(m).padStart(2, '0');
-        if (secondsEl) secondsEl.textContent = String(s).padStart(2, '0');
-    }
-
-    updateCountdown(); 
-});
+        const diff = targetTime - now;
+        document.getElementById("days").innerText = Math.floor(diff / 86400000).toString().padStart(2, '0');
+        document.getElementById("hours").innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+    }, 1000);
 </script>
 </body>
 </html>
