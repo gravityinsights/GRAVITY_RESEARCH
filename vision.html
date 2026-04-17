@@ -1,173 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Vision | gRaviTy Research</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gRaviTy Research | Vision</title>
 
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: #000;
-            color: #ffffff;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@200;300;400;500;600&display=swap');
 
-        /* --- NAVIGATION --- */
-        .nav {
-            padding: 20px 5%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #1f1f1f;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+:root {
+    --gold: #d4af37;
+    --bg: #050505;
+}
 
-        .nav a { color: #d4af37; text-decoration: none; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: #fff;
+}
 
-        /* --- HERO --- */
-        .vision-hero {
-            padding: 100px 10%;
-            text-align: center;
-            background: radial-gradient(circle at center, rgba(212,175,55,0.05) 0%, transparent 70%);
-        }
+/* TOP BAR */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: sticky;
+    top: 0;
+    background: rgba(5,5,5,0.9);
+    backdrop-filter: blur(10px);
+}
 
-        .vision-hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(40px, 6vw, 72px);
-            color: #d4af37;
-            margin-bottom: 20px;
-        }
+.home-btn {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
 
-        .tagline {
-            font-size: 18px;
-            color: #9ca3af;
-            max-width: 800px;
-            margin: 0 auto;
-            font-weight: 300;
-        }
+/* SECTIONS */
+.section {
+    padding: 80px 20px;
+    max-width: 1000px;
+    margin: auto;
+}
 
-        /* --- CORE CONTENT --- */
-        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+h1, h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+}
 
-        .definition-card {
-            background: rgba(212, 175, 55, 0.03);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 80px;
-        }
+/* HERO TEXT */
+.hero {
+    text-align: center;
+    padding: 100px 20px 60px;
+}
 
-        .definition-card h2 { color: #d4af37; margin-top: 0; font-family: 'Playfair Display', serif; }
-        .definition-card p { font-size: 22px; color: #e5e7eb; font-weight: 400; }
+.hero p {
+    color: #aaa;
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.7;
+}
 
-        /* --- THE GRID --- */
-        .vision-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
+/* SERVICES */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
 
-        .vision-item {
-            padding: 30px;
-            border-radius: 12px;
-            background: #0a0a0a;
-            border: 1px solid #1f1f1f;
-            transition: 0.3s;
-        }
+.card {
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+}
 
-        .vision-item:hover { border-color: #d4af37; transform: translateY(-5px); }
-        .vision-item h3 { color: #d4af37; font-size: 20px; margin-bottom: 15px; }
-        .vision-item p { color: #9ca3af; font-size: 15px; }
+.card:hover {
+    border-color: var(--gold);
+}
 
-        /* --- PHILOSOPHY --- */
-        .philosophy-section {
-            text-align: center;
-            padding: 100px 0;
-            border-top: 1px solid #1f1f1f;
-            margin-top: 60px;
-        }
+/* REPORTS */
+.report {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer;
+    color: #aaa;
+}
 
-        .gold-text { color: #d4af37; font-weight: 500; }
+.report:hover {
+    color: var(--gold);
+}
 
-        .quote {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            color: #ffffff;
-            font-style: italic;
-            margin-bottom: 40px;
-        }
+/* STOCK PANEL */
+.stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
 
-        .footer { text-align: center; padding: 40px; color: #4b5563; font-size: 12px; border-top: 1px solid #1f1f1f; }
-    </style>
+.stock {
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.stock:hover {
+    border-color: var(--gold);
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #0a0a0a;
+    padding: 30px;
+    max-width: 500px;
+    border: 1px solid var(--gold);
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.small {
+    color: #888;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* PURPOSE */
+.points {
+    line-height: 2;
+    color: #bbb;
+}
+
+.points span {
+    color: var(--gold);
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 40px;
+    font-size: 12px;
+    color: #444;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+</style>
 </head>
+
 <body>
 
-    <nav class="nav">
-        <a href="index.html">← Back to Home</a>
-        <img src="logo.png" alt="Logo" style="height: 40px;">
-        <div style="width: 80px;"></div>
-    </nav>
+<!-- TOP BAR -->
+<div class="topbar">
+    <a class="home-btn" href="index.html">← HOME</a>
+    <div style="color:var(--gold); font-size:12px; letter-spacing:2px;">gRAVIty Vision</div>
+</div>
 
-    <header class="vision-hero">
-        <h1>The Vision</h1>
-        <p class="tagline">Moving beyond the noise. Decoding the fundamental forces of the global economy.</p>
-    </header>
+<!-- HERO -->
+<div class="hero section">
+    <h1>Building a research platform of real force</h1>
+    <p>
+        gRaviTy Research is not just a service — it is a commitment to structured, disciplined thinking about markets.
+        We are building a platform designed to grow, expand globally, and establish a permanent standard for research-driven intelligence.
+    </p>
+</div>
 
-    <div class="container">
-        <div class="definition-card">
-            <h2>Our Identity</h2>
-            <p>“gRaviTy Research is a market research and analysis firm focused on understanding and explaining financial markets, businesses, and industry trends.”</p>
-        </div>
-
-        <div class="vision-grid">
-            <div class="vision-item">
-                <h3>Structural Analysis</h3>
-                <p>We break down complex company financials and revenue models to reveal the engine driving the growth.</p>
-            </div>
-            <div class="vision-item">
-                <h3>Industry Deep-Dives</h3>
-                <p>From EV transitions to AI integration, we analyze how broad industrial shifts create local opportunities.</p>
-            </div>
-            <div class="vision-item">
-                <h3>Behavioral Patterns</h3>
-                <p>Understanding the "why" behind market movements by studying investor sentiment and institutional flow.</p>
-            </div>
-            <div class="vision-item">
-                <h3>Strategic Intelligence</h3>
-                <p>Providing actionable insights for businesses and startups to navigate economic volatility.</p>
-            </div>
-            <div class="vision-item">
-                <h3>Public Literacy</h3>
-                <p>Translating "Wall Street" jargon into clear, high-signal reports for the modern intellectual.</p>
-            </div>
-            <div class="vision-item">
-                <h3>Future Outlook</h3>
-                <p>Identifying emerging trends before they become mainstream consensus.</p>
-            </div>
-        </div>
-
-        <section class="philosophy-section">
-            <div class="quote">"We don’t manage money. We decode the forces behind it."</div>
-            <p style="max-width: 600px; margin: 0 auto; color: #9ca3af;">
-                Our approach is rooted in <span class="gold-text">Clarity over Hype</span>. 
-                While others focus on daily fluctuations, we focus on the gravitational pull of value and momentum.
-            </p>
-        </section>
+<!-- SERVICES -->
+<div class="section">
+    <h2>Services</h2>
+    <div class="grid">
+        <div class="card">Stock Analysis</div>
+        <div class="card">Industry Research</div>
+        <div class="card" style="opacity:0.5">More coming soon</div>
     </div>
+</div>
 
-    <footer class="footer">
-        © 2026 gRaviTy Research | Private Intelligence Firm<br>
-        <span style="opacity: 0.5;">Informational purposes only. Not financial advice.</span>
-    </footer>
+<!-- REPORTS -->
+<div class="section">
+    <h2>Reports</h2>
+    <div class="report">Q1 Market Structural Breakdown</div>
+    <div class="report">Tech Sector Momentum Report</div>
+    <div class="report">Global Liquidity Flow Study</div>
+</div>
+
+<!-- STOCKS -->
+<div class="section">
+    <h2>Featured Stocks</h2>
+    <div class="stock-grid">
+        <div class="stock" onclick="openStock('TCS')">TCS</div>
+        <div class="stock" onclick="openStock('RELIANCE')">RELIANCE</div>
+        <div class="stock" onclick="openStock('INFY')">INFY</div>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h2 id="stockName">Stock</h2>
+        <p class="small" id="stockInfo"></p>
+    </div>
+</div>
+
+<!-- PURPOSE -->
+<div class="section">
+    <h2>Our Purpose</h2>
+    <div class="points">
+        <span>I.</span> Build a modern, research-driven intelligence platform for serious market thinkers.<br>
+        <span>II.</span> Expand coverage globally across markets and sectors.<br>
+        <span>III.</span> Deliver structured, reliable insights with intellectual honesty.<br>
+        <span>IV.</span> Create a knowledge base that grows stronger every cycle.
+    </div>
+</div>
+
+<!-- CONTACT -->
+<div class="section">
+    <h2>Contact</h2>
+    <p class="small">
+        Email: contact@gravrityresearch.com<br>
+        Telegram: @gravrityresearch
+    </p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 gRaviTy Research
+</div>
+
+<script>
+const stockData = {
+    "TCS": "TCS is a stable IT leader. Strong long-term compounder. Neutral-to-positive outlook based on current cycle strength.",
+    "RELIANCE": "Diversified conglomerate with strong energy + retail exposure. High influence on index movement.",
+    "INFY": "IT services giant. Conservative growth, strong balance sheet, steady but slower momentum."
+};
+
+function openStock(name) {
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("stockName").innerText = name;
+    document.getElementById("stockInfo").innerText = stockData[name] || "No data available.";
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+window.onclick = function(e) {
+    if (e.target.classList.contains("modal")) {
+        closeModal();
+    }
+};
+</script>
 
 </body>
 </html>
