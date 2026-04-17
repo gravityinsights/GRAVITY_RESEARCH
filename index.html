@@ -24,6 +24,19 @@
             color: #ffffff;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+
+            /* --- PREVENT TEXT SELECTION & HIGHLIGHT --- */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            cursor: default; /* Prevents the text-selection I-beam cursor */
+        }
+
+        /* Prevent images from being dragged or saved easily */
+        img {
+            -webkit-user-drag: none;
+            user-drag: none;
         }
 
         /* --- SCROLL REVEAL --- */
@@ -156,7 +169,8 @@
         .timer-label { font-size: 9px; color: #555; text-transform: uppercase; margin-top: 5px; letter-spacing: 1px; }
     </style>
 </head>
-<body>
+
+<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
 
 <div id="mySidebar" class="sidebar">
     <span class="close-btn" id="closeSidebar">&times;</span>
@@ -221,6 +235,19 @@
 </div>
 
 <script>
+    // DISABLE RIGHT CLICK, DRAG, AND SELECT
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    
+    // DISABLE KEYBOARD SHORTCUTS (Inspect, Source, Save)
+    document.onkeydown = function(e) {
+        if (e.keyCode == 123) { return false; } // F12
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } // Ctrl+Shift+I
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; } // Ctrl+Shift+C
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } // Ctrl+Shift+J
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } // Ctrl+U
+        if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { return false; } // Ctrl+S
+    };
+
     // SIDEBAR
     const sidebar = document.getElementById("mySidebar");
     const menuBtn = document.getElementById("menuBtn");
