@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>gRaviTy Research | Understanding Market Forces</title>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@200;300;400;500;600&display=swap');
 
@@ -29,7 +30,7 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* --- SIDEBAR --- */
+        /* SIDEBAR */
         .sidebar {
             height: 100%; width: 0; position: fixed; z-index: 9999;
             top: 0; left: 0; background-color: rgba(5, 5, 5, 0.98);
@@ -39,255 +40,241 @@
         }
         .sidebar.open { width: 350px; }
         .sidebar-content { padding: 0 40px; min-width: 280px; }
+
         .sidebar a {
             padding: 15px 0; text-decoration: none; font-size: 16px;
             color: #888; display: block; transition: 0.3s;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .sidebar a:hover { color: var(--gold); padding-left: 10px; }
-        .sidebar .close-btn { position: absolute; top: 20px; right: 25px; font-size: 32px; cursor: pointer; color: var(--gold); }
-        .menu-label { padding: 25px 0 10px 0; font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
 
-        /* --- NAVIGATION --- */
-        .nav {
-            padding: 20px 40px; display: flex; align-items: center; justify-content: space-between;
-            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+        .sidebar .close-btn {
+            position: absolute; top: 20px; right: 25px;
+            font-size: 32px; cursor: pointer; color: var(--gold);
         }
-        .menu-icon { cursor: pointer; display: flex; flex-direction: column; gap: 6px; padding: 5px; }
-        .menu-icon span { display: block; width: 22px; height: 1px; background-color: var(--gold); }
-        .nav img { height: 45px; width: auto; }
 
-        /* SEARCH BAR */
-        .search-box {
-            width: 100%;
-            max-width: 500px;
-            margin: 20px auto 0;
+        .menu-label {
+            padding: 25px 0 10px 0; font-size: 10px;
+            color: var(--gold); text-transform: uppercase;
+            letter-spacing: 2px; font-weight: 600;
+        }
+
+        /* NAV */
+        .nav {
+            padding: 20px 40px; display: flex;
+            align-items: center; justify-content: space-between;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .menu-icon span {
+            width: 22px; height: 1px;
+            background-color: var(--gold);
+        }
+
+        .nav img { height: 45px; }
+
+        /* SEARCH + FILTER BAR */
+        .top-controls {
             display: flex;
             justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         .search-box input {
-            width: 100%;
-            padding: 12px 18px;
+            width: 300px;
+            padding: 12px;
             background: rgba(15,15,15,0.8);
             border: 1px solid rgba(255,255,255,0.1);
             color: white;
             outline: none;
-            font-size: 14px;
             border-radius: 6px;
-            transition: 0.3s;
         }
 
-        .search-box input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212,175,55,0.2);
+        .toggle-btn {
+            padding: 12px 16px;
+            border: 1px solid var(--gold);
+            background: transparent;
+            color: var(--gold);
+            cursor: pointer;
+            border-radius: 6px;
         }
 
-        /* --- HERO --- */
-        .hero { text-align: center; padding: 140px 20px; position: relative; z-index: 10; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(38px, 9vw, 75px); color: var(--gold); margin-bottom: 25px; line-height: 1.1; }
-        .hero p { max-width: 600px; margin: 0 auto 45px; font-size: 19px; color: #999; line-height: 1.7; }
-
-        .btn {
-            margin: 10px; padding: 16px 40px; border: 1px solid var(--gold);
-            color: var(--gold); text-decoration: none; display: inline-block;
-            font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; transition: 0.4s;
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 140px 20px;
         }
-        .btn:hover { background: var(--gold); color: #000; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3); }
 
-        /* --- CONTENT --- */
-        .section { padding: 80px 20px; text-align: center; position: relative; z-index: 10; }
-        .section h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 38px; margin-bottom: 40px; }
+        .hero h1 {
+            font-family: 'Playfair Display';
+            font-size: clamp(38px, 9vw, 75px);
+            color: var(--gold);
+        }
 
-        /* --- INSIGHTS PREVIEW --- */
-        .insights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+        .hero p { color: #999; }
+
+        /* GRID */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
         .preview-card {
-            background: rgba(15,15,15,0.7); padding: 30px; text-align: left;
-            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
+            background: rgba(15,15,15,0.7);
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
-        .preview-card:hover { border-color: var(--gold); }
-        .comp-check { accent-color: var(--gold); cursor: pointer; }
 
-        /* --- COMPARE OVERLAY --- */
-        #compare-overlay {
-            display: none; position: fixed; bottom: 0; left: 0; width: 100%;
-            background: #0a0a0a; border-top: 2px solid var(--gold);
-            z-index: 9999; padding: 30px; box-shadow: 0 -20px 40px rgba(0,0,0,0.9);
-            animation: slideUp 0.4s ease;
+        .preview-card:hover {
+            border-color: var(--gold);
         }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        .gold-orb { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 1; opacity: 0.2; }
-        .orb1 { width: 500px; height: 500px; background: var(--gold); top: -10%; left: -10%; }
-        .orb2 { width: 400px; height: 400px; background: var(--gold); bottom: -5%; right: -5%; }
+        .star {
+            cursor: pointer;
+            font-size: 18px;
+            color: #444;
+        }
 
-        .footer { padding: 60px; text-align: center; color: #333; font-size: 10px; letter-spacing: 2px; }
+        .star.active {
+            color: var(--gold);
+        }
 
-        /* SEARCH RESULTS HIGHLIGHT */
+        .comp-check { accent-color: var(--gold); }
+
         .hidden { display: none !important; }
     </style>
 </head>
-<body oncontextmenu="return false;">
 
-<div id="mySidebar" class="sidebar">
-    <span class="close-btn" id="closeSidebar">&times;</span>
-    <div class="sidebar-content">
-        <div class="menu-label">Terminal Tools</div>
-        <a href="insights.html">Market Insights</a>
-        <a href="calc.html">Wealth Projection</a>
-        <a href="clock.html">Market Clock</a>
-        <div class="menu-label">The Firm</div>
-        <a href="vision.html">Our Vision</a>
-        <a href="aboutus.html">About Us</a>
-    </div>
-</div>
-
-<div class="gold-orb orb1"></div>
-<div class="gold-orb orb2"></div>
+<body>
 
 <div class="nav">
     <div class="menu-icon" id="menuBtn"><span></span><span></span><span></span></div>
-    <a href="index.html"><img src="logo.png" alt="Logo"></a>
-    <div style="width:30px"></div>
+    <img src="logo.png">
 </div>
 
-<!-- SEARCH BAR ADDED -->
-<div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search assets... (ticker or company)">
-</div>
-
-<div class="hero reveal">
-    <h1>Decoding the Pulse <br>of the Market</h1>
-    <p>We synthesize industrial inertia with financial momentum to illuminate the path forward.</p>
-    <a href="insights.html" class="btn">Launch Terminal</a>
-</div>
-
-<div class="section reveal">
-    <h2>Market Insights</h2>
-    <p style="color: #666; margin-bottom: 30px; font-size: 13px;">SELECT TWO ASSETS TO INITIALIZE COMPARISON MODE</p>
-    <div id="home-insights-preview" class="insights-grid">
-        <div class="preview-card">Syncing Data...</div>
+<!-- CONTROLS -->
+<div class="top-controls">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search ticker or company">
     </div>
+    <button class="toggle-btn" id="favToggle">Show Favorites</button>
 </div>
 
-<div id="compare-overlay">
-    <div style="max-width:900px; margin:auto;">
-        <div style="display:flex; justify-content:space-between; margin-bottom:20px; border-bottom:1px solid #222; padding-bottom:10px;">
-            <span style="color:var(--gold); letter-spacing:2px; font-size:11px; font-weight:600;">CROSS-ASSET ANALYSIS MODE</span>
-            <span onclick="closeCompare()" style="cursor:pointer; font-size:12px; color:#888;">RESET [X]</span>
-        </div>
-        <div id="compare-content" style="display:grid; grid-template-columns: 1fr 1fr; gap:40px;"></div>
-    </div>
+<div class="hero">
+    <h1>Decoding the Pulse<br>of the Market</h1>
+    <p>We synthesize market momentum into structured intelligence.</p>
 </div>
 
-<div class="footer">© 2026 gRaviTy Research | Private Analysis Firm</div>
+<div class="insights-grid" id="grid"></div>
 
 <script>
-    const sidebar = document.getElementById("mySidebar");
-    const menuBtn = document.getElementById("menuBtn");
-    const closeBtn = document.getElementById("closeSidebar");
+let allAssets = [];
+let selectedIdx = [];
+let showFav = false;
 
-    menuBtn.onclick = () => sidebar.classList.add("open");
-    closeBtn.onclick = () => sidebar.classList.remove("open");
-    document.onclick = (e) => { if(!sidebar.contains(e.target) && !menuBtn.contains(e.target)) sidebar.classList.remove("open"); };
+function getFavs() {
+    return JSON.parse(localStorage.getItem("favs") || "[]");
+}
 
-    window.onscroll = () => {
-        document.querySelectorAll('.reveal').forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('active');
-        });
-    };
+function toggleFav(index) {
+    let favs = getFavs();
 
-    let allAssets = [];
-    let selectedIdx = [];
-
-    async function loadData() {
-        const URL = 'https://api.sheety.co/27bb86a119d2050ea00da106b6e33003/gRaviTyResearchTerminal/sheet1';
-        try {
-            const res = await fetch(URL);
-            const json = await res.json();
-            allAssets = json.sheet1;
-            renderPreview();
-        } catch (e) { console.error("Sync Error"); }
+    if (favs.includes(index)) {
+        favs = favs.filter(i => i !== index);
+    } else {
+        favs.push(index);
     }
 
-    function renderPreview(filter = "") {
-        const container = document.getElementById('home-insights-preview');
-        container.innerHTML = '';
+    localStorage.setItem("favs", JSON.stringify(favs));
+    render(document.getElementById("searchInput").value.toLowerCase());
+}
 
-        let filtered = allAssets.slice(0, 3);
+async function loadData() {
+    const res = await fetch('https://api.sheety.co/27bb86a119d2050ea00da106b6e33003/gRaviTyResearchTerminal/sheet1');
+    const json = await res.json();
+    allAssets = json.sheet1;
+    render("");
+}
 
-        if (filter) {
-            filtered = allAssets.filter(item =>
-                (item.ticker || "").toLowerCase().includes(filter) ||
-                (item.company || "").toLowerCase().includes(filter)
-            );
-        }
+function render(filter = "") {
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
 
-        filtered.slice(0, 3).forEach((item, i) => {
-            const change = (parseFloat(item.change) * 100).toFixed(2);
-            container.innerHTML += `
-                <div class="preview-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                        <span style="color:var(--gold); font-size:11px; letter-spacing:1px;">${item.ticker}</span>
-                        <input type="checkbox" class="comp-check" onchange="handleComp(this, ${i})">
-                    </div>
-                    <div style="font-family:'Playfair Display'; font-size:22px; color:var(--gold);">${item.company}</div>
-                    <div style="font-size:14px; margin: 10px 0;">₹${Number(item.price).toLocaleString('en-IN')} 
-                        <span style="color:${change >= 0 ? '#00ff88' : '#ff4444'}; margin-left:10px;">${change >= 0 ? '▲' : '▼'} ${change}%</span>
-                    </div>
-                    <div style="font-size:12px; color:#555; line-height:1.5;">${(item.analysis || "").substring(0, 80)}...</div>
+    let data = allAssets;
+
+    if (filter) {
+        data = data.filter(a =>
+            (a.ticker || "").toLowerCase().includes(filter) ||
+            (a.company || "").toLowerCase().includes(filter)
+        );
+    }
+
+    if (showFav) {
+        const favs = getFavs();
+        data = data.filter((_, i) => favs.includes(i));
+    }
+
+    data.forEach((item, i) => {
+        const change = (parseFloat(item.change) * 100).toFixed(2);
+        const favs = getFavs();
+        const isFav = favs.includes(i);
+
+        grid.innerHTML += `
+            <div class="preview-card">
+                <div style="display:flex;justify-content:space-between;">
+                    <span style="color:var(--gold)">${item.ticker}</span>
+                    <span class="star ${isFav ? 'active' : ''}" onclick="toggleFav(${i})">
+                        ★
+                    </span>
                 </div>
-            `;
-        });
-    }
 
-    function handleComp(cb, index) {
-        if (cb.checked) {
-            if (selectedIdx.length >= 2) {
-                alert("Comparison limited to 2 assets.");
-                cb.checked = false;
-                return;
-            }
-            selectedIdx.push(index);
-        } else {
-            selectedIdx = selectedIdx.filter(i => i !== index);
-        }
+                <h3 style="color:var(--gold)">${item.company}</h3>
 
-        if (selectedIdx.length === 2) {
-            const a1 = allAssets[selectedIdx[0]];
-            const a2 = allAssets[selectedIdx[1]];
-            document.getElementById('compare-content').innerHTML = `
                 <div>
-                    <h4 style="color:var(--gold); margin:0 0 10px 0;">${a1.company}</h4>
-                    <p style="font-size:13px; color:#aaa;">Sense: ${a1.verdict}</p>
+                    ₹${Number(item.price).toLocaleString('en-IN')}
+                    <span style="color:${change >= 0 ? '#00ff88' : '#ff4444'}">
+                        ${change >= 0 ? '▲' : '▼'} ${change}%
+                    </span>
                 </div>
-                <div>
-                    <h4 style="color:var(--gold); margin:0 0 10px 0;">${a2.company}</h4>
-                    <p style="font-size:13px; color:#aaa;">Sense: ${a2.verdict}</p>
-                </div>
-            `;
-            document.getElementById('compare-overlay').style.display = 'block';
-        } else {
-            document.getElementById('compare-overlay').style.display = 'none';
-        }
-    }
 
-    function closeCompare() {
-        selectedIdx = [];
-        document.querySelectorAll('.comp-check').forEach(c => c.checked = false);
-        document.getElementById('compare-overlay').style.display = 'none';
-    }
-
-    // SEARCH FEATURE
-    document.getElementById("searchInput").addEventListener("input", (e) => {
-        const val = e.target.value.toLowerCase();
-        renderPreview(val);
+                <p style="color:#777;font-size:12px">
+                    ${(item.analysis || "").slice(0,80)}...
+                </p>
+            </div>
+        `;
     });
+}
 
-    loadData();
+/* SEARCH */
+document.getElementById("searchInput").addEventListener("input", e => {
+    render(e.target.value.toLowerCase());
+});
 
-    document.onkeydown = (e) => { if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) return false; };
+/* FAVORITES TOGGLE */
+document.getElementById("favToggle").onclick = () => {
+    showFav = !showFav;
+    document.getElementById("favToggle").innerText =
+        showFav ? "Show All" : "Show Favorites";
+    render(document.getElementById("searchInput").value.toLowerCase());
+};
+
+loadData();
 </script>
+
 </body>
 </html>
