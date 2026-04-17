@@ -25,7 +25,6 @@
             cursor: default;
         }
 
-        /* --- NAVIGATION --- */
         .nav {
             padding: 20px 40px;
             display: flex;
@@ -46,45 +45,38 @@
             margin: 40px auto;
             padding: 0 20px;
             z-index: 10;
-            position: relative;
         }
 
-        /* --- SEARCH & FILTERS --- */
+        /* --- CONTROLS --- */
         .controls {
-            margin-bottom: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            margin-bottom: 50px;
+            text-align: center;
         }
 
         #searchBar {
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
             background: var(--glass);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 15px 25px;
+            padding: 12px 20px;
             color: var(--gold);
             font-family: 'Inter', sans-serif;
-            font-size: 14px;
             outline: none;
-            transition: 0.3s;
+            margin-bottom: 20px;
         }
-
-        #searchBar:focus { border-color: var(--gold); background: rgba(212, 175, 55, 0.05); }
 
         .filter-group {
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .filter-btn {
             background: transparent;
-            border: 1px solid #333;
-            color: #888;
-            padding: 8px 16px;
+            border: 1px solid #222;
+            color: #666;
+            padding: 6px 15px;
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -92,10 +84,7 @@
             transition: 0.3s;
         }
 
-        .filter-btn.active, .filter-btn:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-        }
+        .filter-btn.active { border-color: var(--gold); color: var(--gold); }
 
         /* --- CARDS --- */
         .insight-card {
@@ -104,10 +93,10 @@
             padding: 40px;
             margin-bottom: 30px;
             transition: 0.4s;
-            display: none; /* Controlled by JS */
+            display: none;
         }
 
-        .insight-card.visible { display: block; animation: fadeInUp 0.5s forwards; }
+        .insight-card.visible { display: block; animation: fadeInUp 0.6s forwards; }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -117,28 +106,27 @@
         .card-header {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 20px;
+            align-items: center;
             border-bottom: 1px solid #222;
             padding-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .company-name { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--gold); }
-        .live-price { font-size: 18px; color: #fff; }
-        .analysis-content { line-height: 1.8; color: #bbb; font-size: 15px; }
-
-        /* --- LIVE COMMENT TAG --- */
-        .live-tag {
-            display: inline-block;
-            background: rgba(0, 255, 136, 0.1);
-            color: #00ff88;
+        
+        /* --- AI VERDICT BADGE --- */
+        .verdict-badge {
             font-size: 9px;
-            padding: 4px 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 15px;
-            border-left: 2px solid #00ff88;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: inline-block;
         }
+
+        .analysis-content { line-height: 1.8; color: #bbb; font-size: 15px; }
 
         .gold-orb { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 1; opacity: 0.15; }
         .orb1 { width: 500px; height: 500px; background: var(--gold); top: -10%; left: -10%; }
@@ -158,8 +146,8 @@
 
 <div class="container">
     <div class="controls">
-        <input type="text" id="searchBar" placeholder="Search Company" onkeyup="filterInsights()">
-        <div class="filter-group" id="filterGroup">
+        <input type="text" id="searchBar" placeholder="Search Company" onkeyup="filterData()">
+        <div class="filter-group">
             <button class="filter-btn active" onclick="setFilter('all', this)">All Sectors</button>
             <button class="filter-btn" onclick="setFilter('tech', this)">Tech</button>
             <button class="filter-btn" onclick="setFilter('finance', this)">Finance</button>
@@ -168,68 +156,69 @@
     </div>
 
     <div id="insights-container">
-        <div id="loader" style="text-align: center; color: var(--gold);">SYNCHRONIZING...</div>
+        <div style="text-align: center; color: var(--gold);">SYNCHRONIZING WITH TERMINAL...</div>
     </div>
 </div>
 
 <script>
     let allData = [];
-    let currentFilter = 'all';
+    let activeFilter = 'all';
 
-    async function loadInsights() {
+    async function loadData() {
         const SHEETY_URL = 'https://api.sheety.co/27bb86a119d2050ea00da106b6e33003/gRaviTyResearchTerminal/sheet1'; 
-
         try {
             const response = await fetch(SHEETY_URL);
             const data = await response.json();
             allData = data.sheet1;
-            renderCards();
-        } catch (error) {
-            document.getElementById('insights-container').innerHTML = "Connection Error.";
-        }
+            filterData();
+        } catch (e) { console.error("Sync Failed"); }
     }
 
-    function renderCards() {
+    function filterData() {
         const container = document.getElementById('insights-container');
+        const search = document.getElementById('searchBar').value.toLowerCase();
         container.innerHTML = '';
-        const searchVal = document.getElementById('searchBar').value.toLowerCase();
 
-        allData.forEach(report => {
-            const isVisible = (currentFilter === 'all' || report.sector?.toLowerCase() === currentFilter) &&
-                              (report.company.toLowerCase().includes(searchVal) || report.ticker.toLowerCase().includes(searchVal));
+        allData.forEach(item => {
+            const matchesSearch = item.company.toLowerCase().includes(search) || item.ticker.toLowerCase().includes(search);
+            const matchesFilter = activeFilter === 'all' || item.sector?.toLowerCase() === activeFilter;
 
-            const changeVal = (parseFloat(report.change) * 100).toFixed(2);
-            const color = changeVal >= 0 ? '#00ff88' : '#ff4444';
+            if (matchesSearch && matchesFilter) {
+                const card = document.createElement('div');
+                card.className = 'insight-card visible';
+                
+                const change = (parseFloat(item.change) * 100).toFixed(2);
+                const isBullish = parseFloat(change) >= 0;
+                const vColor = isBullish ? 'rgba(0, 255, 136, 0.1)' : 'rgba(255, 68, 68, 0.1)';
+                const vText = isBullish ? '#00ff88' : '#ff4444';
 
-            const card = document.createElement('div');
-            card.className = `insight-card ${isVisible ? 'visible' : ''}`;
-            card.innerHTML = `
-                <div class="live-tag">Live Pulse: Market Momentum Active</div>
-                <div class="card-header">
-                    <div class="company-name">${report.company}</div>
-                    <div class="price-info">
-                        <span class="live-price">₹${report.price.toLocaleString('en-IN')}</span>
-                        <span style="color: ${color}; font-size: 12px;">${changeVal >= 0 ? '+' : ''}${changeVal}%</span>
+                card.innerHTML = `
+                    <div class="verdict-badge" style="background: ${vColor}; color: ${vText}">
+                        AI SENSE: ${item.verdict || 'ANALYZING'}
                     </div>
-                </div>
-                <div class="analysis-content">${report.analysis}</div>
-            `;
-            container.appendChild(card);
+                    <div class="card-header">
+                        <div class="company-name">${item.company}</div>
+                        <div style="text-align: right;">
+                            <span style="font-size: 18px;">₹${item.price.toLocaleString('en-IN')}</span>
+                            <div style="color: ${vText}; font-size: 11px;">${isBullish ? '▲' : '▼'} ${change}%</div>
+                        </div>
+                    </div>
+                    <div class="analysis-content">${item.analysis}</div>
+                `;
+                container.appendChild(card);
+            }
         });
     }
 
-    function filterInsights() { renderCards(); }
-
-    function setFilter(sector, btn) {
-        currentFilter = sector;
+    function setFilter(f, btn) {
+        activeFilter = f;
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        renderCards();
+        filterData();
     }
 
-    loadInsights();
-
-    // Security Lockdown
+    loadData();
+    
     document.onkeydown = function(e) {
         if (e.keyCode === 123 || ((e.ctrlKey || e.metaKey) && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73))) return false;
     };
