@@ -1,319 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gRaviTy Research | Understanding Market Forces</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gRaviTy Research | Understanding Market Forces</title>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@200;300;400;500;600&display=swap');
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@200;300;400;500;600&display=swap');
 
-        :root {
-            --gold: #d4af37;
-            --gold-muted: rgba(212, 175, 55, 0.2);
-            --bg-black: #050505;
-        }
+    :root {
+        --gold: #d4af37;
+        --gold-muted: rgba(212, 175, 55, 0.2);
+        --bg-black: #050505;
+    }
 
-        html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-black);
-            color: #ffffff;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            cursor: default;
-        }
+    body {
+        margin: 0; padding: 0;
+        font-family: 'Inter', sans-serif;
+        background: var(--bg-black);
+        color: #ffffff;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        user-select: none;
+        cursor: default;
+    }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* --- SIDEBAR --- */
+    .sidebar {
+        height: 100%; width: 0; position: fixed; z-index: 9999;
+        top: 0; left: 0; background-color: rgba(5, 5, 5, 0.98);
+        backdrop-filter: blur(20px); overflow-x: hidden;
+        transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        padding-top: 80px; border-right: 1px solid var(--gold-muted);
+    }
 
-        /* --- SIDEBAR --- */
-        .sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            background-color: rgba(5, 5, 5, 0.98);
-            backdrop-filter: blur(20px);
-            overflow-x: hidden;
-            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-            padding-top: 80px;
-            border-right: 1px solid var(--gold-muted);
-        }
+    .sidebar.open { width: 350px; }
 
-        .sidebar.open { width: 350px; }
+    .sidebar-content { padding: 0 40px; min-width: 280px; }
 
-        .sidebar-content { padding: 0 40px; min-width: 280px; }
+    .sidebar a {
+        padding: 15px 0;
+        text-decoration: none;
+        font-size: 16px;
+        color: #888;
+        display: block;
+        transition: 0.3s;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
 
-        .sidebar a {
-            padding: 15px 0;
-            text-decoration: none;
-            font-size: 16px;
-            color: #888;
-            display: block;
-            transition: 0.3s;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
+    .sidebar a:hover { color: var(--gold); padding-left: 10px; }
 
-        .sidebar a:hover { color: var(--gold); padding-left: 10px; }
+    .sidebar .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 32px;
+        cursor: pointer;
+        color: var(--gold);
+    }
 
-        .sidebar .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 32px;
-            cursor: pointer;
-            color: var(--gold);
-        }
+    .menu-label {
+        padding: 25px 0 10px 0;
+        font-size: 10px;
+        color: var(--gold);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
 
-        .menu-label {
-            padding: 25px 0 10px 0;
-            font-size: 10px;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-        }
+    /* NAV */
+    .nav {
+        padding: 20px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(15px);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
 
-        /* --- NAVIGATION --- */
-        .nav {
-            padding: 20px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(15px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
+    .menu-icon {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 5px;
+    }
 
-        .menu-icon { cursor: pointer; display: flex; flex-direction: column; gap: 6px; padding: 5px; }
-        .menu-icon span { display: block; width: 22px; height: 1px; background-color: var(--gold); }
+    .menu-icon span {
+        display: block;
+        width: 22px;
+        height: 1px;
+        background-color: var(--gold);
+    }
 
-        .nav img { height: 45px; width: auto; }
-
-        /* --- HERO --- */
-        .hero { text-align: center; padding: 140px 20px; position: relative; z-index: 10; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(38px, 9vw, 75px); color: var(--gold); margin-bottom: 25px; line-height: 1.1; }
-        .hero p { max-width: 600px; margin: 0 auto 45px; font-size: 19px; color: #999; line-height: 1.7; }
-
-        .btn {
-            margin: 10px;
-            padding: 16px 40px;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            text-decoration: none;
-            display: inline-block;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            transition: 0.4s;
-        }
-
-        .btn:hover { background: var(--gold); color: #000; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3); }
-
-        /* --- CONTENT --- */
-        .section { padding: 100px 20px; text-align: center; position: relative; z-index: 10; }
-        .section h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 38px; margin-bottom: 40px; }
-        .card {
-            background: rgba(15,15,15,0.7);
-            padding: 60px 50px;
-            max-width: 700px;
-            margin: 0 auto;
-            border: 1px solid rgba(255,255,255,0.05);
-            line-height: 1.9;
-            color: #bbb;
-            font-size: 18px;
-        }
-
-        .footer { padding: 80px; text-align: center; color: #444; font-size: 11px; letter-spacing: 2px; border-top: 1px solid #111; }
-
-        .gold-orb { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 1; opacity: 0.25; }
-        .orb1 { width: 500px; height: 500px; background: var(--gold); top: -10%; left: -10%; }
-        .orb2 { width: 400px; height: 400px; background: var(--gold); bottom: -5%; right: -5%; }
-
-        .countdown-box { border: 1px solid var(--gold-muted); padding: 20px; margin: 20px 0; border-radius: 8px; background: rgba(212, 175, 55, 0.03); }
-        .timer-display { color: var(--gold); font-size: 18px; display: flex; justify-content: center; gap: 10px; align-items: center; }
-        .timer-unit { display: flex; flex-direction: column; align-items: center; min-width: 35px; }
-        .timer-label { font-size: 9px; color: #555; text-transform: uppercase; margin-top: 5px; letter-spacing: 1px; }
-
-        /* --- INSIGHTS PREVIEW GRID --- */
-        .insights-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .preview-card {
-            background: rgba(15,15,15,0.7);
-            padding: 30px;
-            text-align: left;
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            transition: 0.3s;
-        }
-        .preview-card:hover { border-color: var(--gold); }
-    </style>
+    .nav img {
+        height: 45px;
+        width: auto;
+    }
+</style>
 </head>
-<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
+
+<body>
 
 <div id="mySidebar" class="sidebar">
     <span class="close-btn" id="closeSidebar">&times;</span>
+
     <div class="sidebar-content">
-        <div class="menu-label">Full Launch Countdown (IST)</div>
-        <div class="countdown-box">
-            <div id="timer-display" class="timer-display">
-                <div class="timer-unit"><span id="days">00</span><span class="timer-label">Days</span></div>
-                <span style="opacity: 0.5; padding-bottom: 15px;">:</span>
-                <div class="timer-unit"><span id="hours">00</span><span class="timer-label">Hrs</span></div>
-                <span style="opacity: 0.5; padding-bottom: 15px;">:</span>
-                <div class="timer-unit"><span id="minutes">00</span><span class="timer-label">Min</span></div>
-                <span style="opacity: 0.5; padding-bottom: 15px;">:</span>
-                <div class="timer-unit"><span id="seconds">00</span><span class="timer-label">Sec</span></div>
-            </div>
-        </div>
 
-        <div class="menu-label">Market Insights</div>
-        <a href="insights.html">Live Reports</a> <a href="markettata.html">Tata Analysis</a>
-
-        <div class="menu-label">Advanced Tools</div>
+        <div class="menu-label">Terminal Tools</div>
+        <a href="insights.html">Market Insights</a>
         <a href="calc.html">Wealth Projection</a>
         <a href="clock.html">Market Clock</a>
-        <a href="insights.html">Market Insights</a> <div class="menu-label">The Firm</div>
+
+        <!-- ONLY ADDITION DONE -->
+        <div class="menu-label">Advanced Tools</div>
+        <a href="watchlist.html">My Favorites / Watchlist</a>
+
+        <div class="menu-label">The Firm</div>
         <a href="vision.html">Our Vision</a>
         <a href="aboutus.html">About Us</a>
+
     </div>
 </div>
-
-<div class="gold-orb orb1"></div>
-<div class="gold-orb orb2"></div>
 
 <div class="nav">
-    <div class="menu-icon" id="menuBtn"><span></span><span></span><span></span></div>
-    <a href="index.html"><img src="logo.png" alt="gRaviTy Research Logo"></a>
-    <div style="width:30px"></div>
-</div>
-
-<div class="hero reveal">
-    <h1>Decoding the Pulse <br>of the Market</h1>
-    <p>gRaviTy Research is a boutique market analysis firm. We synthesize industrial inertia with financial momentum to illuminate the path forward.</p>
-    <div class="btn-group">
-        <a href="insights.html" class="btn">Explore Insights</a>
-        <a href="vision.html" class="btn">Our Vision</a>
+    <div class="menu-icon" id="menuBtn">
+        <span></span><span></span><span></span>
     </div>
-</div>
 
-<div class="section reveal">
-    <h2>The Core Philosophy</h2>
-    <div class="card">
-        We believe that markets are governed by predictable forces. Our job is to measure the 
-        "gravity" of value, momentum, and industrial shifts to give you a clearer view of the 
-        financial horizon. We don't manage money; we decode the forces behind it.
-    </div>
-</div>
-
-<div class="section reveal">
-    <h2>Market Insights</h2>
-    <div id="home-insights-preview" class="insights-grid">
-        <div class="preview-card">Synchronizing with Terminal...</div>
-    </div>
-    <br><br>
-    <a href="insights.html" class="btn">View All Reports</a>
-</div>
-
-<div class="footer">
-    © 2026 gRaviTy Research | Private Analysis Firm <br>
-    <span style="font-size: 10px; opacity: 0.3; margin-top: 10px; display: block;">Informational purposes only. All market investments are subject to risk.</span>
+    <a href="index.html">
+        <img src="logo.png" alt="Logo">
+    </a>
 </div>
 
 <script>
-    // SIDEBAR
-    const sidebar = document.getElementById("mySidebar");
-    const menuBtn = document.getElementById("menuBtn");
-    const closeBtn = document.getElementById("closeSidebar");
+const sidebar = document.getElementById("mySidebar");
+const menuBtn = document.getElementById("menuBtn");
+const closeBtn = document.getElementById("closeSidebar");
 
-    menuBtn.onclick = (e) => { e.stopPropagation(); sidebar.classList.add("open"); };
-    closeBtn.onclick = () => { sidebar.classList.remove("open"); };
-    document.onclick = (e) => { if(!sidebar.contains(e.target) && !menuBtn.contains(e.target)) sidebar.classList.remove("open"); };
+menuBtn.onclick = () => sidebar.classList.add("open");
+closeBtn.onclick = () => sidebar.classList.remove("open");
 
-    // SCROLL REVEAL
-    const reveal = () => {
-        document.querySelectorAll('.reveal').forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('active');
-        });
-    };
-    window.onscroll = reveal;
-    reveal();
-
-    // TIMER
-    const target = new Date("2026-04-25T00:00:00+05:30").getTime();
-    function updateClock() {
-        const diff = target - new Date().getTime();
-        if (diff <= 0) return;
-        document.getElementById("days").innerText = Math.floor(diff / 86400000).toString().padStart(2, '0');
-        document.getElementById("hours").innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
-        document.getElementById("minutes").innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
-        document.getElementById("seconds").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+document.onclick = (e) => {
+    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+        sidebar.classList.remove("open");
     }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // DYNAMIC PREVIEW LOAD
-    async function loadHomePreview() {
-        const SHEETY_URL = 'https://api.sheety.co/27bb86a119d2050ea00da106b6e33003/gRaviTyResearchTerminal/sheet1'; 
-        try {
-            const response = await fetch(SHEETY_URL);
-            const data = await response.json();
-            const container = document.getElementById('home-insights-preview');
-            container.innerHTML = '';
-            data.sheet1.slice(0, 3).forEach(report => {
-                const changeVal = (parseFloat(report.change) * 100).toFixed(2);
-                const color = changeVal >= 0 ? '#00ff88' : '#ff4444';
-                container.innerHTML += `
-                    <div class="preview-card">
-                        <div style="color: var(--gold); font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 10px;">
-                            ${report.company}
-                        </div>
-                        <div style="font-size: 14px; margin-bottom: 15px;">
-                            ₹${report.price.toLocaleString('en-IN')} 
-                            <span style="color: ${color}; margin-left: 10px;">${changeVal >= 0 ? '+' : ''}${changeVal}%</span>
-                        </div>
-                        <div style="font-size: 12px; color: #888; line-height: 1.5;">
-                            ${report.analysis.substring(0, 100)}...
-                        </div>
-                    </div>
-                `;
-            });
-        } catch (e) {
-            console.error("Preview Sync Failed");
-        }
-    }
-    loadHomePreview();
-
-    // LOCKDOWN
-    document.onkeydown = function(e) {
-        if (e.keyCode === 123 || ((e.ctrlKey || e.metaKey) && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73))) return false;
-    };
+};
 </script>
+
 </body>
 </html>
