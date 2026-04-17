@@ -26,6 +26,7 @@
             cursor: default;
         }
 
+        /* Essential for initial visibility */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -154,15 +155,28 @@
     const menuBtn = document.getElementById("menuBtn");
     const closeBtn = document.getElementById("closeSidebar");
 
+    // Sidebar Logic
     menuBtn.onclick = () => sidebar.classList.add("open");
     closeBtn.onclick = () => sidebar.classList.remove("open");
-    document.onclick = (e) => { if(!sidebar.contains(e.target) && !menuBtn.contains(e.target)) sidebar.classList.remove("open"); };
+    
+    document.addEventListener('click', (e) => {
+        if(!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+            sidebar.classList.remove("open");
+        }
+    });
 
-    window.onscroll = () => {
+    // REVEAL LOGIC: Trigger on scroll AND on page load
+    const handleReveal = () => {
         document.querySelectorAll('.reveal').forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('active');
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 50) {
+                el.classList.add('active');
+            }
         });
     };
+
+    window.addEventListener('scroll', handleReveal);
+    window.addEventListener('load', handleReveal); // Ensure Hero shows up immediately
 
     let allAssets = [];
     let selectedIdx = [];
@@ -171,28 +185,35 @@
         const URL = 'https://api.sheety.co/27bb86a119d2050ea00da106b6e33003/gRaviTyResearchTerminal/sheet1';
         try {
             const res = await fetch(URL);
+            if (!res.ok) throw new Error("API Failure");
             const json = await res.json();
-            allAssets = json.sheet1;
+            allAssets = json.sheet1 || [];
             renderPreview();
-        } catch (e) { console.error("Sync Error"); }
+        } catch (e) { 
+            console.error("Sync Error:", e);
+            document.getElementById('home-insights-preview').innerHTML = 
+                '<div class="preview-card" style="color:#666;">Data synchronization currently unavailable.</div>';
+        }
     }
 
     function renderPreview() {
         const container = document.getElementById('home-insights-preview');
+        if (!allAssets || allAssets.length === 0) return;
+        
         container.innerHTML = '';
         allAssets.slice(0, 3).forEach((item, i) => {
             const change = (parseFloat(item.change) * 100).toFixed(2);
             container.innerHTML += `
                 <div class="preview-card">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                        <span style="color:var(--gold); font-size:11px; letter-spacing:1px;">${item.ticker}</span>
+                        <span style="color:var(--gold); font-size:11px; letter-spacing:1px;">${item.ticker || 'N/A'}</span>
                         <input type="checkbox" class="comp-check" onchange="handleComp(this, ${i})">
                     </div>
-                    <div style="font-family:'Playfair Display'; font-size:22px; color:var(--gold);">${item.company}</div>
-                    <div style="font-size:14px; margin: 10px 0;">₹${item.price.toLocaleString('en-IN')} 
+                    <div style="font-family:'Playfair Display'; font-size:22px; color:var(--gold);">${item.company || 'Unknown'}</div>
+                    <div style="font-size:14px; margin: 10px 0;">₹${(item.price || 0).toLocaleString('en-IN')} 
                         <span style="color:${change >= 0 ? '#00ff88' : '#ff4444'}; margin-left:10px;">${change >= 0 ? '▲' : '▼'} ${change}%</span>
                     </div>
-                    <div style="font-size:12px; color:#555; line-height:1.5;">${item.analysis.substring(0, 80)}...</div>
+                    <div style="font-size:12px; color:#555; line-height:1.5;">${(item.analysis || '').substring(0, 80)}...</div>
                 </div>
             `;
         });
@@ -235,8 +256,14 @@
         document.getElementById('compare-overlay').style.display = 'none';
     }
 
+    // Initialize
     loadData();
-    document.onkeydown = (e) => { if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) return false; };
+    handleReveal(); 
+
+    // DevTools Lock (Optional)
+    document.onkeydown = (e) => { 
+        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) return false; 
+    };
 </script>
 </body>
 </html>
