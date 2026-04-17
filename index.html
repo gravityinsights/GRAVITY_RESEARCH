@@ -25,11 +25,11 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- PRE-ANIMATION STATE (Scroll Reveal) --- */
+        /* --- SCROLL REVEAL ANIMATION --- */
         .reveal {
             opacity: 0;
-            transform: translateY(30px); /* Moves up roughly 1cm */
-            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .reveal.active {
@@ -63,12 +63,12 @@
             font-size: 17px;
             color: #888;
             display: block;
-            transition: 0.4s;
+            transition: 0.3s;
             font-weight: 300;
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
 
-        .sidebar a:hover { color: var(--gold); padding-left: 12px; }
+        .sidebar a:hover { color: var(--gold); padding-left: 10px; }
 
         .sidebar .close-btn {
             position: absolute;
@@ -86,6 +86,7 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             font-weight: 600;
+            opacity: 0.8;
         }
 
         /* --- NAVIGATION --- */
@@ -94,7 +95,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
             position: sticky;
@@ -148,16 +149,40 @@
 
         .footer { padding: 80px; text-align: center; color: #444; font-size: 11px; letter-spacing: 2px; border-top: 1px solid #111; }
 
-        /* --- ORBS --- */
-        .gold-orb { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 0; opacity: 0.3; }
+        /* --- BACKGROUND ORBS --- */
+        .gold-orb { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 0; opacity: 0.25; }
         .orb1 { width: 600px; height: 600px; background: radial-gradient(circle, var(--gold), transparent 70%); top: -10%; left: -10%; }
         .orb2 { width: 500px; height: 500px; background: radial-gradient(circle, var(--gold), transparent 70%); bottom: -5%; right: -5%; }
 
-        /* --- TIMER --- */
-        .countdown-box { border: 1px solid var(--gold-muted); padding: 25px; margin: 20px 0; border-radius: 4px; }
-        .timer-display { color: var(--gold); font-size: 20px; font-weight: 200; }
-        .timer-label { font-size: 9px; color: #555; display: block; margin-top: 5px; }
+        /* --- HORIZONTAL COUNTDOWN STYLES --- */
+        .countdown-box {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid var(--gold-muted);
+            padding: 20px 10px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
 
+        .timer-display {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            color: var(--gold);
+            font-weight: 400;
+        }
+
+        .timer-unit {
+            display: inline-block;
+            min-width: 35px;
+        }
+
+        .timer-label {
+            font-size: 10px;
+            color: #555;
+            text-transform: uppercase;
+            display: block;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
@@ -167,13 +192,32 @@
 
     <div class="sidebar-content">
         <div class="menu-label">Full Launch Countdown</div>
+        
         <div class="countdown-box">
             <div class="timer-display">
-                <span id="days">00</span><small class="timer-label">Days</small> :
-                <span id="hours">00</span><small class="timer-label">Hrs</small> :
-                <span id="minutes">00</span><small class="timer-label">Min</small> :
-                <span id="seconds">00</span><small class="timer-label">Sec</small>
+                <span class="timer-unit">
+                    <span id="days">00</span>
+                    <small class="timer-label">Days</small>
+                </span>
+                <span style="opacity: 0.5;">:</span>
+                <span class="timer-unit">
+                    <span id="hours">00</span>
+                    <small class="timer-label">Hrs</small>
+                </span>
+                <span style="opacity: 0.5;">:</span>
+                <span class="timer-unit">
+                    <span id="minutes">00</span>
+                    <small class="timer-label">Min</small>
+                </span>
+                <span style="opacity: 0.5;">:</span>
+                <span class="timer-unit">
+                    <span id="seconds">00</span>
+                    <small class="timer-label">Sec</small>
+                </span>
             </div>
+            <p style="font-size: 10px; color: #555; margin-top: 15px; letter-spacing: 1px;">
+                LAUNCHING APRIL 25, 2026
+            </p>
         </div>
 
         <div class="menu-label">Market Insights</div>
@@ -184,7 +228,8 @@
         <a href="calc.html">Wealth Projection</a>
         <a href="clock.html">Market Clock</a>
 
-        <div class="menu-label">The Firm</div> <a href="vision.html">Our Vision</a>
+        <div class="menu-label">The Firm</div>
+        <a href="vision.html">Our Vision</a>
         <a href="aboutus.html">About Us</a>
     </div>
 </div>
@@ -193,7 +238,9 @@
 <div class="gold-orb orb2"></div>
 
 <div class="nav">
-    <div class="menu-icon" id="menuBtn"><span></span><span></span><span></span></div>
+    <div class="menu-icon" id="menuBtn">
+        <span></span><span></span><span></span>
+    </div>
     <a href="index.html"><img src="logo.png" alt="gRaviTy Research Logo"></a>
     <div style="width: 30px;"></div> 
 </div>
@@ -205,7 +252,8 @@
     </p>
     <div class="btn-group">
         <a href="insights.html" class="btn">Explore Insights</a>
-        <a href="vision.html" class="btn">Our Vision</a> </div>
+        <a href="vision.html" class="btn">Our Vision</a>
+    </div>
 </div>
 
 <div class="section reveal">
@@ -218,43 +266,63 @@
 </div>
 
 <div class="footer">
-    © 2026 gRaviTy Research | Private Analysis Firm
+    © 2026 gRaviTy Research | Private Analysis Firm <br>
+    <span style="font-size: 10px; opacity: 0.3; margin-top: 10px; display: block;">Informational purposes only. All market investments are subject to risk.</span>
 </div>
 
 <script>
-    // SCROLL REVEAL LOGIC
+    // SCROLL REVEAL
     function reveal() {
         var reveals = document.querySelectorAll(".reveal");
         for (var i = 0; i < reveals.length; i++) {
             var windowHeight = window.innerHeight;
             var elementTop = reveals[i].getBoundingClientRect().top;
-            var elementVisible = 150;
+            var elementVisible = 100;
             if (elementTop < windowHeight - elementVisible) {
                 reveals[i].classList.add("active");
             }
         }
     }
     window.addEventListener("scroll", reveal);
-    reveal(); // Run once on load
+    reveal();
 
-    // SIDEBAR LOGIC
+    // SIDEBAR 
     const sidebar = document.getElementById("mySidebar");
     const menuBtn = document.getElementById("menuBtn");
     const closeBtn = document.getElementById("closeSidebar");
 
-    menuBtn.addEventListener("click", (e) => { e.stopPropagation(); sidebar.classList.add("open"); });
-    closeBtn.addEventListener("click", () => { sidebar.classList.remove("open"); });
-    document.addEventListener("click", (e) => { if(!sidebar.contains(e.target)) sidebar.classList.remove("open"); });
+    menuBtn.addEventListener("click", (e) => { 
+        e.stopPropagation(); 
+        sidebar.classList.add("open"); 
+    });
+    
+    closeBtn.addEventListener("click", () => { 
+        sidebar.classList.remove("open"); 
+    });
+
+    document.addEventListener("click", (e) => { 
+        if(!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+            sidebar.classList.remove("open"); 
+        }
+    });
 
     // COUNTDOWN
     const targetTime = new Date("April 25, 2026 00:00:00").getTime();
     setInterval(() => {
         const now = Date.now();
         const diff = targetTime - now;
-        document.getElementById("days").innerText = Math.floor(diff / 86400000).toString().padStart(2, '0');
-        document.getElementById("hours").innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
-        document.getElementById("minutes").innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
-        document.getElementById("seconds").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+        
+        if (diff <= 0) return;
+
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+
+        document.getElementById("days").innerText = d.toString().padStart(2, '0');
+        document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
     }, 1000);
 </script>
 </body>
