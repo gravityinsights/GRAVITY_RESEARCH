@@ -18,6 +18,19 @@ body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: white;
+    overflow-x: hidden;
+}
+
+/* CURSOR GLOW */
+.cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(212,175,55,0.15), transparent);
+    pointer-events: none;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
 }
 
 /* SIDEBAR */
@@ -35,14 +48,10 @@ body {
     z-index: 1000;
     border-right: 1px solid rgba(212,175,55,0.2);
 }
-
 .sidebar.open { width: 280px; }
 
-.sidebar-content {
-    padding: 0 30px;
-}
+.sidebar-content { padding: 0 30px; }
 
-/* SECTION LABEL */
 .menu-label {
     margin-top: 25px;
     font-size: 10px;
@@ -52,7 +61,6 @@ body {
     opacity: 0.7;
 }
 
-/* LINKS */
 .sidebar a {
     display: block;
     padding: 14px 0;
@@ -61,13 +69,11 @@ body {
     transition: 0.3s;
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-
 .sidebar a:hover {
     color: var(--gold);
     padding-left: 10px;
 }
 
-/* CLOSE */
 .close-btn {
     position: absolute;
     top: 20px;
@@ -91,10 +97,6 @@ body {
 }
 
 /* MENU ICON */
-.menu-icon {
-    cursor: pointer;
-}
-
 .menu-icon span {
     display: block;
     width: 22px;
@@ -107,12 +109,14 @@ body {
 .hero {
     text-align: center;
     padding: 140px 20px;
+    animation: fadeUp 1s ease;
 }
 
 .hero h1 {
     font-family: 'Playfair Display', serif;
     font-size: 60px;
     color: var(--gold);
+    animation: glow 3s infinite alternate;
 }
 
 .hero p {
@@ -135,6 +139,23 @@ body {
 .btn:hover {
     background: var(--gold);
     color: black;
+    box-shadow: 0 0 20px rgba(212,175,55,0.4);
+}
+
+/* MARKET TICKER */
+.ticker {
+    white-space: nowrap;
+    overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    margin-top: 40px;
+}
+
+.ticker-track {
+    display: inline-block;
+    padding: 10px 0;
+    animation: scroll 20s linear infinite;
+    color: var(--gold);
 }
 
 /* ORBS */
@@ -155,10 +176,28 @@ body > * {
     position: relative;
     z-index: 1;
 }
+
+/* ANIMATIONS */
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(212,175,55,0.3); }
+    to { text-shadow: 0 0 30px rgba(212,175,55,0.6); }
+}
 </style>
 </head>
 
 <body>
+
+<div class="cursor-glow" id="glow"></div>
 
 <div class="gold-orb orb1"></div>
 <div class="gold-orb orb2"></div>
@@ -168,17 +207,13 @@ body > * {
     <span class="close-btn" onclick="closeMenu()">&times;</span>
 
     <div class="sidebar-content">
-
-        <!-- ADVANCED TOOLS -->
         <div class="menu-label">Advanced Tools</div>
         <a href="calc.html">Wealth Calculators</a>
         <a href="clock.html">Market Clock</a>
 
-        <!-- OUR FIRM -->
         <div class="menu-label">Our Firm</div>
         <a href="aboutus.html">About Us</a>
         <a href="vision.html">Our Vision</a>
-
     </div>
 </div>
 
@@ -204,6 +239,14 @@ body > * {
     <button class="btn" onclick="go('calc.html')">Wealth Tools</button>
 </div>
 
+<!-- TICKER -->
+<div class="ticker">
+    <div class="ticker-track">
+        NIFTY ▲ 0.84% • SENSEX ▲ 0.72% • GOLD ▲ 1.12% • BTC ▼ 0.45% • CRUDE ▲ 0.30% • 
+        NIFTY ▲ 0.84% • SENSEX ▲ 0.72% • GOLD ▲ 1.12% • BTC ▼ 0.45% • CRUDE ▲ 0.30%
+    </div>
+</div>
+
 <script>
 function openMenu() {
     document.getElementById("sidebar").classList.add("open");
@@ -217,12 +260,18 @@ function go(page) {
     window.location.href = page;
 }
 
-/* CLICK OUTSIDE CLOSE */
 document.addEventListener("click", function(e) {
     const sidebar = document.getElementById("sidebar");
     if (!sidebar.contains(e.target) && !e.target.closest(".menu-icon")) {
         sidebar.classList.remove("open");
     }
+});
+
+/* CURSOR GLOW */
+document.addEventListener("mousemove", e => {
+    const glow = document.getElementById("glow");
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
 });
 </script>
 
