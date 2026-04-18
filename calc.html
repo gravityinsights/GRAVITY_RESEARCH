@@ -1,199 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wealth Projection | gRaviTy Research</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wealth Tools | gRaviTy Research</title>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@100;200;300;400;600&display=swap');
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
 
-        :root {
-            --gold: #d4af37;
-            --bg-black: #050505;
-            --glass: rgba(255, 255, 255, 0.03);
-        }
+:root {
+    --gold: #d4af37;
+    --bg: #050505;
+}
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-black);
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            
-            /* LOCKDOWN */
-            user-select: none;
-            -webkit-user-select: none;
-            cursor: default;
-        }
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: white;
+}
 
-        /* --- BACKGROUND --- */
-        .gold-orb { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 1; opacity: 0.15; }
-        .orb1 { width: 500px; height: 500px; background: var(--gold); top: -10%; left: -10%; }
-        .orb2 { width: 400px; height: 400px; background: var(--gold); bottom: -5%; right: -5%; }
+/* ORBS */
+.gold-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    opacity: 0.15;
+}
+.orb1 { width:400px;height:400px;background:var(--gold);top:-10%;left:-10%; }
+.orb2 { width:300px;height:300px;background:var(--gold);bottom:-5%;right:-5%; }
 
-        /* --- CALCULATOR UI --- */
-        .calc-wrapper {
-            z-index: 10;
-            width: 90%;
-            max-width: 500px;
-            background: var(--glass);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            padding: 50px 40px;
-            backdrop-filter: blur(20px);
-            text-align: left;
-        }
+body > * { position: relative; z-index: 1; }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            color: var(--gold);
-            font-size: 32px;
-            margin-bottom: 40px;
-            font-style: italic;
-            text-align: center;
-        }
+/* CONTAINER */
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 40px 20px;
+}
 
-        .input-group { margin-bottom: 25px; }
+h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    text-align: center;
+}
 
-        label {
-            display: block;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #666;
-            margin-bottom: 10px;
-        }
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid #222;
+    padding: 25px;
+    margin-top: 30px;
+}
 
-        input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #333;
-            color: var(--gold);
-            font-family: 'Inter', sans-serif;
-            font-size: 18px;
-            padding: 10px 0;
-            outline: none;
-            transition: 0.3s;
-        }
+label {
+    font-size: 10px;
+    color: #777;
+}
 
-        input:focus { border-bottom-color: var(--gold); }
+input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #333;
+    color: var(--gold);
+    padding: 8px 0;
+    margin-bottom: 15px;
+}
 
-        .result-box {
-            margin-top: 40px;
-            padding: 30px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            text-align: center;
-            background: rgba(212, 175, 55, 0.02);
-        }
+.result {
+    margin-top: 15px;
+    font-size: 22px;
+    color: var(--gold);
+}
 
-        .result-label { font-size: 11px; color: #888; letter-spacing: 3px; margin-bottom: 10px; }
-        .result-value { font-size: 36px; color: var(--gold); font-weight: 200; }
-
-        .back-nav {
-            margin-top: 40px;
-            opacity: 0.4;
-            transition: 0.3s;
-        }
-        .back-nav:hover { opacity: 1; }
-        .back-link {
-            color: #fff;
-            text-decoration: none;
-            font-size: 10px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-    </style>
+/* BUTTON */
+.btn {
+    margin-top: 30px;
+    padding: 10px 20px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+}
+.btn:hover {
+    background: var(--gold);
+    color: black;
+}
+</style>
 </head>
-<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
 
-    <div class="gold-orb orb1"></div>
-    <div class="gold-orb orb2"></div>
+<body>
 
-    <div class="calc-wrapper">
-        <h1>Wealth Projection</h1>
+<div class="gold-orb orb1"></div>
+<div class="gold-orb orb2"></div>
 
-        <div class="input-group">
-            <label>Initial Investment (₹)</label>
-            <input type="number" id="principal" value="100000" oninput="calculate()">
-        </div>
+<div class="container">
 
-        <div class="input-group">
-            <label>Monthly Contribution (₹)</label>
-            <input type="number" id="monthly" value="10000" oninput="calculate()">
-        </div>
+<h1>Wealth Calculators</h1>
 
-        <div class="input-group">
-            <label>Expected Annual Return (%)</label>
-            <input type="number" id="return" value="12" oninput="calculate()">
-        </div>
+<!-- MAIN CALC -->
+<div class="card">
+<h3>Wealth Projection</h3>
 
-        <div class="input-group">
-            <label>Time Period (Years)</label>
-            <input type="number" id="years" value="10" oninput="calculate()">
-        </div>
+<label>Initial Investment</label>
+<input id="p" type="number" value="100000" oninput="calc()">
 
-        <div class="result-box">
-            <div class="result-label">Projected Portfolio Value</div>
-            <div class="result-value" id="final-wealth">₹ 0.00</div>
-        </div>
+<label>Monthly Investment</label>
+<input id="m" type="number" value="10000" oninput="calc()">
 
-        <div style="text-align: center;">
-            <div class="back-nav">
-                <a href="index.html" class="back-link">Return to Home</a>
-            </div>
-        </div>
-    </div>
+<label>Return %</label>
+<input id="r" type="number" value="12" oninput="calc()">
 
-    <script>
-        function calculate() {
-            const P = parseFloat(document.getElementById('principal').value) || 0;
-            const PMT = parseFloat(document.getElementById('monthly').value) || 0;
-            const r = (parseFloat(document.getElementById('return').value) || 0) / 100 / 12;
-            const t = (parseFloat(document.getElementById('years').value) || 0) * 12;
+<label>Years</label>
+<input id="y" type="number" value="10" oninput="calc()">
 
-            if (r === 0) {
-                const total = P + (PMT * t);
-                updateDisplay(total);
-                return;
-            }
+<div class="result" id="res1">₹ 0</div>
+</div>
 
-            // Compound Interest Formula for SIP + Principal
-            // Future Value = P(1 + r)^t + PMT * [((1 + r)^t - 1) / r] * (1 + r)
-            const futureValuePrincipal = P * Math.pow(1 + r, t);
-            const futureValueSeries = PMT * ((Math.pow(1 + r, t) - 1) / r) * (1 + r);
-            
-            const total = futureValuePrincipal + futureValueSeries;
-            updateDisplay(total);
-        }
+<!-- SIP ONLY -->
+<div class="card">
+<h3>SIP Future Value</h3>
 
-        function updateDisplay(val) {
-            document.getElementById('final-wealth').innerText = "₹ " + val.toLocaleString('en-IN', {
-                maximumFractionDigits: 0
-            });
-        }
+<label>Monthly SIP</label>
+<input id="sip" type="number" value="5000" oninput="calcSIP()">
 
-        // Initial Calculation
-        updateDisplay(2523000); // Dummy start for the default values
-        calculate();
+<label>Return %</label>
+<input id="sipr" type="number" value="12" oninput="calcSIP()">
 
-        // --- LOCKDOWN SCRIPTS ---
-        document.onkeydown = function(e) {
-            if (e.keyCode === 123 || 
-                ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-                ((e.ctrlKey || e.metaKey) && (e.keyCode === 85 || e.keyCode === 83))
-            ) {
-                return false;
-            }
-        };
-    </script>
+<label>Years</label>
+<input id="sipy" type="number" value="10" oninput="calcSIP()">
+
+<div class="result" id="res2">₹ 0</div>
+</div>
+
+<!-- INFLATION -->
+<div class="card">
+<h3>Inflation Adjusted Value</h3>
+
+<label>Future Value</label>
+<input id="fv" type="number" value="1000000" oninput="calcInflation()">
+
+<label>Inflation %</label>
+<input id="inf" type="number" value="6" oninput="calcInflation()">
+
+<label>Years</label>
+<input id="infy" type="number" value="10" oninput="calcInflation()">
+
+<div class="result" id="res3">₹ 0</div>
+</div>
+
+<button class="btn" onclick="goHome()">← Back Home</button>
+
+</div>
+
+<script>
+
+// MAIN CALC
+function calc(){
+let P=+p.value, M=+m.value, r=(+r1=r.value)/100/12, t=y.value*12;
+let val=P*Math.pow(1+r,t)+M*((Math.pow(1+r,t)-1)/r)*(1+r);
+res1.innerText="₹ "+val.toLocaleString("en-IN");
+}
+
+// SIP
+function calcSIP(){
+let M=+sip.value, r=(+sipr.value)/100/12, t=sipy.value*12;
+let val=M*((Math.pow(1+r,t)-1)/r)*(1+r);
+res2.innerText="₹ "+val.toLocaleString("en-IN");
+}
+
+// INFLATION
+function calcInflation(){
+let fv=+fv.value, r=+inf.value/100, t=+infy.value;
+let val=fv/Math.pow(1+r,t);
+res3.innerText="₹ "+val.toLocaleString("en-IN");
+}
+
+function goHome(){
+window.location.href="index.html";
+}
+
+calc(); calcSIP(); calcInflation();
+
+</script>
+
 </body>
 </html>
