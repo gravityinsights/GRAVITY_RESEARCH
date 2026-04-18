@@ -27,21 +27,30 @@ body {
     position: fixed;
     left: 0;
     top: 0;
-    background: rgba(5,5,5,0.95);
+    background: rgba(5,5,5,0.98);
     backdrop-filter: blur(20px);
     transition: 0.4s;
     padding-top: 80px;
     z-index: 1000;
+    overflow-x: hidden; /* CRITICAL: Prevents text showing when closed */
+    border-right: 0px solid var(--gold);
 }
-.sidebar.open { width: 280px; }
+.sidebar.open { 
+    width: 280px; 
+    border-right: 1px solid #222;
+}
 
-.sidebar-content { padding: 0 30px; }
+.sidebar-content { 
+    width: 280px; /* Keeps content width stable during slide */
+    padding: 0 30px; 
+}
 
 .menu-label {
     margin-top: 25px;
     font-size: 10px;
     letter-spacing: 2px;
     color: var(--gold);
+    text-transform: uppercase;
 }
 
 .sidebar a {
@@ -49,6 +58,7 @@ body {
     padding: 14px 0;
     color: #888;
     text-decoration: none;
+    transition: 0.3s;
 }
 .sidebar a:hover {
     color: var(--gold);
@@ -68,7 +78,12 @@ body {
 .nav {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 20px 40px;
+}
+
+.menu-icon {
+    cursor: pointer;
 }
 
 .menu-icon span {
@@ -90,6 +105,7 @@ h1 {
     font-family: 'Playfair Display', serif;
     color: var(--gold);
     text-align: center;
+    font-size: 2.5rem;
 }
 
 /* CARD */
@@ -100,6 +116,19 @@ h1 {
     margin-top: 30px;
 }
 
+.card h3 {
+    margin-top: 0;
+    color: #eee;
+    font-weight: 400;
+}
+
+label {
+    display: block;
+    font-size: 10px;
+    color: #666;
+    margin-top: 10px;
+}
+
 input {
     width: 100%;
     background: transparent;
@@ -107,129 +136,161 @@ input {
     border-bottom: 1px solid #333;
     color: var(--gold);
     padding: 8px 0;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-bottom: 1px solid var(--gold);
 }
 
 .result {
-    font-size: 22px;
+    margin-top: 20px;
+    font-size: 24px;
     color: var(--gold);
+    font-weight: 600;
 }
 
 .btn {
-    margin-top: 30px;
-    padding: 10px 20px;
+    margin-top: 40px;
+    padding: 12px 24px;
     border: 1px solid var(--gold);
     background: transparent;
-    color: var(--gold;
+    color: var(--gold);
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: var(--gold);
+    color: black;
 }
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
 <div id="sidebar" class="sidebar">
-<span class="close-btn" onclick="closeMenu()">&times;</span>
+    <span class="close-btn" onclick="closeMenu()">&times;</span>
+    <div class="sidebar-content">
+        <div class="menu-label">Advanced Tools</div>
+        <a href="calc.html">Wealth Calculators</a>
+        <a href="clock.html">Market Clock</a>
 
-<div class="sidebar-content">
-<div class="menu-label">Advanced Tools</div>
-<a href="calc.html">Wealth Calculators</a>
-<a href="clock.html">Market Clock</a>
-
-<div class="menu-label">Our Firm</div>
-<a href="aboutus.html">About Us</a>
-<a href="vision.html">Our Vision</a>
+        <div class="menu-label">Our Firm</div>
+        <a href="aboutus.html">About Us</a>
+        <a href="vision.html">Our Vision</a>
+    </div>
 </div>
-</div>
 
-<!-- NAV -->
 <div class="nav">
-<div class="menu-icon" onclick="openMenu()">
-<span></span><span></span><span></span>
-</div>
-<img src="logo.png" height="40" onclick="goHome()">
+    <div class="menu-icon" onclick="openMenu()">
+        <span></span><span></span><span></span>
+    </div>
+    <div style="color: var(--gold); font-weight: bold; cursor: pointer;" onclick="goHome()">gRaviTy</div>
 </div>
 
 <div class="container">
 
-<h1>Wealth Calculators</h1>
+    <h1>Wealth Calculators</h1>
 
-<!-- WEALTH -->
-<div class="card">
-<h3>Wealth Projection</h3>
-<input id="p" type="number" value="100000" oninput="calc()">
-<input id="m" type="number" value="10000" oninput="calc()">
-<input id="r" type="number" value="12" oninput="calc()">
-<input id="y" type="number" value="10" oninput="calc()">
-<div id="res1" class="result">₹ 0</div>
-</div>
+    <div class="card">
+        <h3>Wealth Projection</h3>
+        <label>Principal Amount</label>
+        <input id="p" type="number" value="100000" oninput="calc()">
+        <label>Monthly Addition</label>
+        <input id="m" type="number" value="10000" oninput="calc()">
+        <label>Expected Return (%)</label>
+        <input id="r" type="number" value="12" oninput="calc()">
+        <label>Years</label>
+        <input id="y" type="number" value="10" oninput="calc()">
+        <div id="res1" class="result">₹ 0</div>
+    </div>
 
-<!-- SIP -->
-<div class="card">
-<h3>SIP</h3>
-<input id="sip" type="number" value="5000" oninput="calcSIP()">
-<input id="sipr" type="number" value="12" oninput="calcSIP()">
-<input id="sipy" type="number" value="10" oninput="calcSIP()">
-<div id="res2" class="result">₹ 0</div>
-</div>
+    <div class="card">
+        <h3>SIP</h3>
+        <label>Monthly SIP</label>
+        <input id="sip" type="number" value="5000" oninput="calcSIP()">
+        <label>Expected Return (%)</label>
+        <input id="sipr" type="number" value="12" oninput="calcSIP()">
+        <label>Years</label>
+        <input id="sipy" type="number" value="10" oninput="calcSIP()">
+        <div id="res2" class="result">₹ 0</div>
+    </div>
 
-<!-- INFLATION -->
-<div class="card">
-<h3>Inflation</h3>
-<input id="fv" type="number" value="1000000" oninput="calcInflation()">
-<input id="inf" type="number" value="6" oninput="calcInflation()">
-<input id="infy" type="number" value="10" oninput="calcInflation()">
-<div id="res3" class="result">₹ 0</div>
-</div>
+    <div class="card">
+        <h3>Inflation</h3>
+        <label>Target Amount</label>
+        <input id="fv" type="number" value="1000000" oninput="calcInflation()">
+        <label>Inflation Rate (%)</label>
+        <input id="inf" type="number" value="6" oninput="calcInflation()">
+        <label>Years</label>
+        <input id="infy" type="number" value="10" oninput="calcInflation()">
+        <div id="res3" class="result">₹ 0</div>
+    </div>
 
-<button class="btn" onclick="goHome()">← Back Home</button>
+    <button class="btn" onclick="goHome()">← Back Home</button>
 
 </div>
 
 <script>
-
-// SIDEBAR
+// SIDEBAR LOGIC
 function openMenu(){
-document.getElementById("sidebar").classList.add("open");
-}
-function closeMenu(){
-document.getElementById("sidebar").classList.remove("open");
+    document.getElementById("sidebar").classList.add("open");
 }
 
-document.addEventListener("click", function(e){
-let sb=document.getElementById("sidebar");
-if(!sb.contains(e.target) && !e.target.closest(".menu-icon")){
-sb.classList.remove("open");
+function closeMenu(){
+    document.getElementById("sidebar").classList.remove("open");
 }
+
+// Close when clicking outside
+document.addEventListener("click", function(e){
+    let sb = document.getElementById("sidebar");
+    let menuIcon = document.querySelector(".menu-icon");
+    if(!sb.contains(e.target) && !menuIcon.contains(e.target) && sb.classList.contains("open")){
+        closeMenu();
+    }
 });
 
-// NAV
 function goHome(){
-window.location.href="index.html";
+    alert("Redirecting to home...");
+    // window.location.href="index.html";
 }
 
-// CALCS
+// CALCULATORS - Using proper DOM selection
 function calc(){
-let P=+p.value||0, M=+m.value||0, r=(+r.value||0)/100/12, t=(+y.value||0)*12;
-let val = r===0 ? P+M*t : P*Math.pow(1+r,t)+M*((Math.pow(1+r,t)-1)/r)*(1+r);
-res1.innerText="₹ "+Math.round(val).toLocaleString("en-IN");
+    const pVal = +document.getElementById("p").value || 0;
+    const mVal = +document.getElementById("m").value || 0;
+    const rVal = (+document.getElementById("r").value || 0) / 100 / 12;
+    const tVal = (+document.getElementById("y").value || 0) * 12;
+    
+    let val = rVal === 0 ? pVal + mVal * tVal : pVal * Math.pow(1 + rVal, tVal) + mVal * ((Math.pow(1 + rVal, tVal) - 1) / rVal) * (1 + rVal);
+    document.getElementById("res1").innerText = "₹ " + Math.round(val).toLocaleString("en-IN");
 }
 
 function calcSIP(){
-let M=+sip.value||0, r=(+sipr.value||0)/100/12, t=(+sipy.value||0)*12;
-let val = r===0 ? M*t : M*((Math.pow(1+r,t)-1)/r)*(1+r);
-res2.innerText="₹ "+Math.round(val).toLocaleString("en-IN");
+    const mVal = +document.getElementById("sip").value || 0;
+    const rVal = (+document.getElementById("sipr").value || 0) / 100 / 12;
+    const tVal = (+document.getElementById("sipy").value || 0) * 12;
+    
+    let val = rVal === 0 ? mVal * tVal : mVal * ((Math.pow(1 + rVal, tVal) - 1) / rVal) * (1 + rVal);
+    document.getElementById("res2").innerText = "₹ " + Math.round(val).toLocaleString("en-IN");
 }
 
 function calcInflation(){
-let val=(+fv.value||0)/Math.pow(1+(+inf.value||0)/100,(+infy.value||0));
-res3.innerText="₹ "+Math.round(val).toLocaleString("en-IN");
+    const target = +document.getElementById("fv").value || 0;
+    const rate = +document.getElementById("inf").value || 0;
+    const years = +document.getElementById("infy").value || 0;
+    
+    let val = target / Math.pow(1 + (rate / 100), years);
+    document.getElementById("res3").innerText = "₹ " + Math.round(val).toLocaleString("en-IN");
 }
 
-// INIT
-calc(); calcSIP(); calcInflation();
-
+// Initial Run
+calc(); 
+calcSIP(); 
+calcInflation();
 </script>
 
 </body>
