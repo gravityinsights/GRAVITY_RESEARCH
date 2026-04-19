@@ -93,6 +93,9 @@ body {
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
+.menu-icon {
+    cursor: pointer;
+}
 .menu-icon span {
     display: block;
     width: 22px;
@@ -284,7 +287,7 @@ document.addEventListener("click", function(e) {
     }
 });
 
-// GRAVITY EFFECT
+// GRAVITY (REALISTIC MASS EFFECT)
 const planets = document.querySelectorAll(".planet");
 
 document.addEventListener("mousemove", e => {
@@ -297,10 +300,26 @@ document.addEventListener("mousemove", e => {
         const dy = e.clientY - py;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 200) {
-            const force = (200 - dist) / 200;
-            p.style.transform = `translate(${dx * 0.08}px, ${dy * 0.08}px) scale(${1 + force * 0.2})`;
-            p.style.boxShadow = `0 0 ${40 * force}px rgba(212,175,55,0.6)`;
+        const size = rect.width;
+
+        let speed, glow;
+
+        if (size > 120) {
+            speed = 0.03;   // heavy
+            glow = 0.4;
+        } else if (size > 90) {
+            speed = 0.06;   // medium
+            glow = 0.6;
+        } else {
+            speed = 0.12;   // light
+            glow = 1;
+        }
+
+        if (dist < 250) {
+            const force = (250 - dist) / 250;
+
+            p.style.transform = `translate(${dx * speed}px, ${dy * speed}px) scale(${1 + force * 0.25})`;
+            p.style.boxShadow = `0 0 ${60 * force * glow}px rgba(212,175,55,${0.5 * glow})`;
         } else {
             p.style.transform = "translate(0,0) scale(1)";
             p.style.boxShadow = "none";
