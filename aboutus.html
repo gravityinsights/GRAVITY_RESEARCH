@@ -182,6 +182,34 @@ body > * {
     font-size: 12px;
     color: #6b7280;
 }
+    /* ===== GOLD SCROLLBAR ===== */
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* track (background) */
+::-webkit-scrollbar-track {
+    background: #000; /* pure void */
+}
+
+/* thumb (the moving part) */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #d4af37, #b8962e);
+    border-radius: 10px;
+}
+
+/* hover effect */
+::-webkit-scrollbar-thumb:hover {
+    background: #ffd700;
+}
+
+/* optional: ultra thin look */
+html {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #d4af37 #000;
+}
 </style>
 </head>
 
