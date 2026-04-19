@@ -8,7 +8,6 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
 
-/* BASE */
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
@@ -17,7 +16,85 @@ body {
     overflow-x: hidden;
 }
 
-/* ORBS */
+/* ================= BLACK HOLE LOADER ================= */
+
+.loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* swirl layers */
+.swirl {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(212,175,55,0.2);
+    animation: rotate 2s linear infinite;
+}
+
+.s1 { width: 80px; height: 80px; animation-duration: 1.2s; }
+.s2 { width: 140px; height: 140px; animation-duration: 1.8s; }
+.s3 { width: 200px; height: 200px; animation-duration: 2.5s; }
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* core black hole */
+.blackhole {
+    width: 60px;
+    height: 60px;
+    background: black;
+    border-radius: 50%;
+    box-shadow:
+        0 0 40px rgba(0,0,0,1),
+        0 0 80px rgba(212,175,55,0.3),
+        inset 0 0 30px black;
+    animation: grow 1.5s ease forwards;
+}
+
+/* sucking effect */
+@keyframes grow {
+    0% { transform: scale(0.5); }
+    100% { transform: scale(3); }
+}
+
+/* white hole flash */
+.whitehole {
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.whitehole.active {
+    animation: explode 0.6s ease forwards;
+}
+
+@keyframes explode {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 200vw;
+        height: 200vw;
+        opacity: 0;
+    }
+}
+
+/* ================= ORBS ================= */
+
 .gold-orb {
     position: fixed;
     border-radius: 50%;
@@ -65,7 +142,6 @@ body {
     100% { top:50%; left:0%; }
 }
 
-/* KEEP CONTENT ABOVE ORBS */
 body > * {
     position: relative;
     z-index: 1;
@@ -80,8 +156,8 @@ body > * {
 
 .nav img {
     width: 180px;
-    cursor: pointer;
     transition: 0.3s;
+    cursor: pointer;
 }
 
 .nav img:hover {
@@ -177,48 +253,19 @@ body > * {
     font-size: 12px;
     color: #6b7280;
 }
-
-/* TRANSITION */
-#transition {
-    position: fixed;
-    inset: 0;
-    background: black;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.blackhole {
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, black 40%, transparent);
-    border-radius: 50%;
-}
-
-.whitehole {
-    position: absolute;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, white, transparent);
-    border-radius: 50%;
-    opacity: 0;
-}
-
-@keyframes suckIn {
-    to { transform: scale(0.2); opacity: 0; }
-}
-@keyframes blackExpand {
-    to { width: 2000px; height: 2000px; }
-}
-@keyframes whiteBurst {
-    0% { opacity: 1; }
-    100% { width: 2000px; height: 2000px; opacity: 0; }
-}
 </style>
 </head>
 
 <body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+    <div class="swirl s1"></div>
+    <div class="swirl s2"></div>
+    <div class="swirl s3"></div>
+    <div class="blackhole"></div>
+    <div class="whitehole" id="whitehole"></div>
+</div>
 
 <!-- ORBS -->
 <div class="gold-orb orb1"></div>
@@ -227,7 +274,7 @@ body > * {
 
 <!-- NAV -->
 <div class="nav">
-    <img src="logo.png" onclick="go('index.html')">
+    <img src="logo.png" onclick="goHome()">
 </div>
 
 <!-- HERO -->
@@ -270,7 +317,7 @@ body > * {
 
 <!-- BUTTON -->
 <div class="section">
-    <button class="btn" onclick="go('index.html')">← Back to Home</button>
+    <button class="btn" onclick="goHome()">← Back to Home</button>
 </div>
 
 <!-- FOOTER -->
@@ -278,26 +325,27 @@ body > * {
     © 2026 gRaviTy Research
 </div>
 
-<!-- TRANSITION -->
-<div id="transition">
-    <div class="blackhole"></div>
-    <div class="whitehole"></div>
-</div>
-
 <script>
 
-function go(page){
-    let t=document.getElementById("transition")
-    let b=t.querySelector(".blackhole")
-    let w=t.querySelector(".whitehole")
-
-    t.style.display="flex"
-    document.body.style.animation="suckIn 0.5s forwards"
-
-    setTimeout(()=>b.style.animation="blackExpand 0.5s forwards",200)
-    setTimeout(()=>w.style.animation="whiteBurst 0.4s forwards",700)
-    setTimeout(()=>window.location.href=page,900)
+function goHome() {
+    window.location.href = "index.html";
 }
+
+/* LOADER TIMELINE */
+window.addEventListener("load", () => {
+
+    const white = document.getElementById("whitehole");
+    const loader = document.getElementById("loader");
+
+    setTimeout(() => {
+        white.classList.add("active");
+    }, 1200);
+
+    setTimeout(() => {
+        loader.style.display = "none";
+    }, 1800);
+
+});
 
 </script>
 
