@@ -29,9 +29,28 @@ body {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     z-index: 0;
 }
-.p1 { width:140px;height:140px;top:20%;left:10%;background:radial-gradient(circle,rgba(212,175,55,0.25),transparent); }
-.p2 { width:100px;height:100px;bottom:15%;right:12%;background:radial-gradient(circle,rgba(212,175,55,0.2),transparent); }
-.p3 { width:80px;height:80px;top:60%;left:30%;background:radial-gradient(circle,rgba(212,175,55,0.18),transparent); }
+
+.p1 {
+    width: 140px;
+    height: 140px;
+    top: 20%;
+    left: 10%;
+    background: radial-gradient(circle, rgba(212,175,55,0.25), transparent);
+}
+.p2 {
+    width: 100px;
+    height: 100px;
+    bottom: 15%;
+    right: 12%;
+    background: radial-gradient(circle, rgba(212,175,55,0.2), transparent);
+}
+.p3 {
+    width: 80px;
+    height: 80px;
+    top: 60%;
+    left: 30%;
+    background: radial-gradient(circle, rgba(212,175,55,0.18), transparent);
+}
 
 /* SIDEBAR */
 .sidebar {
@@ -96,6 +115,7 @@ body {
 .menu-icon {
     cursor: pointer;
 }
+
 .menu-icon span {
     display: block;
     width: 22px;
@@ -104,7 +124,9 @@ body {
     margin: 4px 0;
 }
 
-.nav img { cursor: pointer; }
+.nav img {
+    cursor: pointer;
+}
 
 /* HERO */
 .hero {
@@ -124,7 +146,7 @@ body {
     color: #999;
 }
 
-/* SECTIONS */
+/* SECTION */
 .section {
     text-align: center;
     margin-top: 100px;
@@ -157,7 +179,6 @@ body {
     width: 200px;
     transition: 0.3s;
 }
-
 .tool-card:hover {
     border-color: var(--gold);
     transform: translateY(-5px);
@@ -179,6 +200,44 @@ body {
     box-shadow: 0 0 20px rgba(212,175,55,0.3);
 }
 
+/* TRANSITION */
+#transition {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.blackhole {
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, black 40%, transparent);
+    border-radius: 50%;
+}
+
+.whitehole {
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, white, transparent);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+@keyframes suckIn {
+    to { transform: scale(0.2); opacity: 0; }
+}
+@keyframes blackExpand {
+    to { width: 2000px; height: 2000px; }
+}
+@keyframes whiteBurst {
+    0% { opacity: 1; }
+    100% { width: 2000px; height: 2000px; opacity: 0; }
+}
+
 body > * { position: relative; z-index: 1; }
 </style>
 </head>
@@ -192,140 +251,103 @@ body > * { position: relative; z-index: 1; }
 
 <!-- SIDEBAR -->
 <div id="sidebar" class="sidebar">
-    <span class="close-btn" onclick="closeMenu()">&times;</span>
-
-    <div class="sidebar-content">
-        <div class="menu-label">Advanced Tools</div>
-        <a href="calc.html">Wealth Calculators</a>
-        <a href="clock.html">Market Clock</a>
-
-        <div class="menu-label">Our Firm</div>
-        <a href="aboutus.html">About Us</a>
-        <a href="vision.html">Our Vision</a>
-    </div>
+<span class="close-btn" onclick="closeMenu()">&times;</span>
+<div class="sidebar-content">
+<div class="menu-label">Advanced Tools</div>
+<a onclick="go('calc.html')">Wealth Calculators</a>
+<a onclick="go('clock.html')">Market Clock</a>
+<div class="menu-label">Our Firm</div>
+<a onclick="go('aboutus.html')">About Us</a>
+<a onclick="go('vision.html')">Our Vision</a>
+</div>
 </div>
 
 <!-- NAV -->
 <div class="nav">
-    <div class="menu-icon" onclick="openMenu()">
-        <span></span><span></span><span></span>
-    </div>
-    <img src="logo.png" height="40" onclick="go('index.html')">
+<div class="menu-icon" onclick="openMenu()">
+<span></span><span></span><span></span>
+</div>
+<img src="logo.png" height="40" onclick="go('index.html')">
 </div>
 
 <!-- HERO -->
 <div class="hero">
-    <h1>Markets Aren’t Random.</h1>
-
-    <p>
-        They move with patterns, logic, and hidden forces.
-        We decode them into clarity.
-    </p>
-
-    <p style="font-size:14px; opacity:0.7;">
-        Built for investors who think beyond noise.
-    </p>
-
-    <button class="btn" onclick="go('calc.html')">Wealth Tools</button>
+<h1>Markets Aren’t Random.</h1>
+<p>They move with patterns, logic, and hidden forces.</p>
+<button class="btn" onclick="go('calc.html')">Wealth Tools</button>
 </div>
 
-<!-- WHAT WE DO -->
+<!-- SECTION -->
 <div class="section">
-    <h2>What We Do</h2>
-    <p>
-        We simplify complex market behavior into actionable insights.
-        From wealth-building tools to market understanding frameworks,
-        everything is designed to give you an edge.
-    </p>
+<h2>What We Do</h2>
+<p>We simplify complex market behavior into actionable insights.</p>
 </div>
 
 <!-- TOOLS -->
 <div class="section">
-    <h2>Tools That Build Wealth</h2>
+<h2>Tools That Build Wealth</h2>
+<div class="tool-grid">
+<div class="tool-card"><h4>Projection</h4></div>
+<div class="tool-card"><h4>SIP Engine</h4></div>
+<div class="tool-card"><h4>Inflation</h4></div>
+</div>
+</div>
 
-    <div class="tool-grid">
-        <div class="tool-card">
-            <h4>Projection</h4>
-            <p style="color:#777;font-size:13px;">
-                Visualize how your investments grow over time.
-            </p>
-        </div>
-
-        <div class="tool-card">
-            <h4>SIP Engine</h4>
-            <p style="color:#777;font-size:13px;">
-                Build wealth consistently with compounding.
-            </p>
-        </div>
-
-        <div class="tool-card">
-            <h4>Inflation Reality</h4>
-            <p style="color:#777;font-size:13px;">
-                Understand the true value of money over time.
-            </p>
-        </div>
-    </div>
+<!-- TRANSITION -->
+<div id="transition">
+<div class="blackhole"></div>
+<div class="whitehole"></div>
 </div>
 
 <script>
 
 // SIDEBAR
-function openMenu() {
-    document.getElementById("sidebar").classList.add("open");
+function openMenu(){sidebar.classList.add("open")}
+function closeMenu(){sidebar.classList.remove("open")}
+document.addEventListener("click",e=>{
+if(!sidebar.contains(e.target)&&!e.target.closest(".menu-icon"))closeMenu()
+})
+
+// NAV TRANSITION
+function go(page){
+let t=document.getElementById("transition")
+let b=t.querySelector(".blackhole")
+let w=t.querySelector(".whitehole")
+
+t.style.display="flex"
+document.body.style.animation="suckIn 0.5s forwards"
+
+setTimeout(()=>b.style.animation="blackExpand 0.5s forwards",200)
+setTimeout(()=>w.style.animation="whiteBurst 0.4s forwards",700)
+setTimeout(()=>window.location.href=page,900)
 }
-function closeMenu() {
-    document.getElementById("sidebar").classList.remove("open");
+
+// GRAVITY
+const planets=document.querySelectorAll(".planet")
+document.addEventListener("mousemove",e=>{
+planets.forEach(p=>{
+let rect=p.getBoundingClientRect()
+let px=rect.left+rect.width/2
+let py=rect.top+rect.height/2
+let dx=e.clientX-px
+let dy=e.clientY-py
+let dist=Math.sqrt(dx*dx+dy*dy)
+
+if(dist<250){
+let force=(250-dist)/250
+
+// size-based weight
+let size=rect.width
+let speed=size>120?0.03:size>90?0.06:0.12
+
+p.style.transform=`translate(${dx*speed}px,${dy*speed}px) scale(${1+force*0.25})`
+p.style.boxShadow=`0 0 ${50*force}px rgba(212,175,55,0.7)`
+}else{
+p.style.transform="translate(0,0) scale(1)"
+p.style.boxShadow="none"
 }
-function go(page) {
-    window.location.href = page;
-}
-
-document.addEventListener("click", function(e) {
-    const sidebar = document.getElementById("sidebar");
-    if (!sidebar.contains(e.target) && !e.target.closest(".menu-icon")) {
-        sidebar.classList.remove("open");
-    }
-});
-
-// GRAVITY (REALISTIC MASS EFFECT)
-const planets = document.querySelectorAll(".planet");
-
-document.addEventListener("mousemove", e => {
-    planets.forEach(p => {
-        const rect = p.getBoundingClientRect();
-        const px = rect.left + rect.width / 2;
-        const py = rect.top + rect.height / 2;
-
-        const dx = e.clientX - px;
-        const dy = e.clientY - py;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        const size = rect.width;
-
-        let speed, glow;
-
-        if (size > 120) {
-            speed = 0.03;   // heavy
-            glow = 0.4;
-        } else if (size > 90) {
-            speed = 0.06;   // medium
-            glow = 0.6;
-        } else {
-            speed = 0.12;   // light
-            glow = 1;
-        }
-
-        if (dist < 250) {
-            const force = (250 - dist) / 250;
-
-            p.style.transform = `translate(${dx * speed}px, ${dy * speed}px) scale(${1 + force * 0.25})`;
-            p.style.boxShadow = `0 0 ${60 * force * glow}px rgba(212,175,55,${0.5 * glow})`;
-        } else {
-            p.style.transform = "translate(0,0) scale(1)";
-            p.style.boxShadow = "none";
-        }
-    });
-});
+})
+})
 
 </script>
 
