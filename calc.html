@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wealth Tools | gRaviTy Research</title>
 
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
 
-:root {
+:root 
+{
     --gold: #d4af37;
     --bg: #050505;
 }
 
-body {
+body 
+{
     margin: 0;
     font-family: 'Inter', sans-serif;
     background: var(--bg);
@@ -21,8 +25,9 @@ body {
     overflow-x: hidden;
 }
 
-/* SIDEBAR */
-.sidebar {
+/* sidebar */
+.sidebar 
+{
     width: 0;
     height: 100%;
     position: fixed;
@@ -36,17 +41,20 @@ body {
     overflow-x: hidden;
 }
 
-.sidebar.open { 
+.sidebar.open 
+{ 
     width: 280px; 
     border-right: 1px solid var(--gold);
 }
 
-.sidebar-content { 
+.sidebar-content 
+{ 
     min-width: 280px;
     padding: 0 30px; 
 }
 
-.menu-label {
+.menu-label 
+{
     margin-top: 25px;
     font-size: 10px;
     letter-spacing: 2px;
@@ -54,19 +62,23 @@ body {
     text-transform: uppercase;
 }
 
-.sidebar a {
+.sidebar a 
+{
     display: block;
     padding: 14px 0;
     color: #888;
     text-decoration: none;
     transition: 0.3s;
 }
-.sidebar a:hover {
+
+.sidebar a:hover 
+{
     color: var(--gold);
     padding-left: 10px;
 }
 
-.close-btn {
+.close-btn 
+{
     position: absolute;
     top: 20px;
     right: 20px;
@@ -75,8 +87,9 @@ body {
     color: var(--gold);
 }
 
-/* NAV */
-.nav {
+/* nav */
+.nav 
+{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -87,12 +100,14 @@ body {
     z-index: 100;
 }
 
-.menu-icon {
+.menu-icon 
+{
     cursor: pointer;
     z-index: 101;
 }
 
-.menu-icon span {
+.menu-icon span 
+{
     display: block;
     width: 25px;
     height: 2px;
@@ -100,35 +115,41 @@ body {
     margin: 5px 0;
 }
 
-/* CONTAINER */
-.container {
+/* container */
+.container 
+{
     max-width: 600px;
     margin: auto;
     padding: 40px 20px;
 }
 
-h1 {
+h1 
+{
     font-family: 'Playfair Display', serif;
     color: var(--gold);
     text-align: center;
     font-size: 2.5rem;
 }
 
-/* CARD */
-.card {
+/* card */
+.card 
+{
     background: rgba(255,255,255,0.03);
     border: 1px solid #222;
     padding: 25px;
     margin-top: 30px;
 }
 
-.card h3 {
+.card h3 
+{
     margin-top: 0;
     font-weight: 400;
     color: #eee;
 }
 
-label {
+/* form */
+label 
+{
     display: block;
     font-size: 10px;
     color: #666;
@@ -136,7 +157,8 @@ label {
     text-transform: uppercase;
 }
 
-input {
+input 
+{
     width: 100%;
     background: transparent;
     border: none;
@@ -148,18 +170,23 @@ input {
     outline: none;
 }
 
-input:focus {
+input:focus 
+{
     border-bottom: 1px solid var(--gold);
 }
 
-.result {
+/* result */
+.result 
+{
     font-size: 24px;
     color: var(--gold);
     margin-top: 15px;
     font-weight: 600;
 }
 
-.btn {
+/* button */
+.btn 
+{
     margin-top: 40px;
     padding: 12px 24px;
     border: 1px solid var(--gold);
@@ -169,18 +196,24 @@ input:focus {
     transition: 0.3s;
 }
 
-.btn:hover {
+.btn:hover 
+{
     background: var(--gold);
     color: black;
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- sidebar -->
 <div id="sidebar" class="sidebar">
+
     <span class="close-btn" onclick="closeMenu()">&times;</span>
+
     <div class="sidebar-content">
+
         <div class="menu-label">Advanced Tools</div>
         <a href="calc.html">Wealth Calculators</a>
         <a href="clock.html">Market Clock</a>
@@ -188,53 +221,89 @@ input:focus {
         <div class="menu-label">Our Firm</div>
         <a href="aboutus.html">About Us</a>
         <a href="vision.html">Our Vision</a>
+
     </div>
+
 </div>
 
+<!-- nav -->
 <div class="nav">
+
     <div class="menu-icon" onclick="openMenu(event)">
-        <span></span><span></span><span></span>
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
-    <div style="color: var(--gold); font-size: 22px; font-weight: bold; cursor: pointer;" onclick="goHome()">gRaviTy</div>
+
+    <div 
+        style="color: var(--gold); font-size: 22px; font-weight: bold; cursor: pointer;" 
+        onclick="goHome()"
+    >
+        gRaviTy
+    </div>
+
 </div>
 
+<!-- content -->
 <div class="container">
 
     <h1>Wealth Calculators</h1>
 
+    <!-- wealth -->
     <div class="card">
+
         <h3>Wealth Projection</h3>
+
         <label>Initial Investment (P)</label>
         <input id="p" type="number" value="100000" oninput="calcWealth()">
+
         <label>Monthly Addition (M)</label>
         <input id="m" type="number" value="10000" oninput="calcWealth()">
+
         <label>Annual Return (%)</label>
         <input id="r" type="number" value="12" oninput="calcWealth()">
+
         <label>Duration (Years)</label>
         <input id="y" type="number" value="10" oninput="calcWealth()">
+
         <div id="res1" class="result">₹ 0</div>
+
     </div>
 
+    <!-- sip -->
     <div class="card">
+
         <h3>SIP Calculator</h3>
+
         <label>Monthly SIP Amount</label>
         <input id="sip" type="number" value="5000" oninput="calcSIP()">
+
         <label>Expected Return (%)</label>
         <input id="sipr" type="number" value="12" oninput="calcSIP()">
+
         <label>Time Period (Years)</label>
         <input id="sipy" type="number" value="10" oninput="calcSIP()">
+
         <div id="res2" class="result">₹ 0</div>
+
     </div>
 
+    <!-- inflation -->
     <div class="card">
+
         <h3>Inflation Adjuster</h3>
+
         <label>Target Future Value</label>
         <input id="fv" type="number" value="1000000" oninput="calcInflation()">
+
         <label>Inflation Rate (%)</label>
         <input id="inf" type="number" value="6" oninput="calcInflation()">
+
         <label>Time Horizon (Years)</label>
         <input id="infy" type="number" value="10" oninput="calcInflation()">
+
         <div id="res3" class="result">₹ 0</div>
+
     </div>
 
     <button class="btn" onclick="goHome()">← Back Home</button>
@@ -242,31 +311,40 @@ input:focus {
 </div>
 
 <script>
-// SIDEBAR CONTROL
-function openMenu(event) {
+
+/* sidebar */
+function openMenu(event) 
+{
     event.stopPropagation(); 
     document.getElementById("sidebar").classList.add("open");
 }
 
-function closeMenu() {
+function closeMenu() 
+{
     document.getElementById("sidebar").classList.remove("open");
 }
 
-// Close when clicking outside
-document.addEventListener("click", function(e) {
+/* outside click */
+document.addEventListener("click", function(e) 
+{
     const sb = document.getElementById("sidebar");
     const menuIcon = document.querySelector(".menu-icon");
-    if (!sb.contains(e.target) && !menuIcon.contains(e.target)) {
+
+    if (!sb.contains(e.target) && !menuIcon.contains(e.target)) 
+    {
         closeMenu();
     }
 });
 
-function goHome() {
+/* nav */
+function goHome() 
+{
     window.location.href = "index.html";
 }
 
-// CALCULATOR LOGIC
-function calcWealth() {
+/* wealth */
+function calcWealth() 
+{
     const P = +document.getElementById("p").value || 0;
     const M = +document.getElementById("m").value || 0;
     const rate = +document.getElementById("r").value || 0;
@@ -282,7 +360,9 @@ function calcWealth() {
     document.getElementById("res1").innerText = "₹ " + Math.round(val).toLocaleString("en-IN");
 }
 
-function calcSIP() {
+/* sip */
+function calcSIP() 
+{
     const M = +document.getElementById("sip").value || 0;
     const rate = +document.getElementById("sipr").value || 0;
     const years = +document.getElementById("sipy").value || 0;
@@ -297,19 +377,23 @@ function calcSIP() {
     document.getElementById("res2").innerText = "₹ " + Math.round(val).toLocaleString("en-IN");
 }
 
-function calcInflation() {
+/* inflation */
+function calcInflation() 
+{
     const target = +document.getElementById("fv").value || 0;
     const rate = +document.getElementById("inf").value || 0;
     const years = +document.getElementById("infy").value || 0;
 
     let val = target / Math.pow(1 + (rate / 100), years);
+
     document.getElementById("res3").innerText = "₹ " + Math.round(val).toLocaleString("en-IN");
 }
 
-// Initialization
+/* init */
 calcWealth();
 calcSIP();
 calcInflation();
+
 </script>
 
 </body>
