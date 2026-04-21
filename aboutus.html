@@ -10,7 +10,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
 
-/* background */
 body 
 {
     margin: 0;
@@ -20,7 +19,7 @@ body
     overflow-x: hidden;
 }
 
-/* orbs */
+/* ORBS */
 .gold-orb 
 {
     position: fixed;
@@ -30,60 +29,15 @@ body
     z-index: 0;
 }
 
-.orb1 
-{
-    width: 300px;
-    height: 300px;
-    background: rgba(212,175,55,0.25);
-    animation: move1 18s linear infinite;
-}
+.orb1 { width: 320px; height: 320px; background: rgba(212,175,55,0.25); animation: move1 18s linear infinite; }
+.orb2 { width: 260px; height: 260px; background: rgba(212,175,55,0.2); animation: move2 25s linear infinite; }
+.orb3 { width: 200px; height: 200px; background: rgba(212,175,55,0.15); animation: move3 30s linear infinite; }
 
-.orb2 
-{
-    width: 250px;
-    height: 250px;
-    background: rgba(212,175,55,0.2);
-    animation: move2 25s linear infinite;
-}
+@keyframes move1 { 0%{top:10%;left:10%}50%{top:70%;left:80%}100%{top:10%;left:10%} }
+@keyframes move2 { 0%{top:80%;left:80%}50%{top:20%;left:10%}100%{top:80%;left:80%} }
+@keyframes move3 { 0%{top:50%;left:0%}50%{top:10%;left:90%}100%{top:50%;left:0%} }
 
-.orb3 
-{
-    width: 200px;
-    height: 200px;
-    background: rgba(212,175,55,0.15);
-    animation: move3 30s linear infinite;
-}
-
-/* orb motion */
-@keyframes move1 
-{
-    0% { top:10%; left:10%; }
-    50% { top:70%; left:80%; }
-    100% { top:10%; left:10%; }
-}
-
-@keyframes move2 
-{
-    0% { top:80%; left:80%; }
-    50% { top:20%; left:10%; }
-    100% { top:80%; left:80%; }
-}
-
-@keyframes move3 
-{
-    0% { top:50%; left:0%; }
-    50% { top:10%; left:90%; }
-    100% { top:50%; left:0%; }
-}
-
-/* layer fix */
-body > * 
-{
-    position: relative;
-    z-index: 1;
-}
-
-/* NAV BAR */
+/* NAV */
 .nav 
 {
     display: flex;
@@ -93,156 +47,140 @@ body > *
     position: fixed;
     width: 100%;
     top: 0;
-    left: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.85);
     backdrop-filter: blur(8px);
-    z-index: 1002;
+    z-index: 1000;
 }
 
-/* hamburger */
-.menu-icon 
+.menu-icon span
 {
-    cursor: pointer;
+    display:block;
+    width:22px;
+    height:2px;
+    background:#d4af37;
+    margin:5px 0;
+    cursor:pointer;
 }
 
-.menu-icon span 
+.logo
 {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: #d4af37;
-    margin: 5px 0;
-}
-
-/* logo */
-.logo 
-{
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    color: #d4af37;
-    cursor: pointer;
+    font-family:'Playfair Display';
+    color:#d4af37;
+    cursor:pointer;
 }
 
 /* SIDEBAR */
-.sidebar 
+.sidebar
 {
-    width: 0;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
-    background: #0a0a0a;
-    overflow-x: hidden;
-    transition: 0.3s;
-    padding-top: 80px;
-    z-index: 1001;
-    border-right: 1px solid rgba(255,255,255,0.08);
+    width:0;
+    height:100%;
+    position:fixed;
+    left:0;
+    top:0;
+    background:#0a0a0a;
+    overflow-x:hidden;
+    transition:0.3s;
+    padding-top:80px;
+    z-index:1001;
 }
 
-.sidebar.open 
+.sidebar.open { width:260px; }
+
+.sidebar-content { padding:0 30px; }
+
+.menu-label
 {
-    width: 260px;
+    margin-top:25px;
+    font-size:10px;
+    letter-spacing:2px;
+    color:#d4af37;
+    opacity:0.6;
 }
 
-.sidebar-content 
+.sidebar a
 {
-    padding: 0 30px;
+    display:block;
+    padding:14px 0;
+    color:#777;
+    text-decoration:none;
 }
 
-.menu-label 
+.sidebar a:hover { color:#d4af37; }
+
+/* CONTENT */
+.hero
 {
-    margin-top: 25px;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: #d4af37;
-    opacity: 0.6;
+    text-align:center;
+    padding:140px 20px 60px;
 }
 
-.sidebar a 
+.hero h1
 {
-    display: block;
-    padding: 14px 0;
-    color: #777;
-    text-decoration: none;
+    font-family:'Playfair Display';
+    font-size:48px;
+    color:#d4af37;
 }
 
-.sidebar a:hover 
+.hero p
 {
-    color: #d4af37;
+    max-width:800px;
+    margin:20px auto;
+    color:#9ca3af;
+    font-size:18px;
+    line-height:1.7;
 }
 
-/* hero */
-.hero 
+/* SECTIONS */
+.section
 {
-    text-align: center;
-    padding: 120px 20px 80px;
+    padding:80px 20px;
+    text-align:center;
 }
 
-.hero h1 
+.section h2
 {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    color: #d4af37;
+    font-family:'Playfair Display';
+    color:#d4af37;
+    margin-bottom:40px;
+    font-size:28px;
 }
 
-.hero p 
+.card
 {
-    max-width: 750px;
-    margin: 20px auto;
-    color: #9ca3af;
-    font-size: 18px;
+    background:#0a0a0a;
+    padding:30px;
+    margin:20px auto;
+    max-width:700px;
+    border:1px solid #1f1f1f;
+    border-radius:12px;
+    color:#cfcfcf;
+    line-height:1.7;
+    transition:0.3s;
 }
 
-/* section */
-.section 
+.card:hover
 {
-    padding: 60px 20px;
-    text-align: center;
+    border-color:#d4af37;
+    transform:translateY(-4px);
 }
 
-.section h2 
+/* EXTRA LONG CONTENT BLOCKS */
+.long-text
 {
-    font-family: 'Playfair Display', serif;
-    color: #d4af37;
-    margin-bottom: 30px;
+    max-width:800px;
+    margin:0 auto;
+    color:#aaa;
+    line-height:1.8;
+    font-size:16px;
 }
 
-/* cards */
-.card 
+/* FOOTER */
+.footer
 {
-    background: #0a0a0a;
-    padding: 25px;
-    margin: 20px auto;
-    border-radius: 12px;
-    max-width: 650px;
-    border: 1px solid #1f1f1f;
-}
-
-/* button */
-.btn 
-{
-    margin-top: 30px;
-    padding: 12px 25px;
-    background: transparent;
-    border: 1px solid #d4af37;
-    color: #d4af37;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.btn:hover 
-{
-    background: #d4af37;
-    color: black;
-}
-
-/* footer */
-.footer 
-{
-    text-align: center;
-    padding: 20px;
-    font-size: 12px;
-    color: #6b7280;
+    text-align:center;
+    padding:40px;
+    color:#666;
+    font-size:12px;
 }
 
 </style>
@@ -297,22 +235,79 @@ body > *
     <h1>Who We Are</h1>
 
     <p>
-        gRaviTy Research is built on a simple belief — markets are not random.
+        gRaviTy Research is not built on opinions. It is built on structure, repetition, and behavioral logic inside markets.
     </p>
 
 </div>
 
-<!-- SECTION -->
+<!-- STORY -->
 <div class="section">
 
-    <h2>Our Mission</h2>
+    <h2>Our Origin</h2>
 
     <div class="card">
-        We simplify financial markets into structured insights.
+        We started with a simple observation — markets move in patterns that most people fail to notice.
     </div>
 
     <div class="card">
-        We turn noise into clarity.
+        What looks like chaos is often structured behavior repeating across timeframes.
+    </div>
+
+</div>
+
+<!-- PHILOSOPHY -->
+<div class="section">
+
+    <h2>Our Philosophy</h2>
+
+    <div class="long-text">
+        We do not believe in predicting markets with certainty. Instead, we study probability clusters, liquidity behavior, and structural zones where decisions repeatedly form.
+
+        <br><br>
+
+        Every chart tells a story — but only if you know how to read structure instead of noise.
+
+        <br><br>
+
+        The goal is not to guess the market. The goal is to understand what conditions increase probability of movement.
+    </div>
+
+</div>
+
+<!-- EDGE -->
+<div class="section">
+
+    <h2>Our Edge</h2>
+
+    <div class="card">
+        We focus on repeatable frameworks instead of emotional trading decisions.
+    </div>
+
+    <div class="card">
+        We remove noise, simplify structure, and isolate key decision points.
+    </div>
+
+    <div class="card">
+        We study behavior, not hype.
+    </div>
+
+</div>
+
+<!-- VISION -->
+<div class="section">
+
+    <h2>Where We Are Going</h2>
+
+    <div class="long-text">
+        Our goal is to build a complete research ecosystem where market understanding is not reserved for professionals alone.
+
+        <br><br>
+
+        We aim to make structured financial thinking accessible, visual, and systematic.
+
+        <br><br>
+
+        Over time, gRaviTy Research will expand into deeper analytical models, tools, and frameworks for market interpretation.
     </div>
 
 </div>
