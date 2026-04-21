@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Portal | gRaviTy Research</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap');
+
+:root
+{
+    --gold: #d4af37;
+    --bg: #050505;
+}
+
+html
+{
+    scroll-behavior: smooth;
+}
+
+body
+{
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: white;
+}
+
+/* bg glow */
+body::before
+{
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 20%, rgba(212,175,55,0.06), transparent 50%);
+    z-index: 0;
+}
+
+/* nav */
+.nav
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(5,5,5,0.9);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+}
+
+.home
+{
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.logo
+{
+    height: 36px;
+}
+
+/* main */
+.container
+{
+    max-width: 900px;
+    margin: auto;
+    padding: 140px 20px 80px;
+}
+
+/* heading */
+h1
+{
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: clamp(32px, 6vw, 56px);
+}
+
+h1::after
+{
+    content: "";
+    display: block;
+    width: 60px;
+    height: 2px;
+    margin: 14px auto;
+    background: var(--gold);
+    opacity: 0.6;
+}
+
+.subtitle
+{
+    text-align: center;
+    color: #8f8f8f;
+    max-width: 600px;
+    margin: 20px auto 50px;
+    line-height: 1.7;
+}
+
+/* grid */
+.grid
+{
+    display: grid;
+    gap: 25px;
+}
+
+/* card */
+.card
+{
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 25px;
+    transition: 0.25s;
+}
+
+.card:hover
+{
+    border-color: var(--gold);
+    transform: translateY(-4px);
+}
+
+/* title */
+.card h3
+{
+    margin: 0;
+    font-weight: 500;
+    color: white;
+}
+
+/* desc */
+.desc
+{
+    margin-top: 10px;
+    color: #888;
+    font-size: 14px;
+}
+
+/* meta */
+.meta
+{
+    margin-top: 15px;
+    font-size: 12px;
+    color: #666;
+}
+
+/* actions */
+.actions
+{
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+/* buttons */
+.btn
+{
+    padding: 8px 16px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.btn:hover
+{
+    background: var(--gold);
+    color: black;
+}
+
+/* footer */
+.footer
+{
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 12px;
+    color: #555;
+}
+
+/* layering */
+body > *
+{
+    position: relative;
+    z-index: 1;
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #d4af37; }
+
+html
+{
+    scrollbar-width: thin;
+    scrollbar-color: #d4af37 #000;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- nav -->
+<div class="nav">
+
+    <a class="home" href="index.html">← HOME</a>
+
+    <img src="logo.png" class="logo">
+
+</div>
+
+<!-- main -->
+<div class="container">
+
+    <h1>Research Portal</h1>
+
+    <div class="subtitle">
+        Structured reports built on data, logic, and market behavior.
+        This is an evolving archive of research-driven insights.
+    </div>
+
+    <!-- reports -->
+    <div class="grid">
+
+        <!-- REPORT 1 -->
+        <div class="card">
+
+            <h3>Q1 Market Structural Breakdown</h3>
+
+            <div class="desc">
+                A deep analysis of liquidity flows, positioning, and structural trends
+                shaping the current market cycle.
+            </div>
+
+            <div class="meta">
+                April 2026 • Market Structure
+            </div>
+
+            <div class="actions">
+
+                <a class="btn" href="reports/2026-q1-market-structure.pdf" target="_blank">
+                    View
+                </a>
+
+                <a class="btn" href="reports/2026-q1-market-structure.pdf" download>
+                    Download
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- footer -->
+<div class="footer">
+    © 2026 gRaviTy Research
+</div>
+
+</body>
+</html>
