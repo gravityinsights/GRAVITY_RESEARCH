@@ -8,96 +8,337 @@
 
 <style>
 
-/* SAME CSS AS ABOVE (KEEP IT CONSISTENT) */
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
 
-:root { --gold:#d4af37; --bg:#000; }
+/* background */
+body 
+{
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #000;
+    color: white;
+    overflow-x: hidden;
+}
 
-body { margin:0; font-family:Inter; background:#000; color:#fff; }
+/* orbs */
+.gold-orb 
+{
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+}
 
-.nav { display:flex; justify-content:space-between; padding:20px; position:fixed; width:100%; top:0; background:rgba(0,0,0,0.9); }
+.orb1 
+{
+    width: 300px;
+    height: 300px;
+    background: rgba(212,175,55,0.25);
+    animation: move1 18s linear infinite;
+}
 
-.menu-icon span { width:22px; height:2px; background:var(--gold); display:block; margin:5px 0; cursor:pointer; }
+.orb2 
+{
+    width: 250px;
+    height: 250px;
+    background: rgba(212,175,55,0.2);
+    animation: move2 25s linear infinite;
+}
 
-.sidebar { width:0; position:fixed; left:0; top:0; height:100%; background:#0a0a0a; transition:0.3s; padding-top:80px; overflow:hidden; }
-.sidebar.open { width:260px; }
+.orb3 
+{
+    width: 200px;
+    height: 200px;
+    background: rgba(212,175,55,0.15);
+    animation: move3 30s linear infinite;
+}
 
-.sidebar a { display:block; padding:14px 25px; color:#888; text-decoration:none; }
-.sidebar a:hover { color:var(--gold); }
+@keyframes move1
+{
+    0% { top:10%; left:10%; }
+    50% { top:70%; left:80%; }
+    100% { top:10%; left:10%; }
+}
 
-.menu-label { padding:20px 25px 5px; color:var(--gold); font-size:10px; }
+@keyframes move2
+{
+    0% { top:80%; left:80%; }
+    50% { top:20%; left:10%; }
+    100% { top:80%; left:80%; }
+}
 
-.overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); opacity:0; pointer-events:none; transition:0.3s; }
-.overlay.show { opacity:1; pointer-events:all; }
+@keyframes move3
+{
+    0% { top:50%; left:0%; }
+    50% { top:10%; left:90%; }
+    100% { top:50%; left:0%; }
+}
 
-.hero { text-align:center; padding:120px 20px; }
-.hero h1 { color:var(--gold); font-family:Playfair Display; }
+/* layering */
+body > * 
+{
+    position: relative;
+    z-index: 1;
+}
 
-.section { padding:40px 20px; text-align:center; }
+/* NAV */
+.nav 
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1002;
+}
 
-.card { max-width:600px; margin:20px auto; padding:20px; background:#0a0a0a; }
+/* hamburger */
+.menu-icon 
+{
+    cursor: pointer;
+}
 
-.btn { padding:12px 25px; border:1px solid var(--gold); color:var(--gold); background:none; cursor:pointer; }
+.menu-icon span 
+{
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #d4af37;
+    margin: 5px 0;
+}
 
-.btn:hover { background:var(--gold); color:#000; }
+/* logo */
+.logo 
+{
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: #d4af37;
+    cursor: pointer;
+}
+
+/* SIDEBAR */
+.sidebar 
+{
+    width: 0;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #0a0a0a;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 80px;
+    z-index: 1001;
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar.open 
+{
+    width: 260px;
+}
+
+.sidebar-content 
+{
+    padding: 0 30px;
+}
+
+.menu-label 
+{
+    margin-top: 25px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #d4af37;
+    opacity: 0.6;
+}
+
+.sidebar a 
+{
+    display: block;
+    padding: 14px 0;
+    color: #777;
+    text-decoration: none;
+}
+
+.sidebar a:hover 
+{
+    color: #d4af37;
+}
+
+/* hero */
+.hero 
+{
+    text-align: center;
+    padding: 120px 20px 80px;
+}
+
+.hero h1 
+{
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: #d4af37;
+}
+
+.hero p 
+{
+    max-width: 750px;
+    margin: 20px auto;
+    color: #9ca3af;
+    font-size: 18px;
+}
+
+/* section */
+.section 
+{
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.section h2 
+{
+    font-family: 'Playfair Display', serif;
+    color: #d4af37;
+    margin-bottom: 30px;
+}
+
+/* cards */
+.card 
+{
+    background: #0a0a0a;
+    padding: 25px;
+    margin: 20px auto;
+    border-radius: 12px;
+    max-width: 650px;
+    border: 1px solid #1f1f1f;
+}
+
+/* button */
+.btn 
+{
+    margin-top: 30px;
+    padding: 12px 25px;
+    background: transparent;
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn:hover 
+{
+    background: #d4af37;
+    color: black;
+}
+
+/* footer */
+.footer 
+{
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #6b7280;
+}
 
 </style>
-
 </head>
 
 <body>
 
-<div class="overlay" onclick="toggleMenu()"></div>
+<!-- ORBS -->
+<div class="gold-orb orb1"></div>
+<div class="gold-orb orb2"></div>
+<div class="gold-orb orb3"></div>
 
-<div id="sidebar" class="sidebar">
-
-    <div class="menu-label">Advanced Tools</div>
-    <a href="calc.html">Wealth Calculators</a>
-    <a href="clock.html">Market Clock</a>
-
-    <div class="menu-label">Our Firm</div>
-    <a href="aboutus.html">About Us</a>
-    <a href="vision.html">Vision</a>
-
-    <div class="menu-label">Research</div>
-    <a href="researchportal.html">Research Portal</a>
-
-    <div class="menu-label">Access</div>
-    <a href="contactus.html">Contact Us</a>
-
-</div>
-
+<!-- NAV -->
 <div class="nav">
 
-    <div onclick="toggleMenu()" class="menu-icon">
-        <span></span><span></span><span></span>
+    <div class="menu-icon" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
-    <img src="logo.png" height="35">
+    <div class="logo" onclick="goHome()">gRaviTy</div>
 
 </div>
 
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+
+    <div class="sidebar-content">
+
+        <div class="menu-label">Advanced Tools</div>
+        <a href="calc.html">Wealth Calculators</a>
+        <a href="clock.html">Market Clock</a>
+
+        <div class="menu-label">Our Firm</div>
+        <a href="aboutus.html">About Us</a>
+        <a href="vision.html">Our Vision</a>
+
+        <div class="menu-label">Access</div>
+        <a href="contactus.html">Contact Us</a>
+
+        <div class="menu-label">Research</div>
+        <a href="researchportal.html">Research Portal</a>
+
+    </div>
+
+</div>
+
+<!-- HERO -->
 <div class="hero">
+
     <h1>Our Vision</h1>
-    <p>To decode financial systems into pure structure and logic.</p>
+
+    <p>
+        We aim to redefine how people understand markets — not as chaos,
+        but as structured systems driven by logic and behavior.
+    </p>
+
 </div>
 
+<!-- SECTION -->
 <div class="section">
-    <div class="card">We aim for clarity in chaos.</div>
-    <div class="card">We study long-term market structure.</div>
+
+    <h2>Long Term Vision</h2>
+
+    <div class="card">
+        Build a research ecosystem that simplifies global financial systems.
+    </div>
+
+    <div class="card">
+        Make structured market thinking accessible to everyone.
+    </div>
+
 </div>
 
+<!-- BUTTON -->
 <div class="section">
-    <button class="btn" onclick="window.location='index.html'">Back Home</button>
+    <button class="btn" onclick="goHome()">← Back to Home</button>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 gRaviTy Research
 </div>
 
 <script>
+
 function toggleMenu()
 {
     document.getElementById("sidebar").classList.toggle("open");
-    document.querySelector(".overlay").classList.toggle("show");
 }
+
+function goHome()
+{
+    window.location.href = "index.html";
+}
+
 </script>
 
 </body>
