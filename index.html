@@ -10,96 +10,77 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap');
 
-:root 
+:root
 {
     --gold: #d4af37;
-    --gold-soft: rgba(212,175,55,0.2);
     --bg: #050505;
 }
 
-body 
+body
 {
     margin: 0;
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: white;
-    overflow-x: hidden;
 }
 
-/* glow background */
+/* subtle gradient bg */
 body::before
 {
     content: "";
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at 30% 20%, rgba(212,175,55,0.08), transparent 40%),
-                radial-gradient(circle at 70% 80%, rgba(212,175,55,0.05), transparent 40%);
+    background: radial-gradient(circle at 50% 20%, rgba(212,175,55,0.06), transparent 50%);
     z-index: 0;
 }
-
-/* planets */
-.planet 
-{
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    z-index: 0;
-}
-
-.p1 { width:140px;height:140px;top:20%;left:10%;background:radial-gradient(circle,rgba(212,175,55,0.25),transparent); }
-.p2 { width:100px;height:100px;bottom:15%;right:12%;background:radial-gradient(circle,rgba(212,175,55,0.2),transparent); }
-.p3 { width:80px;height:80px;top:60%;left:30%;background:radial-gradient(circle,rgba(212,175,55,0.18),transparent); }
 
 /* sidebar */
-.sidebar 
+.sidebar
 {
     width: 0;
     height: 100%;
     position: fixed;
     left: 0;
     top: 0;
-    background: rgba(5,5,5,0.98);
-    backdrop-filter: blur(25px);
+    background: #0a0a0a;
     overflow-x: hidden;
-    transition: width 0.4s cubic-bezier(.77,0,.18,1);
+    transition: 0.3s ease;
     padding-top: 80px;
     z-index: 1000;
+    border-right: 1px solid rgba(255,255,255,0.05);
 }
 
-.sidebar.open 
-{ 
-    width: 280px; 
+.sidebar.open
+{
+    width: 260px;
 }
 
-.sidebar-content 
-{ 
-    padding: 0 30px; 
+.sidebar-content
+{
+    padding: 0 30px;
 }
 
-.menu-label 
+.menu-label
 {
     margin-top: 25px;
     font-size: 10px;
     letter-spacing: 2px;
     color: var(--gold);
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
-.sidebar a 
+.sidebar a
 {
     display: block;
     padding: 14px 0;
-    color: #888;
+    color: #777;
     text-decoration: none;
-    cursor: pointer;
-    transition: 0.25s;
+    transition: 0.2s;
 }
 
-.sidebar a:hover 
+.sidebar a:hover
 {
     color: var(--gold);
-    padding-left: 12px;
 }
 
 /* overlay */
@@ -107,8 +88,7 @@ body::before
 {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.4);
     opacity: 0;
     pointer-events: none;
     transition: 0.3s;
@@ -122,114 +102,106 @@ body::before
 }
 
 /* nav */
-.nav 
+.nav
 {
     display: flex;
     justify-content: space-between;
-    padding: 20px 40px;
+    align-items: center;
+    padding: 20px 30px;
 }
 
-.menu-icon span 
+.menu-icon span
 {
     display: block;
     width: 22px;
     height: 2px;
     background: var(--gold);
     margin: 5px 0;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.menu-icon:hover span
-{
-    transform: translateX(4px);
 }
 
 /* hero */
-.hero 
+.hero
 {
     text-align: center;
-    padding: 160px 20px;
+    padding: 120px 20px 100px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.hero h1
+{
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 6vw, 64px);
+    color: var(--gold);
+    line-height: 1.2;
+}
+
+.hero p
+{
+    margin-top: 20px;
+    color: #aaa;
+    font-size: clamp(14px, 2.5vw, 18px);
+    line-height: 1.7;
+}
+
+/* button */
+.btn
+{
+    margin-top: 30px;
+    padding: 12px 26px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn:hover
+{
+    background: var(--gold);
+    color: black;
+}
+
+/* subtle fade-in */
+.fade
+{
     opacity: 0;
-    transform: translateY(30px);
-    animation: fadeUp 1s ease forwards;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s ease forwards;
+}
+
+.fade.delay
+{
+    animation-delay: 0.2s;
+}
+
+.fade.delay2
+{
+    animation-delay: 0.4s;
 }
 
 @keyframes fadeUp
 {
-    to 
+    to
     {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-.hero h1 
-{
-    font-family: 'Playfair Display', serif;
-    font-size: 64px;
-    color: var(--gold);
-    letter-spacing: 1px;
-}
-
-.hero p 
-{
-    max-width: 600px;
-    margin: 20px auto;
-    color: #aaa;
-    line-height: 1.6;
-}
-
-/* button */
-.btn 
-{
-    padding: 14px 28px;
-    margin: 10px;
-    border: 1px solid var(--gold);
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    transition: 0.3s;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn::before
-{
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--gold);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: 0.3s;
-    z-index: -1;
-}
-
-.btn:hover::before
-{
-    transform: scaleX(1);
-}
-
-.btn:hover
-{
-    color: black;
-}
-
 /* layering */
-body > * 
-{ 
-    position: relative; 
-    z-index: 1; 
+body > *
+{
+    position: relative;
+    z-index: 1;
 }
 
 /* scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #000; }
-::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #d4af37, #b8962e); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #ffd700; }
+::-webkit-scrollbar-thumb { background: #d4af37; }
 
-html 
+html
 {
     scrollbar-width: thin;
     scrollbar-color: #d4af37 #000;
@@ -240,15 +212,11 @@ html
 
 <body>
 
-<div class="overlay" id="overlay" onclick="openMenu()"></div>
-
-<!-- planets -->
-<div class="planet p1"></div>
-<div class="planet p2"></div>
-<div class="planet p3"></div>
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
 <!-- sidebar -->
 <div id="sidebar" class="sidebar">
+
     <div class="sidebar-content">
 
         <div class="menu-label">Advanced Tools</div>
@@ -260,36 +228,42 @@ html
         <a onclick="go('vision.html')">Our Vision</a>
 
     </div>
+
 </div>
 
 <!-- nav -->
 <div class="nav">
-    <div class="menu-icon" onclick="openMenu()">
+
+    <div class="menu-icon" onclick="toggleMenu()">
         <span></span>
         <span></span>
         <span></span>
     </div>
-    <img src="logo.png" height="40">
+
+    <img src="logo.png" height="36">
+
 </div>
 
 <!-- hero -->
 <div class="hero">
 
-    <h1>Markets Aren’t Random.</h1>
+    <h1 class="fade">Markets Aren’t Random.</h1>
 
-    <p>
+    <p class="fade delay">
         They move with patterns, logic, and hidden forces.
         We decode them into clarity.
     </p>
 
-    <button class="btn" onclick="go('aboutus.html')">Explore</button>
+    <button class="btn fade delay2" onclick="go('aboutus.html')">
+        Explore
+    </button>
 
 </div>
 
 <script>
 
-/* menu toggle */
-function openMenu()
+/* menu */
+function toggleMenu()
 {
     document.getElementById("sidebar").classList.toggle("open");
     document.getElementById("overlay").classList.toggle("show");
@@ -300,25 +274,6 @@ function go(page)
 {
     window.location.href = page;
 }
-
-/* gravity refined */
-const planets = document.querySelectorAll(".planet");
-
-document.addEventListener("mousemove", e => 
-{
-    planets.forEach(p => 
-    {
-        const rect = p.getBoundingClientRect();
-
-        const px = rect.left + rect.width / 2;
-        const py = rect.top + rect.height / 2;
-
-        const dx = (e.clientX - px) * 0.15;
-        const dy = (e.clientY - py) * 0.15;
-
-        p.style.transform = `translate(${dx}px, ${dy}px)`;
-    });
-});
 
 </script>
 
