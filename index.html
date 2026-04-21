@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>gRaviTy Research | Understanding Market Forces</title>
 
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap');
 
-:root {
+:root 
+{
     --gold: #d4af37;
     --bg: #050505;
 }
 
-body {
+body 
+{
     margin: 0;
     font-family: 'Inter', sans-serif;
     background: var(--bg);
@@ -21,8 +25,9 @@ body {
     overflow-x: hidden;
 }
 
-/* PLANETS */
-.planet {
+/* planets */
+.planet 
+{
     position: fixed;
     border-radius: 50%;
     pointer-events: none;
@@ -30,12 +35,36 @@ body {
     z-index: 0;
 }
 
-.p1 { width:140px;height:140px;top:20%;left:10%;background:radial-gradient(circle,rgba(212,175,55,0.25),transparent); }
-.p2 { width:100px;height:100px;bottom:15%;right:12%;background:radial-gradient(circle,rgba(212,175,55,0.2),transparent); }
-.p3 { width:80px;height:80px;top:60%;left:30%;background:radial-gradient(circle,rgba(212,175,55,0.18),transparent); }
+.p1 
+{ 
+    width:140px;
+    height:140px;
+    top:20%;
+    left:10%;
+    background:radial-gradient(circle,rgba(212,175,55,0.25),transparent); 
+}
 
-/* SIDEBAR */
-.sidebar {
+.p2 
+{ 
+    width:100px;
+    height:100px;
+    bottom:15%;
+    right:12%;
+    background:radial-gradient(circle,rgba(212,175,55,0.2),transparent); 
+}
+
+.p3 
+{ 
+    width:80px;
+    height:80px;
+    top:60%;
+    left:30%;
+    background:radial-gradient(circle,rgba(212,175,55,0.18),transparent); 
+}
+
+/* sidebar */
+.sidebar 
+{
     width: 0;
     height: 100%;
     position: fixed;
@@ -48,37 +77,50 @@ body {
     padding-top: 80px;
     z-index: 1000;
 }
-.sidebar.open { width: 280px; }
 
-.sidebar-content { padding: 0 30px; }
+.sidebar.open 
+{ 
+    width: 280px; 
+}
 
-.menu-label {
+.sidebar-content 
+{ 
+    padding: 0 30px; 
+}
+
+.menu-label 
+{
     margin-top: 25px;
     font-size: 10px;
     letter-spacing: 2px;
     color: var(--gold);
 }
 
-.sidebar a {
+.sidebar a 
+{
     display: block;
     padding: 14px 0;
     color: #888;
     text-decoration: none;
     cursor: pointer;
 }
-.sidebar a:hover {
+
+.sidebar a:hover 
+{
     color: var(--gold);
     padding-left: 10px;
 }
 
-/* NAV */
-.nav {
+/* nav */
+.nav 
+{
     display: flex;
     justify-content: space-between;
     padding: 20px 40px;
 }
 
-.menu-icon span {
+.menu-icon span 
+{
     display: block;
     width: 22px;
     height: 2px;
@@ -87,26 +129,30 @@ body {
     cursor: pointer;
 }
 
-/* HERO */
-.hero {
+/* hero */
+.hero 
+{
     text-align: center;
     padding: 140px 20px;
 }
 
-.hero h1 {
+.hero h1 
+{
     font-family: 'Playfair Display', serif;
     font-size: 60px;
     color: var(--gold);
 }
 
-.hero p {
+.hero p 
+{
     max-width: 600px;
     margin: 20px auto;
     color: #999;
 }
 
-/* BUTTON */
-.btn {
+/* button */
+.btn 
+{
     padding: 12px 25px;
     margin: 10px;
     border: 1px solid var(--gold);
@@ -115,53 +161,62 @@ body {
     cursor: pointer;
     transition: 0.3s;
 }
-.btn:hover {
+
+.btn:hover 
+{
     background: var(--gold);
     color: black;
 }
 
-body > * { position: relative; z-index: 1; }
-    /* ===== GOLD SCROLLBAR ===== */
+/* layer fix */
+body > * 
+{ 
+    position: relative; 
+    z-index: 1; 
+}
 
-/* width */
-::-webkit-scrollbar {
+/* scrollbar */
+::-webkit-scrollbar 
+{
     width: 6px;
 }
 
-/* track (background) */
-::-webkit-scrollbar-track {
-    background: #000; /* pure void */
+::-webkit-scrollbar-track 
+{
+    background: #000;
 }
 
-/* thumb (the moving part) */
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb 
+{
     background: linear-gradient(180deg, #d4af37, #b8962e);
     border-radius: 10px;
 }
 
-/* hover effect */
-::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover 
+{
     background: #ffd700;
 }
 
-/* optional: ultra thin look */
-html {
-    scrollbar-width: thin; /* Firefox */
+html 
+{
+    scrollbar-width: thin;
     scrollbar-color: #d4af37 #000;
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- PLANETS -->
+<!-- planets -->
 <div class="planet p1"></div>
 <div class="planet p2"></div>
 <div class="planet p3"></div>
 
-<!-- SIDEBAR -->
+<!-- sidebar -->
 <div id="sidebar" class="sidebar">
     <div class="sidebar-content">
+
         <div class="menu-label">Advanced Tools</div>
         <a onclick="go('calc.html')">Wealth Calculators</a>
         <a onclick="go('clock.html')">Market Clock</a>
@@ -169,61 +224,77 @@ html {
         <div class="menu-label">Our Firm</div>
         <a onclick="go('aboutus.html')">About Us</a>
         <a onclick="go('vision.html')">Our Vision</a>
+
     </div>
 </div>
 
-<!-- NAV -->
+<!-- nav -->
 <div class="nav">
     <div class="menu-icon" onclick="openMenu()">
-        <span></span><span></span><span></span>
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
     <img src="logo.png" height="40">
 </div>
 
-<!-- HERO -->
+<!-- hero -->
 <div class="hero">
+
     <h1>Markets Aren’t Random.</h1>
+
     <p>
         They move with patterns, logic, and hidden forces.
         We decode them into clarity.
     </p>
 
     <button class="btn" onclick="go('aboutus.html')">Explore</button>
+
 </div>
 
 <script>
 
-/* SIDEBAR */
-function openMenu(){
-document.getElementById("sidebar").classList.toggle("open");
+/* menu */
+function openMenu()
+{
+    document.getElementById("sidebar").classList.toggle("open");
 }
 
-/* NAVIGATION */
-function go(page){
-window.location.href = page;
+/* nav */
+function go(page)
+{
+    window.location.href = page;
 }
 
-/* GRAVITY EFFECT */
+/* gravity */
 const planets = document.querySelectorAll(".planet");
 
-document.addEventListener("mousemove", e => {
-    planets.forEach(p => {
+document.addEventListener("mousemove", e => 
+{
+    planets.forEach(p => 
+    {
         const rect = p.getBoundingClientRect();
+
         const px = rect.left + rect.width / 2;
         const py = rect.top + rect.height / 2;
 
         const dx = e.clientX - px;
         const dy = e.clientY - py;
+
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         let strength = p.classList.contains("p1") ? 0.03 : 
                        p.classList.contains("p2") ? 0.06 : 0.12;
 
-        if (dist < 200) {
+        if (dist < 200) 
+        {
             const force = (200 - dist) / 200;
+
             p.style.transform = `translate(${dx * strength}px, ${dy * strength}px) scale(${1 + force * 0.3})`;
             p.style.boxShadow = `0 0 ${60 * force}px rgba(212,175,55,0.7)`;
-        } else {
+        } 
+        else 
+        {
             p.style.transform = "translate(0,0) scale(1)";
             p.style.boxShadow = "none";
         }
