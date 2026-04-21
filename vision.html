@@ -1,300 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>gRaviTy Research | Vision</title>
+<title>About Us | gRaviTy Research</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@200;300;400;500;600&display=swap');
 
-:root {
-    --gold: #d4af37;
-    --bg: #050505;
-}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
 
-body {
+/* background */
+body 
+{
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: #fff;
+    background: #000;
+    color: white;
+    overflow-x: hidden;
 }
 
-/* TOP BAR */
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    position: sticky;
-    top: 0;
-    background: rgba(5,5,5,0.9);
-    backdrop-filter: blur(10px);
-}
-
-.home-btn {
-    color: var(--gold);
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 2px;
-}
-
-/* SECTIONS */
-.section {
-    padding: 80px 20px;
-    max-width: 1000px;
-    margin: auto;
-}
-
-h1, h2 {
-    font-family: 'Playfair Display', serif;
-    color: var(--gold);
-}
-
-/* HERO TEXT */
-.hero {
-    text-align: center;
-    padding: 100px 20px 60px;
-}
-
-.hero p {
-    color: #aaa;
-    max-width: 700px;
-    margin: auto;
-    line-height: 1.7;
-}
-
-/* SERVICES */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.card {
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 20px;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.card:hover {
-    border-color: var(--gold);
-}
-
-/* REPORTS */
-.report {
-    padding: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    cursor: pointer;
-    color: #aaa;
-}
-
-.report:hover {
-    color: var(--gold);
-}
-
-/* STOCK PANEL */
-.stock-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 15px;
-}
-
-.stock {
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.stock:hover {
-    border-color: var(--gold);
-}
-
-/* MODAL */
-.modal {
-    display: none;
+/* orbs */
+.gold-orb 
+{
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8);
-    justify-content: center;
-    align-items: center;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
 }
 
-.modal-content {
-    background: #0a0a0a;
-    padding: 30px;
-    max-width: 500px;
-    border: 1px solid var(--gold);
+.orb1 
+{
+    width: 300px;
+    height: 300px;
+    background: rgba(212,175,55,0.25);
+    animation: move1 18s linear infinite;
 }
 
-.close {
-    float: right;
-    cursor: pointer;
-    color: #aaa;
+.orb2 
+{
+    width: 250px;
+    height: 250px;
+    background: rgba(212,175,55,0.2);
+    animation: move2 25s linear infinite;
 }
 
-.small {
-    color: #888;
-    font-size: 13px;
-    line-height: 1.6;
+.orb3 
+{
+    width: 200px;
+    height: 200px;
+    background: rgba(212,175,55,0.15);
+    animation: move3 30s linear infinite;
 }
 
-/* PURPOSE */
-.points {
-    line-height: 2;
-    color: #bbb;
+/* orb motion */
+@keyframes move1 
+{
+    0% 
+    { 
+        top:10%; 
+        left:10%; 
+    }
+
+    50% 
+    { 
+        top:70%; 
+        left:80%; 
+    }
+
+    100% 
+    { 
+        top:10%; 
+        left:10%; 
+    }
 }
 
-.points span {
-    color: var(--gold);
+@keyframes move2 
+{
+    0% 
+    { 
+        top:80%; 
+        left:80%; 
+    }
+
+    50% 
+    { 
+        top:20%; 
+        left:10%; 
+    }
+
+    100% 
+    { 
+        top:80%; 
+        left:80%; 
+    }
 }
 
-/* FOOTER */
-.footer {
+@keyframes move3 
+{
+    0% 
+    { 
+        top:50%; 
+        left:0%; 
+    }
+
+    50% 
+    { 
+        top:10%; 
+        left:90%; 
+    }
+
+    100% 
+    { 
+        top:50%; 
+        left:0%; 
+    }
+}
+
+/* layer fix */
+body > * 
+{
+    position: relative;
+    z-index: 1;
+}
+
+/* nav */
+.nav 
+{
+    padding: 20px;
     text-align: center;
-    padding: 40px;
-    font-size: 12px;
-    color: #444;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid #1f1f1f;
 }
-/* ===== GOLD SCROLLBAR ===== */
 
-/* width */
-::-webkit-scrollbar {
+.nav img 
+{
+    width: 180px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.nav img:hover 
+{
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 8px #d4af37);
+}
+
+/* hero */
+.hero 
+{
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero h1 
+{
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: #d4af37;
+}
+
+.hero p 
+{
+    max-width: 750px;
+    margin: 20px auto;
+    color: #9ca3af;
+    font-size: 18px;
+}
+
+/* section */
+.section 
+{
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.section h2 
+{
+    font-family: 'Playfair Display', serif;
+    color: #d4af37;
+    margin-bottom: 30px;
+}
+
+/* cards */
+.card 
+{
+    background: #0a0a0a;
+    padding: 25px;
+    margin: 20px auto;
+    border-radius: 12px;
+    max-width: 650px;
+    border: 1px solid #1f1f1f;
+    transition: 0.3s;
+}
+
+.card:hover 
+{
+    border: 1px solid #d4af37;
+    transform: scale(1.03);
+}
+
+/* button */
+.btn 
+{
+    margin-top: 30px;
+    padding: 12px 25px;
+    background: transparent;
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover 
+{
+    background: #d4af37;
+    color: black;
+}
+
+/* fade */
+.fade-up 
+{
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s ease forwards;
+}
+
+.fade-up.delay 
+{
+    animation-delay: 0.4s;
+}
+
+.fade-up.delay2 
+{
+    animation-delay: 0.8s;
+}
+
+@keyframes fadeUp 
+{
+    to 
+    {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* footer */
+.footer 
+{
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* scrollbar */
+::-webkit-scrollbar 
+{
     width: 6px;
 }
 
-/* track (background) */
-::-webkit-scrollbar-track {
-    background: #000; /* pure void */
+::-webkit-scrollbar-track 
+{
+    background: #000;
 }
 
-/* thumb (the moving part) */
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb 
+{
     background: linear-gradient(180deg, #d4af37, #b8962e);
     border-radius: 10px;
 }
 
-/* hover effect */
-::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover 
+{
     background: #ffd700;
 }
 
-/* optional: ultra thin look */
-html {
-    scrollbar-width: thin; /* Firefox */
+html 
+{
+    scrollbar-width: thin;
     scrollbar-color: #d4af37 #000;
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-    <a class="home-btn" href="index.html">← HOME</a>
-    <div style="color:var(--gold); font-size:12px; letter-spacing:2px;">gRAVIty Vision</div>
+<!-- orbs -->
+<div class="gold-orb orb1"></div>
+<div class="gold-orb orb2"></div>
+<div class="gold-orb orb3"></div>
+
+<!-- nav -->
+<div class="nav">
+    <img src="logo.png" onclick="goHome()">
 </div>
 
-<!-- HERO -->
-<div class="hero section">
-    <h1>Building a research platform of real force</h1>
-    <p>
-        gRaviTy Research is not just a service — it is a commitment to structured, disciplined thinking about markets.
-        We are building a platform designed to grow, expand globally, and establish a permanent standard for research-driven intelligence.
+<!-- hero -->
+<div class="hero">
+
+    <h1 class="fade-up">Who We Are</h1>
+
+    <p class="fade-up delay">
+        gRaviTy Research is built on a simple belief — markets are not random.
+        They operate on structure, behavior, and underlying forces that most people overlook.
     </p>
+
 </div>
 
-<!-- SERVICES -->
+<!-- mission -->
 <div class="section">
-    <h2>Services</h2>
-    <div class="grid">
-        <div class="card">Stock Analysis</div>
-        <div class="card">Industry Research</div>
-        <div class="card" style="opacity:0.5">More coming soon</div>
+
+    <h2 class="fade-up">Our Mission</h2>
+
+    <div class="card fade-up delay">
+        To simplify financial markets by breaking down complex data into clear,
+        structured insights that anyone can understand.
     </div>
-</div>
 
-<!-- REPORTS -->
-<div class="section">
-    <h2>Reports</h2>
-    <div class="report">Q1 Market Structural Breakdown</div>
-    <div class="report">Tech Sector Momentum Report</div>
-    <div class="report">Global Liquidity Flow Study</div>
-</div>
-
-<!-- STOCKS -->
-<div class="section">
-    <h2>Featured Stocks</h2>
-    <div class="stock-grid">
-        <div class="stock" onclick="openStock('TCS')">TCS</div>
-        <div class="stock" onclick="openStock('RELIANCE')">RELIANCE</div>
-        <div class="stock" onclick="openStock('INFY')">INFY</div>
+    <div class="card fade-up delay2">
+        We aim to bridge the gap between raw market data and human understanding —
+        turning noise into clarity.
     </div>
+
 </div>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">×</span>
-        <h2 id="stockName">Stock</h2>
-        <p class="small" id="stockInfo"></p>
-    </div>
-</div>
-
-<!-- PURPOSE -->
+<!-- approach -->
 <div class="section">
-    <h2>Our Purpose</h2>
-    <div class="points">
-        <span>I.</span> Build a modern, research-driven intelligence platform for serious market thinkers.<br>
-        <span>II.</span> Expand coverage globally across markets and sectors.<br>
-        <span>III.</span> Deliver structured, reliable insights with intellectual honesty.<br>
-        <span>IV.</span> Create a knowledge base that grows stronger every cycle.
+
+    <h2 class="fade-up">Our Approach</h2>
+
+    <div class="card fade-up delay">
+        We analyze trends, decode patterns, and study business fundamentals
+        to uncover the logic behind market movements.
     </div>
+
+    <div class="card fade-up delay2">
+        Instead of following hype, we focus on structure, behavior, and probability.
+    </div>
+
 </div>
 
-<!-- CONTACT -->
+<!-- button -->
 <div class="section">
-    <h2>Contact</h2>
-    <p class="small">
-        Email: gravity.insights07@gmail.com<br>
-        Telegram: @gravityresearch
-    </p>
+    <button class="btn" onclick="goHome()">← Back to Home</button>
 </div>
 
-<!-- FOOTER -->
+<!-- footer -->
 <div class="footer">
     © 2026 gRaviTy Research
 </div>
 
 <script>
-const stockData = {
-    "TCS": "TCS is a stable IT leader. Strong long-term compounder. Neutral-to-positive outlook based on current cycle strength.",
-    "RELIANCE": "Diversified conglomerate with strong energy + retail exposure. High influence on index movement.",
-    "INFY": "IT services giant. Conservative growth, strong balance sheet, steady but slower momentum."
-};
 
-function openStock(name) {
-    document.getElementById("modal").style.display = "flex";
-    document.getElementById("stockName").innerText = name;
-    document.getElementById("stockInfo").innerText = stockData[name] || "No data available.";
+/* nav */
+function goHome() 
+{
+    window.location.href = "index.html";
 }
 
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
-
-window.onclick = function(e) {
-    if (e.target.classList.contains("modal")) {
-        closeModal();
-    }
-};
 </script>
 
 </body>
