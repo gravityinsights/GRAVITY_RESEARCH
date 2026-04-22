@@ -11,9 +11,8 @@
 :root {
     --gold: #d4af37;
     --gold-dim: rgba(212, 175, 55, 0.3);
-    --gold-glow: rgba(212, 175, 55, 0.1);
+    --gold-glow: rgba(212, 175, 55, 0.15);
     --bg: #050505;
-    --selection: rgba(212, 175, 55, 0.15);
 }
 
 /* ================= PROTECTION STYLES ================= */
@@ -23,9 +22,6 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
-
-::selection { background: var(--selection); color: var(--gold); }
-::-moz-selection { background: var(--selection); color: var(--gold); }
 
 /* ================= SEAMLESS PAGE TRANSITIONS ================= */
 body {
@@ -50,7 +46,7 @@ body.fade-out {
     z-index: 10000;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 15px var(--gold);
-    transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cursor-dot.hover-state {
@@ -58,7 +54,6 @@ body.fade-out {
     height: 30px;
     background: rgba(212, 175, 55, 0.05);
     border: 1px solid var(--gold);
-    box-shadow: 0 0 20px var(--gold-glow);
 }
 
 body {
@@ -77,9 +72,8 @@ body {
     position: fixed;
     left: 0;
     top: 0;
-    background: rgba(3, 3, 3, 0.95);
+    background: rgba(3, 3, 3, 0.98);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     overflow-x: hidden;
     transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
     padding-top: 100px;
@@ -94,42 +88,11 @@ body {
     padding: 18px 40px;
     color: #999;
     text-decoration: none;
-    letter-spacing: 1px;
     font-size: 14px;
-    font-weight: 300;
-    transition: 0.3s;
-    position: relative;
-}
-
-.sidebar a::before {
-    content: '';
-    position: absolute;
-    left: 25px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 0;
-    height: 1px;
-    background: var(--gold);
     transition: 0.3s;
 }
 
-.sidebar a:hover {
-    color: var(--gold);
-    padding-left: 50px;
-}
-
-.sidebar a:hover::before {
-    width: 15px;
-}
-
-.menu-label {
-    padding: 25px 40px 10px;
-    font-size: 10px;
-    color: var(--gold);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    opacity: 0.5;
-}
+.sidebar a:hover { color: var(--gold); padding-left: 50px; }
 
 /* nav */
 .nav {
@@ -145,18 +108,14 @@ body {
     box-sizing: border-box;
 }
 
-.menu-icon { cursor: pointer; padding: 10px; margin:-10px; }
-
+.menu-icon { cursor: pointer; }
 .menu-icon span {
     display: block;
     width: 22px;
     height: 1px;
     background: var(--gold);
     margin: 6px 0;
-    transition: 0.3s;
 }
-
-.menu-icon:hover span:nth-child(2) { transform: translateX(4px); }
 
 .logo {
     font-family: 'Playfair Display', serif;
@@ -164,18 +123,6 @@ body {
     color: var(--gold);
     letter-spacing: 3px;
     cursor: pointer;
-    position: relative;
-}
-
-.logo::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    opacity: 0.5;
 }
 
 /* orbs */
@@ -183,7 +130,6 @@ body {
     position: fixed;
     border-radius: 50%;
     filter: blur(160px);
-    -webkit-filter: blur(160px);
     pointer-events: none;
     z-index: 1;
     opacity: 0.12;
@@ -204,7 +150,6 @@ body {
     flex-direction: column;
     position: relative;
     z-index: 2;
-    padding-bottom: 5vh;
 }
 
 .label {
@@ -213,23 +158,11 @@ body {
     letter-spacing: 10px;
     color: white;
     text-transform: uppercase;
-    margin-bottom: 50px;
-    opacity: 0.9;
-    position: relative;
+    margin-bottom: 60px;
+    opacity: 0.8;
 }
 
-.label::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 1px;
-    background: var(--gold);
-}
-
-/* ================= TIMER STYLING ================= */
+/* ================= TIMER STYLING (REFINED) ================= */
 .timer {
     display: flex;
     align-items: center;
@@ -237,67 +170,47 @@ body {
 }
 
 .unit-box {
-    position: relative;
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    padding: 30px 20px;
-    border-radius: 8px;
-    min-width: 130px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(212, 175, 55, 0.4); /* Sharper border for visibility */
+    backdrop-filter: blur(10px);
+    padding: 35px 25px;
+    border-radius: 4px;
+    min-width: 140px;
     text-align: center;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .unit-box:hover {
-    border-color: rgba(212, 175, 55, 0.3);
+    border-color: var(--gold);
     transform: translateY(-5px);
 }
-
-.unit-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    border-radius: 8px;
-    background: radial-gradient(circle at center, var(--gold-glow), transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.unit-box:hover::before { opacity: 1; }
 
 .unit-value {
     font-family: 'Inter', sans-serif;
     font-size: clamp(45px, 8vw, 85px);
     color: var(--gold);
-    font-weight: 100; 
+    font-weight: 100;
     line-height: 1;
     letter-spacing: -2px;
-    position: relative;
-    z-index: 1;
-    text-shadow: 0 0 15px var(--gold-glow);
 }
 
 .unit-label {
     font-size: 10px;
-    font-weight: 400;
     color: #888;
     text-transform: uppercase;
     letter-spacing: 4px;
     margin-top: 15px;
-    position: relative;
-    z-index: 1;
 }
 
-/* ================= VERTICAL LINES (FIXED & HIGHLY VISIBLE) ================= */
+/* ================= VERTICAL LINES (THE FIX) ================= */
 .separator {
-    width: 2px;
-    height: 80px; 
-    background: linear-gradient(to bottom, transparent 0%, var(--gold) 50%, transparent 100%);
-    box-shadow: 0 0 15px var(--gold);
-    margin: 0 25px; /* Adds space between the boxes and the line */
-    opacity: 0.8;
+    width: 1px;
+    height: 100px; /* Tall enough to be noticed */
+    background: var(--gold); /* Solid color for maximum visibility */
+    box-shadow: 0 0 20px var(--gold), 0 0 10px var(--gold); /* Intense glow */
+    margin: 0 40px; /* Significant spacing */
+    opacity: 0.7;
+    flex-shrink: 0;
 }
 
 /* launch text */
@@ -308,10 +221,8 @@ body {
     width: 100%;
     font-family: 'Playfair Display', serif;
     font-size: 16px;
-    font-weight: 600;
     letter-spacing: 5px;
     color: white;
-    opacity: 0.7;
 }
 
 .launch-text span { color: var(--gold); }
@@ -325,54 +236,28 @@ body {
     color: #666;
     text-decoration: none;
     font-size: 11px;
-    font-weight: 300;
     border: 1px solid #222;
     padding: 12px 30px;
-    border-radius: 2px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: 0.3s;
 }
 
 .footer-link:hover {
     border-color: var(--gold);
     color: var(--gold);
     box-shadow: 0 0 15px var(--gold-glow);
-    transform: translateY(-2px);
 }
 
-/* ================= MOBILE RESPONSIVENESS ================= */
+/* ================= MOBILE ================= */
 @media screen and (max-width: 768px) {
     * { cursor: auto !important; }
     .cursor-dot { display: none !important; }
     .sidebar.open { width: 100%; }
-    
-    .nav { padding: 20px; }
-    .logo { font-size: 18px; }
-
-    .container { padding-bottom: 10vh; }
-    .label { letter-spacing: 6px; font-size: 10px; }
-
-    .timer {
-        gap: 10px;
-        flex-wrap: wrap;
-        max-width: 300px;
-    }
-    
-    .unit-box {
-        padding: 20px 10px;
-        min-width: 120px; 
-        backdrop-filter: blur(10px);
-    }
-    
-    /* Hide vertical lines on mobile so boxes stack nicely */
-    .separator { display: none; }
-    
-    .unit-value { font-size: 40px; letter-spacing: -1px; }
-    .unit-label { font-size: 9px; letter-spacing: 3px; margin-top: 10px; }
-
-    .launch-text { font-size: 12px; letter-spacing: 3px; bottom: 130px; }
-    .footer-link { padding: 10px 20px; font-size: 10px; }
+    .timer { flex-wrap: wrap; gap: 20px; max-width: 320px; }
+    .separator { display: none; } /* Hide lines on mobile to avoid clutter */
+    .unit-box { min-width: 130px; padding: 20px 10px; }
+    .unit-value { font-size: 40px; }
 }
 </style>
 </head>
@@ -381,22 +266,16 @@ body {
 <div class="cursor-dot" id="cursor-dot"></div>
 
 <div id="sidebar" class="sidebar">
-    <div class="menu-label">Navigation</div>
     <a href="index.html">Home</a>
     <a href="aboutus.html">About Us</a>
     <a href="vision.html">Our Vision</a>
-    <div class="menu-label">Intelligence</div>
     <a href="calc.html">Wealth Calculators</a>
     <a href="clock.html">Market Clock</a>
     <a href="contactus.html">Contact Us</a>
 </div>
 
 <div class="nav">
-    <div class="menu-icon" id="menuBtn">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+    <div class="menu-icon" id="menuBtn"><span></span><span></span><span></span></div>
     <div class="logo" onclick="goHome()">gRaviTy</div>
 </div>
 
@@ -459,9 +338,7 @@ if (!isTouchDevice) {
         cursorDot.style.left = e.clientX + 'px';
         cursorDot.style.top = e.clientY + 'px';
     });
-    
-    const interactables = document.querySelectorAll('a, button, .menu-icon, .logo, .unit-box, input');
-    interactables.forEach(el => {
+    document.querySelectorAll('a, button, .menu-icon, .logo, .unit-box').forEach(el => {
         el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
         el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
     });
@@ -472,7 +349,6 @@ const sidebar = document.getElementById("sidebar");
 const menuBtn = document.getElementById("menuBtn");
 menuBtn.addEventListener("click", (e) => { e.stopPropagation(); sidebar.classList.toggle("open"); });
 document.addEventListener("click", () => sidebar.classList.remove("open"));
-sidebar.addEventListener("click", (e) => { e.stopPropagation(); });
 
 /* SEAMLESS PAGE TRANSITIONS */
 function transitionTo(url) {
@@ -484,7 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', function(e) {
             const target = this.getAttribute('href');
-            if (target && !target.startsWith('http') && !target.startsWith('mailto') && !target.startsWith('#')) {
+            if (target && !target.startsWith('http') && !target.startsWith('mailto')) {
                 e.preventDefault();
                 transitionTo(target);
             }
@@ -493,9 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener('pageshow', (event) => {
-    if (event.persisted) {
-        document.body.classList.remove('fade-out');
-    }
+    if (event.persisted) document.body.classList.remove('fade-out');
 });
 
 function goHome() { transitionTo('index.html'); }
@@ -508,8 +382,7 @@ function updateClock() {
     const diff = target - now;
 
     if(diff <= 0) {
-        document.querySelector(".container").innerHTML = "<div class='unit-value' style='font-size: clamp(30px, 5vw, 60px); letter-spacing: 10px; font-weight:300;'>SYSTEM LIVE</div>";
-        document.querySelector(".launch-text").style.display = 'none';
+        document.querySelector(".container").innerHTML = "<div class='unit-value' style='letter-spacing: 10px;'>SYSTEM LIVE</div>";
         return;
     }
 
