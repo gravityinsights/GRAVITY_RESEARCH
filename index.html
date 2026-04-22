@@ -30,6 +30,66 @@ body
     overflow-x: hidden;
 }
 
+/* ========================= */
+/* ✨ MOVING GOLD ORBS (NEW) */
+/* ========================= */
+
+.gold-orb
+{
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    z-index: 0;
+    pointer-events: none;
+    background: rgba(212,175,55,0.25);
+}
+
+.orb1
+{
+    width: 320px;
+    height: 320px;
+    top: 10%;
+    left: 10%;
+    animation: float1 18s ease-in-out infinite;
+}
+
+.orb2
+{
+    width: 240px;
+    height: 240px;
+    top: 60%;
+    left: 70%;
+    animation: float2 22s ease-in-out infinite;
+}
+
+.orb3
+{
+    width: 180px;
+    height: 180px;
+    top: 75%;
+    left: 20%;
+    animation: float3 26s ease-in-out infinite;
+}
+
+@keyframes float1
+{
+    0%,100% { transform: translate(0,0); }
+    50% { transform: translate(120px, -80px); }
+}
+
+@keyframes float2
+{
+    0%,100% { transform: translate(0,0); }
+    50% { transform: translate(-100px, 90px); }
+}
+
+@keyframes float3
+{
+    0%,100% { transform: translate(0,0); }
+    50% { transform: translate(80px, 60px); }
+}
+
 /* background glow */
 body::before
 {
@@ -185,6 +245,8 @@ section
     opacity: 0;
     transform: translateY(40px);
     transition: 0.6s ease;
+    position: relative;
+    z-index: 2;
 }
 
 section.show
@@ -215,12 +277,24 @@ footer
     padding: 50px 20px;
     color: #777;
     border-top: 1px solid #111;
+    position: relative;
+    z-index: 2;
 }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #d4af37; }
 
 </style>
 </head>
 
 <body>
+
+<!-- ✨ GOLD ORBS -->
+<div class="gold-orb orb1"></div>
+<div class="gold-orb orb2"></div>
+<div class="gold-orb orb3"></div>
 
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
@@ -260,48 +334,30 @@ footer
 
 <!-- HERO -->
 <div class="hero">
-
     <h1>gRaviTy Insights</h1>
     <p>Decoding Markets. Understanding Movement.</p>
-
     <a class="btn" href="#s1">Explore</a>
-
 </div>
 
-<!-- 1. PROBLEM -->
+<!-- CONTENT -->
 <section id="s1">
     <h2>The Problem</h2>
-    <div class="card">
-        Most people see markets as random noise. They react instead of understanding structure.
-    </div>
+    <div class="card">Markets feel random because most people never see structure.</div>
 </section>
 
-<!-- 2. FRAMEWORK -->
 <section>
     <h2>Our Framework</h2>
-    <div class="card">
-        We break markets into three layers: structure, behavior, and probability.
-    </div>
+    <div class="card">We break everything into structure, behavior, and probability layers.</div>
 </section>
 
-<!-- 5. TOOLS -->
 <section>
     <h2>Tools</h2>
-    <div class="card">
-        Calculators, timing tools, and research modules help decode market conditions.
-    </div>
+    <div class="card">We provide calculators and timing systems for analysis.</div>
 </section>
 
-<!-- 6. CTA -->
 <section>
-    <h2>Start Understanding Markets</h2>
-    <div class="card">
-        Stop guessing. Start analyzing structure-based movement logic.
-    </div>
-
-    <button class="btn" onclick="go('researchportal.html')">
-        Enter Research Portal
-    </button>
+    <h2>Start Now</h2>
+    <div class="card">Stop guessing. Start reading structure-based movement.</div>
 </section>
 
 <footer>
@@ -321,7 +377,6 @@ function go(page)
     window.location.href = page;
 }
 
-/* scroll reveal */
 const sections = document.querySelectorAll("section");
 
 window.addEventListener("scroll", () =>
