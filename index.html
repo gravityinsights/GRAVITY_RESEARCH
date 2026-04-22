@@ -40,25 +40,14 @@ body {
     z-index: 10000;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 10px var(--gold);
+    transition: width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease;
 }
 
-.cursor-ring {
-    width: 36px;
-    height: 36px;
-    border: 1px solid rgba(212,175,55,0.4);
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-}
-
-.cursor-ring.hover-state {
-    width: 65px;
-    height: 65px;
-    background: rgba(212,175,55,0.08);
-    border-color: transparent;
+/* New subtle interaction for just the dot */
+.cursor-dot.hover-state {
+    width: 12px;
+    height: 12px;
+    box-shadow: 0 0 15px var(--gold);
 }
 
 /* ================= NOISE OVERLAY ================= */
@@ -518,7 +507,6 @@ body > *
 <div class="noise-overlay"></div>
 
 <div class="cursor-dot" id="cursor-dot"></div>
-<div class="cursor-ring" id="cursor-ring"></div>
 
 <div id="preloader">
     <div class="loader-text">System Initializing...</div>
@@ -645,40 +633,20 @@ window.addEventListener("load", function() {
     }, 800);
 });
 
-/* ================= CUSTOM CURSOR LOGIC ================= */
+/* ================= CUSTOM CURSOR LOGIC (DOT ONLY) ================= */
 const cursorDot = document.getElementById('cursor-dot');
-const cursorRing = document.getElementById('cursor-ring');
-
-// To smooth the ring
-let mouseX = 0, mouseY = 0;
-let ringX = 0, ringY = 0;
 
 window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
     // Dot follows instantly
-    cursorDot.style.left = mouseX + 'px';
-    cursorDot.style.top = mouseY + 'px';
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
 });
 
-// Smooth animate the ring
-function animateRing() {
-    ringX += (mouseX - ringX) * 0.15; // The lerp speed
-    ringY += (mouseY - ringY) * 0.15;
-    
-    cursorRing.style.left = ringX + 'px';
-    cursorRing.style.top = ringY + 'px';
-    
-    requestAnimationFrame(animateRing);
-}
-animateRing();
-
-// Add hover states to interactable elements
+// Add hover states to interactable elements for the dot
 const interactables = document.querySelectorAll('a, button, .menu-icon, .feature, .logo-shimmer');
 interactables.forEach(el => {
-    el.addEventListener('mouseenter', () => cursorRing.classList.add('hover-state'));
-    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover-state'));
+    el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
+    el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
 });
 
 /* ================= MAGNETIC BUTTON ================= */
@@ -715,52 +683,4 @@ document.querySelectorAll('.feature').forEach(card => {
 function toggleMenu()
 {
     document.getElementById("sidebar").classList.toggle("open");
-    document.getElementById("overlay").classList.toggle("show");
-}
-
-function go(p)
-{
-    window.location.href = p;
-}
-
-/* ================= SCROLL + CENTER FOCUS SYSTEM ================= */
-const features = document.querySelectorAll(".feature");
-
-function update()
-{
-    const trigger = window.innerHeight * 0.75;
-    const center = window.innerHeight / 2;
-
-    features.forEach((el, i) =>
-    {
-        const rect = el.getBoundingClientRect();
-
-        if(rect.top < trigger)
-        {
-            setTimeout(() =>
-            {
-                el.classList.add("show");
-            }, i * 120);
-        }
-
-        const elCenter = rect.top + rect.height / 2;
-        const dist = Math.abs(center - elCenter);
-
-        if(dist < 120)
-        {
-            el.classList.add("active");
-        }
-        else
-        {
-            el.classList.remove("active");
-        }
-    });
-}
-
-window.addEventListener("scroll", update);
-window.addEventListener("load", update);
-
-</script>
-
-</body>
-</html>
+    document.getElementById("overlay").classList.toggle("show
