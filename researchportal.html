@@ -1,635 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Portal | gRaviTy Research</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@100;200;300;400;600&display=swap');
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Research Portal | gRaviTy Research</title>
+        :root {
+            --gold: #d4af37;
+            --bg: #050505;
+        }
 
-<style>
+        /* ================= PROTECTION & TRANSITIONS ================= */
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: white;
+            overflow-x: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+            opacity: 1;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap');
+        body.fade-out { opacity: 0; }
 
-:root
-{
-    --gold: #d4af37;
-    --bg: #050505;
-}
+        /* ================= CUSTOM CURSOR ================= */
+        * { cursor: none !important; }
 
-/* ================= PROTECTION STYLES ================= */
-body {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
+        .cursor-dot {
+            width: 6px; height: 6px; background: var(--gold);
+            position: fixed; top: 0; left: 0; border-radius: 50%;
+            pointer-events: none; z-index: 10000;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px var(--gold);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
 
-/* ================= SEAMLESS PAGE TRANSITIONS ================= */
-body {
-    opacity: 1;
-    transition: opacity 0.4s ease-in-out;
-}
+        .cursor-dot.hover-state { width: 30px; height: 30px; background: rgba(212, 175, 55, 0.05); border: 1px solid var(--gold); }
 
-body.fade-out {
-    opacity: 0;
-}
+        /* ================= NAV & SIDEBAR ================= */
+        .nav {
+            position: fixed; top: 0; width: 100%; display: flex;
+            justify-content: space-between; align-items: center;
+            padding: 25px 40px; z-index: 1001; box-sizing: border-box;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px);
+        }
 
-/* ================= CUSTOM CURSOR ================= */
-* {
-    cursor: none !important;
-}
+        .menu-icon { cursor: pointer; }
+        .menu-icon span { display: block; width: 22px; height: 1px; background: var(--gold); margin: 6px 0; }
 
-.cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--gold);
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none; /* Crucial: stops cursor from blocking clicks */
-    z-index: 10000;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 10px var(--gold);
-    transition: width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease;
-}
+        .logo { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); letter-spacing: 3px; text-decoration: none; }
 
-.cursor-dot.hover-state {
-    width: 12px;
-    height: 12px;
-    box-shadow: 0 0 15px var(--gold);
-}
+        .sidebar {
+            width: 0; height: 100%; position: fixed; left: 0; top: 0;
+            background: rgba(3, 3, 3, 0.98); backdrop-filter: blur(20px);
+            overflow-x: hidden; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            padding-top: 100px; z-index: 1000; border-right: 1px solid rgba(212, 175, 55, 0.15);
+        }
 
-/* base */
-html { scroll-behavior: smooth; }
+        .sidebar.open { width: 280px; }
+        .sidebar a { display: block; padding: 18px 40px; color: #999; text-decoration: none; font-size: 14px; transition: 0.3s; }
+        .sidebar a:hover { color: var(--gold); padding-left: 50px; }
 
-body
-{
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: white;
-}
+        /* ================= CONTENT ================= */
+        .container { padding: 140px 20px 60px; max-width: 900px; margin: auto; position: relative; z-index: 2; }
+        
+        h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 40px; text-align: center; margin-bottom: 50px; }
 
-/* background glow */
-body::before
-{
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at 30% 20%, rgba(212,175,55,0.06), transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(212,175,55,0.04), transparent 60%);
-    z-index: 0;
-    pointer-events: none; /* CRITICAL FIX: Stops the glow from swallowing clicks */
-}
+        .report-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 35px; margin-bottom: 30px; transition: 0.4s;
+        }
 
-/* NAV */
-.nav
-{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 20px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(5,5,5,0.9);
-    backdrop-filter: blur(8px);
-    z-index: 1001;
-    box-sizing: border-box;
-}
+        .report-card:hover { border-color: var(--gold); transform: translateY(-5px); }
 
-.menu-icon
-{
-    cursor: pointer;
-}
+        .report-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--gold); margin-bottom: 15px; }
+        .report-desc { color: #aaa; font-size: 15px; line-height: 1.8; margin-bottom: 25px; }
 
-.menu-icon span
-{
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--gold);
-    margin: 5px 0;
-}
+        .actions { display: flex; gap: 15px; flex-wrap: wrap; }
 
-.logo 
-{
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--gold);
-    letter-spacing: 3px;
-    text-decoration: none;
-    cursor: pointer;
-    position: relative;
-    z-index: 1002;
-}
+        .btn {
+            padding: 12px 25px; border: 1px solid var(--gold); background: transparent;
+            color: var(--gold); font-family: 'Inter', sans-serif; font-size: 12px;
+            letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+            text-decoration: none; display: inline-block;
+        }
 
-/* SIDEBAR */
-.sidebar
-{
-    width: 0;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
-    background: #0a0a0a;
-    overflow-x: hidden;
-    transition: 0.3s ease;
-    padding-top: 80px;
-    z-index: 1005;
-    border-right: 1px solid rgba(255,255,255,0.05);
-}
+        .btn:hover { background: var(--gold); color: black; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+        .btn:active { transform: scale(0.95); }
 
-.sidebar.open { width: 260px; }
+        /* ================= TERMINAL ================= */
+        .terminal {
+            display: none; margin-top: 30px; background: #000;
+            border-left: 2px solid var(--gold); padding: 25px;
+            font-family: 'Courier New', monospace; font-size: 13px;
+        }
 
-.sidebar-content { padding: 0 30px; }
+        .term-header { color: var(--gold); display: flex; justify-content: space-between; border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .term-content { max-height: 400px; overflow-y: auto; color: #00ff41; line-height: 1.6; }
 
-.menu-label
-{
-    margin-top: 25px;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--gold);
-    opacity: 0.6;
-}
+        .chat-box { display: none; margin-top: 20px; border-top: 1px solid #222; padding-top: 20px; gap: 10px; }
+        .chat-input {
+            flex: 1; background: transparent; border: 1px solid #333;
+            color: white; padding: 12px; font-family: 'Inter', sans-serif; outline: none;
+        }
+        .chat-input:focus { border-color: var(--gold); }
 
-.sidebar a
-{
-    display: block;
-    padding: 14px 0;
-    color: #777;
-    text-decoration: none;
-    cursor: pointer;
-}
+        .footer { text-align: center; padding: 60px 20px; color: #444; font-size: 11px; letter-spacing: 2px; }
 
-.sidebar a:hover { color: var(--gold); }
-
-/* overlay */
-.overlay
-{
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.3s;
-    z-index: 900;
-}
-
-.overlay.show
-{
-    opacity: 1;
-    pointer-events: all;
-}
-
-/* MAIN */
-.container
-{
-    padding: 140px 20px 60px;
-    max-width: 1000px;
-    margin: auto;
-    position: relative;
-    z-index: 10; /* Ensures content is above background */
-}
-
-/* heading */
-h1
-{
-    text-align: center;
-    font-family: 'Playfair Display', serif;
-    color: var(--gold);
-    font-size: 40px;
-}
-
-/* report card */
-.report-card
-{
-    margin-top: 40px;
-    padding: 25px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.02);
-    transition: 0.3s;
-    position: relative;
-    z-index: 20; /* Keep highly clickable */
-}
-
-.report-card:hover
-{
-    border-color: var(--gold);
-    transform: translateY(-4px);
-}
-
-.report-title
-{
-    font-size: 20px;
-    color: var(--gold);
-    margin-bottom: 10px;
-}
-
-.report-desc
-{
-    color: #aaa;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-/* buttons */
-.actions
-{
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    position: relative;
-    z-index: 30;
-}
-
-.btn
-{
-    padding: 10px 20px;
-    border: 1px solid var(--gold);
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    transition: 0.2s;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-    pointer-events: auto; /* Force clickability */
-}
-
-.btn:hover
-{
-    background: var(--gold);
-    color: black;
-}
-
-.btn:active
-{
-    /* Physical push-down effect so you KNOW it clicked */
-    transform: scale(0.95);
-}
-
-/* AI Terminal Drawer */
-.terminal {
-    display: none; 
-    margin-top: 25px; 
-    padding: 25px;
-    background: #0a0a0a; 
-    border-left: 2px solid var(--gold);
-    font-family: 'Courier New', monospace; 
-    font-size: 13px; 
-    line-height: 1.6;
-}
-
-.term-header { 
-    color: var(--gold); 
-    margin-bottom: 15px; 
-    font-weight: bold; 
-    border-bottom: 1px solid #222; 
-    padding-bottom: 5px; 
-    display: flex; 
-    justify-content: space-between;
-}
-
-.close-term {
-    color: #555;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.close-term:hover {
-    color: white;
-}
-
-.term-content {
-    max-height: 300px;
-    overflow-y: auto;
-    margin-bottom: 15px;
-    padding-right: 10px;
-}
-
-/* Chat Input UI */
-.chat-box {
-    display: none; 
-    gap: 10px;
-    border-top: 1px solid #222;
-    padding-top: 15px;
-}
-
-.chat-input {
-    flex: 1;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid #333;
-    color: white;
-    padding: 10px 15px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    outline: none;
-    transition: 0.3s;
-}
-
-.chat-input:focus {
-    border-color: var(--gold);
-}
-
-/* footer */
-.footer
-{
-    text-align: center;
-    padding: 40px;
-    font-size: 12px;
-    color: #555;
-    position: relative;
-    z-index: 10;
-}
-
-/* scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #000; }
-::-webkit-scrollbar-thumb { background: #d4af37; }
-
-html
-{
-    scrollbar-width: thin;
-    scrollbar-color: #d4af37 #000;
-}
-
-/* ================= MOBILE RESPONSIVENESS ================= */
-@media screen and (max-width: 768px) {
-    * { cursor: auto !important; }
-    .cursor-dot { display: none !important; }
-    .sidebar.open { width: 100%; }
-    h1 { font-size: 30px; }
-    .chat-box { flex-direction: column; }
-}
-
-</style>
+        @media (max-width: 768px) {
+            * { cursor: auto !important; } .cursor-dot { display: none; }
+            .sidebar.open { width: 100%; } .nav { padding: 20px; }
+            .actions { flex-direction: column; } .btn { width: 100%; text-align: center; box-sizing: border-box; }
+        }
+    </style>
 </head>
-
-<body oncontextmenu="return false;">
+<body>
 
 <div class="cursor-dot" id="cursor-dot"></div>
 
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
 <div id="sidebar" class="sidebar">
-
-    <div class="sidebar-content">
-
-        <div class="menu-label">Navigation</div>
-        <a href="index.html">Home</a>
-        <a href="aboutus.html">About Us</a>
-        <a href="vision.html">Vision</a>
-
-        <div class="menu-label">Tools</div>
-        <a href="calc.html">Wealth Calculators</a>
-        <a href="clock.html">Market Clock</a>
-
-        <div class="menu-label">Access</div>
-        <a href="contactus.html">Contact</a>
-
-    </div>
-
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="vision.html">Our Vision</a>
+    <a href="calc.html">Wealth Calculators</a>
+    <a href="clock.html">Market Clock</a>
+    <a href="contactus.html">Contact Us</a>
 </div>
 
 <div class="nav">
-
-    <div class="menu-icon" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-
-    <a href="index.html" class="logo">gRaviTy</a>
-
+    <div class="menu-icon" id="menuBtn"><span></span><span></span><span></span></div>
+    <div class="logo" style="cursor:pointer" onclick="goHome()">gRaviTy</div>
 </div>
 
 <div class="container">
-
-    <h1>Research Reports</h1>
+    <h1>Research Portal</h1>
 
     <div class="report-card">
-
-        <div class="report-title">
-            Tata Motors — 2026 Depth Analysis
-        </div>
-
-        <div class="report-desc">
-            A detailed structural and fundamental breakdown of Tata Motors, 
-            covering market positioning, financial strength, and long-term outlook.
-        </div>
-
+        <div class="report-title">Tata Motors — 2026 Depth Analysis</div>
+        <div class="report-desc">A professional breakdown of structural market behavior and fundamental growth drivers for Tata Motors through the 2026 fiscal cycle.</div>
+        
         <div class="actions">
-            
-            <a href="tatamotors2026depthanalysis.pdf" target="_blank" class="btn">View Report</a>
-
-            <a href="tatamotors2026depthanalysis.pdf" download class="btn">Download</a>
-
-            <button class="btn" onclick="analyzeReport(this, 'Tata Motors structural analysis report for 2026. Key structural levels identified with major resistance zones. High liquidity void present in the upper quadrant. Market positioning remains strong long-term with EV expansion driving forward volume. P/E ratio is healthy and structural support sits at the 850 zone.')">AI Analysis</button>
-
+            <a href="tatamotors2026depthanalysis.pdf" target="_blank" class="btn ignore-transition">View Report</a>
+            <a href="tatamotors2026depthanalysis.pdf" download class="btn ignore-transition">Download</a>
+            <button class="btn ignore-transition" onclick="analyzeReport(this, 'Context: Tata Motors Analysis 2026. Key resistance at 1100, Support at 850. Bullish on EV infrastructure and long-term liquidity voids.')">AI Analysis</button>
         </div>
 
         <div class="terminal">
-            <div class="term-header">
-                <span>> gRaviTy AI ANALYST v2.0</span>
-                <span class="close-term" onclick="this.closest('.terminal').style.display='none'">[X]</span>
-            </div>
-            <div class="term-content">Initializing...</div>
-            
+            <div class="term-header"><span>> gRaviTy AI ANALYST v2.0</span><span style="cursor:pointer" onclick="this.closest('.terminal').style.display='none'">[X]</span></div>
+            <div class="term-content">Initializing security protocols...</div>
             <div class="chat-box">
-                <input type="text" class="chat-input" placeholder="Ask a question about this report..." onkeypress="handleEnter(event, this)">
-                <button class="btn" onclick="askQuestion(this)">Send</button>
+                <input type="text" class="chat-input" placeholder="Query the AI regarding this report..." onkeypress="if(event.key==='Enter') askQuestion(this.nextElementSibling)">
+                <button class="btn" onclick="askQuestion(this)" style="padding: 12px 20px;">Ask</button>
             </div>
         </div>
-
     </div>
-
 </div>
 
-<div class="footer">
-    © 2026 gRaviTy Research
-</div>
+<div class="footer">© 2026 gRaviTy RESEARCH — SYSTEM SECURE</div>
 
 <script>
+    // CONFIG: PASTE YOUR GOOGLE SCRIPT URL HERE
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbycKRN36WPz1nPVZVfIl9bY3ISWWezB93mwxY8mqBAPQTdQvBe7iWFEEYO7dOjELOFE/exec";
 
-/* PROTECTION SCRIPT */
-document.onkeydown = function(e) {
-    if (e.keyCode == 123 || 
-        (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || 
-        (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) ||
-        (e.ctrlKey && e.keyCode == 'C'.charCodeAt(0))) {
-        return false;
+    // Navigation & Sidebar
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menuBtn");
+    menuBtn.addEventListener("click", (e) => { e.stopPropagation(); sidebar.classList.toggle("open"); });
+    document.addEventListener("click", () => sidebar.classList.remove("open"));
+
+    function goHome() { transitionTo('index.html'); }
+    function transitionTo(url) {
+        document.body.classList.add('fade-out');
+        setTimeout(() => { window.location.href = url; }, 400);
     }
-};
 
-/* menu */
-function toggleMenu()
-{
-    document.getElementById("sidebar").classList.toggle("open");
-    document.getElementById("overlay").classList.toggle("show");
-}
-
-/* TOUCH DETECTION */
-const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-/* CUSTOM CURSOR */
-if (!isTouchDevice) {
-    const cursorDot = document.getElementById('cursor-dot');
-    window.addEventListener('mousemove', (e) => {
-        cursorDot.style.left = e.clientX + 'px';
-        cursorDot.style.top = e.clientY + 'px';
-    });
-
-    const interactables = document.querySelectorAll('a, button, .menu-icon, .close-term, input');
-    interactables.forEach(el => {
-        el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
-        el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
-    });
-}
-
-/* SEAMLESS PAGE TRANSITIONS */
-function transitionTo(url) {
-    document.body.classList.add('fade-out');
-    setTimeout(() => {
-        window.location.href = url;
-    }, 400);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const links = document.querySelectorAll('a[href]');
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const target = this.getAttribute('href');
-            // Allow PDF clicks to bypass the custom transition script
-            if (target && !target.toLowerCase().endsWith('.pdf') && !target.startsWith('http') && !target.startsWith('mailto') && target !== '#') {
-                e.preventDefault();
-                transitionTo(target);
-            }
-        });
-    });
-});
-
-window.addEventListener('pageshow', (event) => {
-    if (event.persisted) document.body.classList.remove('fade-out');
-});
-
-/* ================= AI TERMINAL CHAT LOGIC ================= */
-
-// YOUR GOOGLE APPS SCRIPT URL
-const GAS_URL = "https://script.google.com/macros/s/AKfycbycKRN36WPz1nPVZVfIl9bY3ISWWezB93mwxY8mqBAPQTdQvBe7iWFEEYO7dOjELOFE/exec";
-
-async function analyzeReport(btn, reportContent) {
-    console.log("AI Analysis button clicked!"); // Debug logic
-    const terminal = btn.closest('.report-card').querySelector('.terminal');
-    const content = terminal.querySelector('.term-content');
-    const chatBox = terminal.querySelector('.chat-box');
-    
-    terminal.setAttribute('data-report', reportContent);
-    terminal.style.display = 'block';
-    chatBox.style.display = 'none'; 
-    content.innerHTML = "Establishing secure link to gRaviTy AI Node...<br>Generating executive summary...<br><br>";
-
-    try {
-        const response = await fetch(GAS_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ reportText: reportContent, question: "" })
-        });
-        
-        const data = await response.json();
-        const text = data.summary || "No data returned.";
-        
-        // Typing Effect
-        let i = 0;
-        content.innerHTML = "";
-        function type() {
-            if (i < text.length) {
-                content.innerHTML += text.charAt(i) === '\n' ? '<br>' : text.charAt(i);
-                i++;
-                content.scrollTop = content.scrollHeight; 
-                setTimeout(type, 15);
-            } else {
-                chatBox.style.display = 'flex';
-            }
+    // Protection for Internal Links
+    document.addEventListener("click", (e) => {
+        const link = e.target.closest("a");
+        if (link && !link.classList.contains('ignore-transition') && !link.href.includes('.pdf') && !link.href.startsWith('http')) {
+            e.preventDefault();
+            transitionTo(link.href);
         }
-        type();
+    });
 
-    } catch (err) {
-        content.innerHTML = "<span style='color:#ff4d4d'>[CONNECTION ERROR]</span><br>Verify Google Apps Script URL or API Key.";
-        console.error("AI Fetch Error:", err);
-    }
-}
-
-function handleEnter(e, inputNode) {
-    if (e.key === 'Enter') {
-        askQuestion(inputNode.nextElementSibling);
-    }
-}
-
-async function askQuestion(btn) {
-    const terminal = btn.closest('.terminal');
-    const input = terminal.querySelector('.chat-input');
-    const content = terminal.querySelector('.term-content');
-    const reportContent = terminal.getAttribute('data-report');
-    const questionText = input.value.trim();
-
-    if (!questionText) return;
-
-    // Append user question
-    content.innerHTML += `<br><br><span style="color: #fff">> You: ${questionText}</span><br><span style="color: var(--gold)" id="loading-msg">> gRaviTy AI: Processing...</span><br>`;
-    content.scrollTop = content.scrollHeight;
-    input.value = '';
-    
-    input.disabled = true;
-    btn.disabled = true;
-
-    try {
-        const response = await fetch(GAS_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ reportText: reportContent, question: questionText })
+    // Custom Cursor
+    if (!isTouchDevice()) {
+        const dot = document.getElementById('cursor-dot');
+        window.addEventListener('mousemove', (e) => {
+            dot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
         });
-        
-        const data = await response.json();
-        const text = data.summary;
-
-        document.getElementById('loading-msg').remove();
-        
-        let i = 0;
-        const answerSpan = document.createElement('span');
-        answerSpan.style.color = 'var(--gold)';
-        answerSpan.innerHTML = '> gRaviTy AI: ';
-        content.appendChild(answerSpan);
-
-        function type() {
-            if (i < text.length) {
-                answerSpan.innerHTML += text.charAt(i) === '\n' ? '<br>' : text.charAt(i);
-                i++;
-                content.scrollTop = content.scrollHeight;
-                setTimeout(type, 15);
-            } else {
-                input.disabled = false;
-                btn.disabled = false;
-                input.focus();
-            }
-        }
-        type();
-
-    } catch (err) {
-        document.getElementById('loading-msg').innerHTML = "<span style='color:#ff4d4d'>[ERROR COMMUNICATING WITH AI NODE]</span>";
-        input.disabled = false;
-        btn.disabled = false;
-        console.error("AI Chat Error:", err);
+        document.querySelectorAll('a, button, .menu-icon, .logo').forEach(el => {
+            el.addEventListener('mouseenter', () => dot.classList.add('hover-state'));
+            el.addEventListener('mouseleave', () => dot.classList.remove('hover-state'));
+        });
     }
-}
+    function isTouchDevice() { return 'ontouchstart' in window || navigator.maxTouchPoints > 0; }
 
+    // AI LOGIC
+    async function analyzeReport(btn, content) {
+        const term = btn.closest('.report-card').querySelector('.terminal');
+        const termBody = term.querySelector('.term-content');
+        term.style.display = 'block';
+        term.setAttribute('data-report', content);
+        termBody.innerHTML = "> Connecting to Gemini Pro...<br>> Decrypting structure...";
+
+        try {
+            const res = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ reportText: content, question: "" }) });
+            const data = await res.json();
+            termBody.innerHTML = "> SUMMARY GENERATED:<br><br>" + data.summary.replace(/\n/g, '<br>');
+            term.querySelector('.chat-box').style.display = 'flex';
+        } catch (e) { termBody.innerHTML = "> [CONNECTION ERROR] Deployment must be set to 'Anyone'."; }
+    }
+
+    async function askQuestion(btn) {
+        const term = btn.closest('.terminal');
+        const input = term.querySelector('.chat-input');
+        const termBody = term.querySelector('.term-content');
+        const q = input.value;
+        if(!q) return;
+
+        termBody.innerHTML += `<br><br><span style="color:white">> USER QUERY: ${q}</span><br>> Processing...`;
+        const report = term.getAttribute('data-report');
+        input.value = "";
+        termBody.scrollTop = termBody.scrollHeight;
+
+        try {
+            const res = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ reportText: report, question: q }) });
+            const data = await res.json();
+            termBody.innerHTML += `<br>> gRaviTy AI: ${data.summary.replace(/\n/g, '<br>')}`;
+            termBody.scrollTop = termBody.scrollHeight;
+        } catch (e) { termBody.innerHTML += "<br>> [ERROR] AI Node unreachable."; }
+    }
 </script>
-
 </body>
 </html>
