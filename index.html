@@ -283,7 +283,7 @@ body::before
     top: 0;
     left: 0;
     width: 100%;
-    box-sizing: border-box; /* Prevents overflow from width 100% + padding */
+    box-sizing: border-box; 
     background: rgba(5,5,5,0.75);
     backdrop-filter: blur(14px);
     z-index: 1001;
@@ -291,7 +291,7 @@ body::before
 
 .menu-icon {
     position: relative;
-    z-index: 10; /* Keep above logo */
+    z-index: 10; 
 }
 
 .menu-icon span
@@ -320,6 +320,7 @@ body::before
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    cursor: pointer;
 }
 
 @keyframes shimmer {
@@ -342,10 +343,10 @@ body::before
     font-size: clamp(44px, 6vw, 78px);
     color: var(--gold);
     margin-bottom: 20px;
-    overflow: hidden; /* Clips the sliding text */
+    overflow: hidden; 
     display: flex;
     justify-content: center;
-    gap: 15px; /* Space between words */
+    gap: 15px; 
 }
 
 .cinematic-word {
@@ -355,7 +356,6 @@ body::before
     transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease-out;
 }
 
-/* Class added via JS after preloader */
 .cinematic-title.revealed .cinematic-word {
     transform: translateY(0);
     opacity: 1;
@@ -380,6 +380,7 @@ body::before
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, color 0.3s;
     margin-top: 25px;
     will-change: transform;
+    cursor: pointer;
 }
 
 .btn:hover
@@ -400,21 +401,20 @@ body::before
     gap: 25px;
 }
 
-/* Flashlight Spotlight setup */
 .feature
 {
     padding: 20px;
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 12px;
     background: rgba(255,255,255,0.02);
-    backdrop-filter: blur(12px);         /* Glassmorphism Added */
-    -webkit-backdrop-filter: blur(12px); /* Safari support */
+    backdrop-filter: blur(12px);         
+    -webkit-backdrop-filter: blur(12px); 
 
     opacity: 0;
     transform: translateY(40px) scale(0.98);
     transition: 0.6s ease, border-color 0.3s;
     position: relative;
-    overflow: hidden; /* Keeps spotlight inside */
+    overflow: hidden; 
 }
 
 /* Spotlight glow inside the card */
@@ -433,25 +433,21 @@ body::before
     opacity: 1;
 }
 
-/* Ensure content stays above the spotlight layer */
 .feature > * {
     position: relative;
     z-index: 1;
 }
 
-/* Icon spacing */
 .feature svg {
     margin-bottom: 15px;
 }
 
-/* reveal */
 .feature.show
 {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
 
-/* hover edge glow */
 .feature:hover
 {
     border-color: rgba(212,175,55,0.5);
@@ -460,7 +456,6 @@ body::before
         0 0 80px rgba(212,175,55,0.05);
 }
 
-/* center focus active */
 .feature.active
 {
     border-color: rgba(212,175,55,0.8);
@@ -486,14 +481,12 @@ footer
     border-top: 1px solid #111;
 }
 
-/* layering */
 body > *
 {
     position: relative;
     z-index: 1;
 }
 
-/* scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #000; }
 ::-webkit-scrollbar-thumb { background: var(--gold); }
@@ -524,18 +517,18 @@ body > *
 <div class="sidebar-content">
 
 <div class="menu-label">Tools</div>
-<a onclick="go('calc.html')">Wealth Calculators</a>
-<a onclick="go('clock.html')">Market Clock</a>
+<a onclick="go('calc.html')" style="cursor: pointer;">Wealth Calculators</a>
+<a onclick="go('clock.html')" style="cursor: pointer;">Market Clock</a>
 
 <div class="menu-label">Firm</div>
-<a onclick="go('aboutus.html')">About Us</a>
-<a onclick="go('vision.html')">Our Vision</a>
+<a onclick="go('aboutus.html')" style="cursor: pointer;">About Us</a>
+<a onclick="go('vision.html')" style="cursor: pointer;">Our Vision</a>
 
 <div class="menu-label">Research</div>
-<a onclick="go('researchportal.html')">Research Portal</a>
+<a onclick="go('researchportal.html')" style="cursor: pointer;">Research Portal</a>
 
 <div class="menu-label">Access</div>
-<a onclick="go('contactus.html')">Contact</a>
+<a onclick="go('contactus.html')" style="cursor: pointer;">Contact</a>
 
 </div>
 
@@ -543,7 +536,7 @@ body > *
 
 <div class="nav">
 
-<div class="menu-icon" onclick="toggleMenu()">
+<div class="menu-icon" onclick="toggleMenu()" style="cursor: pointer;">
 <span></span><span></span><span></span>
 </div>
 
@@ -620,29 +613,42 @@ document.onkeydown = function(e) {
     }
 };
 
-/* ================= PRELOADER & CINEMATIC REVEAL ================= */
-window.addEventListener("load", function() {
-    setTimeout(() => {
-        const preloader = document.getElementById("preloader");
+/* ================= PRELOADER & CINEMATIC REVEAL (WITH FAILSAFE) ================= */
+let preloaderRemoved = false;
+
+function removePreloader() {
+    if (preloaderRemoved) return;
+    preloaderRemoved = true;
+    
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
         preloader.style.opacity = "0";
         setTimeout(() => {
             preloader.style.display = "none";
             // Trigger Cinematic Reveal
-            document.getElementById("main-title").classList.add("revealed");
+            const mainTitle = document.getElementById("main-title");
+            if (mainTitle) mainTitle.classList.add("revealed");
         }, 600); 
-    }, 800);
+    }
+}
+
+// Standard load
+window.addEventListener("load", function() {
+    setTimeout(removePreloader, 600);
 });
 
-/* ================= CUSTOM CURSOR LOGIC (DOT ONLY) ================= */
+// Failsafe: Forces the preloader to close after 2.5 seconds regardless of network status
+setTimeout(removePreloader, 2500);
+
+
+/* ================= CUSTOM CURSOR LOGIC ================= */
 const cursorDot = document.getElementById('cursor-dot');
 
 window.addEventListener('mousemove', (e) => {
-    // Dot follows instantly
     cursorDot.style.left = e.clientX + 'px';
     cursorDot.style.top = e.clientY + 'px';
 });
 
-// Add hover states to interactable elements for the dot
 const interactables = document.querySelectorAll('a, button, .menu-icon, .feature, .logo-shimmer');
 interactables.forEach(el => {
     el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
@@ -652,22 +658,23 @@ interactables.forEach(el => {
 /* ================= MAGNETIC BUTTON ================= */
 const magBtn = document.getElementById('magnetic-btn');
 
-magBtn.addEventListener('mousemove', (e) => {
-    const rect = magBtn.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    
-    magBtn.style.transition = 'none'; // remove transition for smooth tracking
-    magBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.4}px)`; // tweak multipliers for intensity
-});
+if (magBtn) {
+    magBtn.addEventListener('mousemove', (e) => {
+        const rect = magBtn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        magBtn.style.transition = 'none'; 
+        magBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.4}px)`; 
+    });
 
-magBtn.addEventListener('mouseleave', () => {
-    // Return transition for the snap back
-    magBtn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, color 0.3s';
-    magBtn.style.transform = 'translate(0px, 0px)';
-});
+    magBtn.addEventListener('mouseleave', () => {
+        magBtn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, color 0.3s';
+        magBtn.style.transform = 'translate(0px, 0px)';
+    });
+}
 
-/* ================= FLASHLIGHT EFFECT ON CARDS ================= */
+/* ================= FLASHLIGHT EFFECT ================= */
 document.querySelectorAll('.feature').forEach(card => {
     card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
@@ -679,8 +686,56 @@ document.querySelectorAll('.feature').forEach(card => {
     });
 });
 
-/* ================= MENU & NAVIGATION ================= */
+/* ================= MENU LOGIC ================= */
 function toggleMenu()
 {
     document.getElementById("sidebar").classList.toggle("open");
-    document.getElementById("overlay").classList.toggle("show
+    document.getElementById("overlay").classList.toggle("show");
+}
+
+function go(p)
+{
+    window.location.href = p;
+}
+
+/* ================= SCROLL LOGIC ================= */
+const features = document.querySelectorAll(".feature");
+
+function update()
+{
+    const trigger = window.innerHeight * 0.75;
+    const center = window.innerHeight / 2;
+
+    features.forEach((el, i) =>
+    {
+        const rect = el.getBoundingClientRect();
+
+        if(rect.top < trigger)
+        {
+            setTimeout(() =>
+            {
+                el.classList.add("show");
+            }, i * 120);
+        }
+
+        const elCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(center - elCenter);
+
+        if(dist < 120)
+        {
+            el.classList.add("active");
+        }
+        else
+        {
+            el.classList.remove("active");
+        }
+    });
+}
+
+window.addEventListener("scroll", update);
+window.addEventListener("load", update);
+
+</script>
+
+</body>
+</html>
