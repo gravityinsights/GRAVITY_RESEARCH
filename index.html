@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>gRaviTy Research | Market Intelligence System</title>
 
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap');
 
-:root
-{
+:root {
     --gold: #d4af37;
     --bg: #050505;
 }
 
 /* ================= PROTECTION STYLES ================= */
 body {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none;    /* Firefox */
-    -ms-user-select: none;     /* IE10+/Edge */
-    user-select: none;         /* Standard */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* ================= CUSTOM CURSOR ================= */
 * {
-    cursor: none !important; /* Hide default cursor */
+    cursor: none !important;
 }
 
 .cursor-dot {
@@ -43,7 +39,6 @@ body {
     transition: width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* New subtle interaction for just the dot */
 .cursor-dot.hover-state {
     width: 12px;
     height: 12px;
@@ -64,14 +59,11 @@ body {
 }
 
 /* ================= BASE ================= */
-
-html
-{
+html {
     scroll-behavior: smooth;
 }
 
-body
-{
+body {
     margin: 0;
     font-family: 'Inter', sans-serif;
     background: var(--bg);
@@ -79,14 +71,11 @@ body
     overflow-x: hidden;
 }
 
-/* Typography Enhancement */
 p {
     letter-spacing: 0.5px;
 }
 
-/* subtle glow background */
-body::before
-{
+body::before {
     content: "";
     position: fixed;
     inset: 0;
@@ -147,9 +136,7 @@ body::before
 }
 
 /* ================= ORBS ================= */
-
-.orb
-{
+.orb {
     position: fixed;
     border-radius: 50%;
     filter: blur(120px);
@@ -158,57 +145,16 @@ body::before
     pointer-events: none;
 }
 
-.orb1
-{
-    width: 420px;
-    height: 420px;
-    background: var(--gold);
-    animation: float1 25s infinite linear;
-}
+.orb1 { width: 420px; height: 420px; background: var(--gold); animation: float1 25s infinite linear; }
+.orb2 { width: 300px; height: 300px; background: var(--gold); opacity: 0.12; animation: float2 32s infinite linear; }
+.orb3 { width: 220px; height: 220px; background: var(--gold); opacity: 0.1; animation: float3 38s infinite linear; }
 
-.orb2
-{
-    width: 300px;
-    height: 300px;
-    background: var(--gold);
-    opacity: 0.12;
-    animation: float2 32s infinite linear;
-}
-
-.orb3
-{
-    width: 220px;
-    height: 220px;
-    background: var(--gold);
-    opacity: 0.1;
-    animation: float3 38s infinite linear;
-}
-
-@keyframes float1
-{
-    0% { top: 10%; left: 10%; }
-    50% { top: 75%; left: 80%; }
-    100% { top: 10%; left: 10%; }
-}
-
-@keyframes float2
-{
-    0% { top: 80%; left: 70%; }
-    50% { top: 20%; left: 15%; }
-    100% { top: 80%; left: 70%; }
-}
-
-@keyframes float3
-{
-    0% { top: 50%; left: 0%; }
-    50% { top: 10%; left: 90%; }
-    100% { top: 50%; left: 0%; }
-}
+@keyframes float1 { 0% { top: 10%; left: 10%; } 50% { top: 75%; left: 80%; } 100% { top: 10%; left: 10%; } }
+@keyframes float2 { 0% { top: 80%; left: 70%; } 50% { top: 20%; left: 15%; } 100% { top: 80%; left: 70%; } }
+@keyframes float3 { 0% { top: 50%; left: 0%; } 50% { top: 10%; left: 90%; } 100% { top: 50%; left: 0%; } }
 
 /* ================= SIDEBAR ================= */
-
-.sidebar
-{
+.sidebar {
     width: 0;
     height: 100%;
     position: fixed;
@@ -221,26 +167,22 @@ body::before
     z-index: 2000;
 }
 
-.sidebar.open
-{
+.sidebar.open {
     width: 270px;
 }
 
-.sidebar-content
-{
+.sidebar-content {
     padding: 0 30px;
 }
 
-.menu-label
-{
+.menu-label {
     margin-top: 25px;
     font-size: 10px;
     letter-spacing: 2px;
     color: var(--gold);
 }
 
-.sidebar a
-{
+.sidebar a {
     display: block;
     padding: 14px 0;
     color: #888;
@@ -248,15 +190,12 @@ body::before
     transition: 0.2s;
 }
 
-.sidebar a:hover
-{
+.sidebar a:hover {
     color: var(--gold);
     transform: translateX(6px);
 }
 
-/* overlay */
-.overlay
-{
+.overlay {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.55);
@@ -266,16 +205,13 @@ body::before
     z-index: 1500;
 }
 
-.overlay.show
-{
+.overlay.show {
     opacity: 1;
     pointer-events: all;
 }
 
 /* ================= NAV ================= */
-
-.nav
-{
+.nav {
     display: flex;
     align-items: center;
     padding: 18px 30px;
@@ -294,8 +230,7 @@ body::before
     z-index: 10; 
 }
 
-.menu-icon span
-{
+.menu-icon span {
     display: block;
     width: 22px;
     height: 2px;
@@ -303,7 +238,6 @@ body::before
     margin: 5px 0;
 }
 
-/* Dynamic Text Logo Enhancement - Centered */
 .logo-shimmer {
     font-family: 'Playfair Display', serif;
     font-size: 24px;
@@ -314,8 +248,6 @@ body::before
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shimmer 3s linear infinite;
-    
-    /* Centralizing Magic */
     position: absolute;
     left: 50%;
     top: 50%;
@@ -328,21 +260,19 @@ body::before
 }
 
 /* ================= HERO & CINEMATIC TEXT ================= */
-
-.hero
-{
+.hero {
     text-align: center;
     padding: 200px 20px 100px;
     position: relative;
     z-index: 2;
 }
 
-/* Cinematic Reveal Setup */
 .cinematic-title {
     font-family: 'Playfair Display', serif;
     font-size: clamp(44px, 6vw, 78px);
     color: var(--gold);
     margin-bottom: 20px;
+    margin-top: 0;
     overflow: hidden; 
     display: flex;
     justify-content: center;
@@ -361,17 +291,14 @@ body::before
     opacity: 1;
 }
 
-.hero p
-{
+.hero p {
     max-width: 720px;
     margin: 20px auto;
     color: #aaa;
     line-height: 1.8;
 }
 
-/* Magnetic Button */
-.btn
-{
+.btn {
     display: inline-block;
     padding: 12px 28px;
     border: 1px solid var(--gold);
@@ -383,16 +310,13 @@ body::before
     cursor: pointer;
 }
 
-.btn:hover
-{
+.btn:hover {
     background: var(--gold);
     color: black;
 }
 
 /* ================= FEATURES (INSIGHTS CARDS) ================= */
-
-.features
-{
+.features {
     max-width: 1000px;
     margin: auto;
     padding: 60px 20px 120px;
@@ -401,15 +325,13 @@ body::before
     gap: 25px;
 }
 
-.feature
-{
+.feature {
     padding: 20px;
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 12px;
     background: rgba(255,255,255,0.02);
     backdrop-filter: blur(12px);         
     -webkit-backdrop-filter: blur(12px); 
-
     opacity: 0;
     transform: translateY(40px) scale(0.98);
     transition: 0.6s ease, border-color 0.3s;
@@ -417,7 +339,6 @@ body::before
     overflow: hidden; 
 }
 
-/* Spotlight glow inside the card */
 .feature::before {
     content: '';
     position: absolute;
@@ -442,47 +363,35 @@ body::before
     margin-bottom: 15px;
 }
 
-.feature.show
-{
+.feature.show {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
 
-.feature:hover
-{
+.feature:hover {
     border-color: rgba(212,175,55,0.5);
-    box-shadow:
-        0 0 25px rgba(212,175,55,0.1),
-        0 0 80px rgba(212,175,55,0.05);
+    box-shadow: 0 0 25px rgba(212,175,55,0.1), 0 0 80px rgba(212,175,55,0.05);
 }
 
-.feature.active
-{
+.feature.active {
     border-color: rgba(212,175,55,0.8);
-    box-shadow:
-        0 0 40px rgba(212,175,55,0.2),
-        0 0 120px rgba(212,175,55,0.1);
+    box-shadow: 0 0 40px rgba(212,175,55,0.2), 0 0 120px rgba(212,175,55,0.1);
     transform: scale(1.05);
 }
 
-.feature h3
-{
+.feature h3 {
     margin-top: 0;
     color: var(--gold);
 }
 
-/* ================= FOOTER ================= */
-
-footer
-{
+footer {
     text-align: center;
     padding: 60px 20px;
     color: #777;
     border-top: 1px solid #111;
 }
 
-body > *
-{
+body > * {
     position: relative;
     z-index: 1;
 }
@@ -491,14 +400,71 @@ body > *
 ::-webkit-scrollbar-track { background: #000; }
 ::-webkit-scrollbar-thumb { background: var(--gold); }
 
-</style>
 
+/* ================= MOBILE RESPONSIVENESS FIXES ================= */
+@media screen and (max-width: 768px) {
+    /* Fix Navigation Layout */
+    .nav {
+        justify-content: space-between; 
+        padding: 15px 20px;
+    }
+    
+    .logo-shimmer {
+        position: relative; 
+        left: auto;
+        top: auto;
+        transform: none;
+        font-size: 20px;
+    }
+
+    /* Fix Hero Spacing & Stacking */
+    .hero {
+        padding: 140px 20px 60px; 
+    }
+    
+    .cinematic-title {
+        flex-wrap: wrap; 
+        font-size: 11vw; 
+        gap: 10px;
+    }
+
+    /* Full-screen Sidebar for Touch */
+    .sidebar.open {
+        width: 100%; 
+    }
+    
+    .sidebar-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        padding-top: 20px;
+        font-size: 18px; /* Larger tap targets */
+    }
+
+    .sidebar a {
+        padding: 18px 0;
+    }
+
+    /* Disable Custom Cursor on Mobile */
+    * {
+        cursor: auto !important; 
+    }
+    
+    .cursor-dot {
+        display: none !important; 
+    }
+    
+    /* Adjust Card Spacing */
+    .features {
+        padding: 40px 20px 80px;
+    }
+}
+</style>
 </head>
 
 <body oncontextmenu="return false;">
 
 <div class="noise-overlay"></div>
-
 <div class="cursor-dot" id="cursor-dot"></div>
 
 <div id="preloader">
@@ -513,96 +479,84 @@ body > *
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
 <div id="sidebar" class="sidebar">
+    <div class="sidebar-content">
+        <div class="menu-label">Tools</div>
+        <a onclick="go('calc.html')" style="cursor: pointer;">Wealth Calculators</a>
+        <a onclick="go('clock.html')" style="cursor: pointer;">Market Clock</a>
 
-<div class="sidebar-content">
+        <div class="menu-label">Firm</div>
+        <a onclick="go('aboutus.html')" style="cursor: pointer;">About Us</a>
+        <a onclick="go('vision.html')" style="cursor: pointer;">Our Vision</a>
 
-<div class="menu-label">Tools</div>
-<a onclick="go('calc.html')" style="cursor: pointer;">Wealth Calculators</a>
-<a onclick="go('clock.html')" style="cursor: pointer;">Market Clock</a>
+        <div class="menu-label">Research</div>
+        <a onclick="go('researchportal.html')" style="cursor: pointer;">Research Portal</a>
 
-<div class="menu-label">Firm</div>
-<a onclick="go('aboutus.html')" style="cursor: pointer;">About Us</a>
-<a onclick="go('vision.html')" style="cursor: pointer;">Our Vision</a>
-
-<div class="menu-label">Research</div>
-<a onclick="go('researchportal.html')" style="cursor: pointer;">Research Portal</a>
-
-<div class="menu-label">Access</div>
-<a onclick="go('contactus.html')" style="cursor: pointer;">Contact</a>
-
-</div>
-
+        <div class="menu-label">Access</div>
+        <a onclick="go('contactus.html')" style="cursor: pointer;">Contact</a>
+    </div>
 </div>
 
 <div class="nav">
-
-<div class="menu-icon" onclick="toggleMenu()" style="cursor: pointer;">
-<span></span><span></span><span></span>
-</div>
-
-<div class="logo-shimmer" onclick="go('index.html')">gRaviTy</div>
-
+    <div class="menu-icon" onclick="toggleMenu()" style="cursor: pointer;">
+        <span></span><span></span><span></span>
+    </div>
+    <div class="logo-shimmer" onclick="go('index.html')">gRaviTy</div>
 </div>
 
 <div class="hero">
+    <h1 class="cinematic-title" id="main-title">
+        <span class="cinematic-word" style="transition-delay: 0.1s;">gRaviTy</span>
+        <span class="cinematic-word" style="transition-delay: 0.3s;">Insights</span>
+    </h1>
 
-<div class="cinematic-title" id="main-title">
-    <span class="cinematic-word" style="transition-delay: 0.1s;">gRaviTy</span>
-    <span class="cinematic-word" style="transition-delay: 0.3s;">Insights</span>
-</div>
+    <p>Markets behave like structured systems — not randomness. We decode movement logic, liquidity, and human behavior flow.</p>
 
-<p>Markets behave like structured systems — not randomness. We decode movement logic, liquidity, and human behavior flow.</p>
-
-<button class="btn" id="magnetic-btn" onclick="go('aboutus.html')">Enter System</button>
-
+    <button class="btn" id="magnetic-btn" onclick="go('aboutus.html')">Enter System</button>
 </div>
 
 <div class="features">
+    <div class="feature">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <h3>Structure</h3>
+        <p>Markets follow hidden structural frameworks.</p>
+    </div>
 
-<div class="feature">
-<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-<h3>Structure</h3>
-<p>Markets follow hidden structural frameworks.</p>
-</div>
+    <div class="feature">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <h3>Behavior</h3>
+        <p>Human emotion drives price movement.</p>
+    </div>
 
-<div class="feature">
-<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-<h3>Behavior</h3>
-<p>Human emotion drives price movement.</p>
-</div>
+    <div class="feature">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="15.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><circle cx="8.5" cy="15.5" r="1.5"/></svg>
+        <h3>Probability</h3>
+        <p>Every move has weighted outcomes.</p>
+    </div>
 
-<div class="feature">
-<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="15.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><circle cx="8.5" cy="15.5" r="1.5"/></svg>
-<h3>Probability</h3>
-<p>Every move has weighted outcomes.</p>
-</div>
+    <div class="feature">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        <h3>Liquidity</h3>
+        <p>Flow determines direction more than news.</p>
+    </div>
 
-<div class="feature">
-<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
-<h3>Liquidity</h3>
-<p>Flow determines direction more than news.</p>
-</div>
+    <div class="feature">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <h3>Momentum</h3>
+        <p>Trends form through repeated pressure cycles.</p>
+    </div>
 
-<div class="feature">
-<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-<h3>Momentum</h3>
-<p>Trends form through repeated pressure cycles.</p>
-</div>
-
-<div class="feature">
-<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-<h3>Structure Zones</h3>
-<p>Price reacts at invisible market boundaries.</p>
-</div>
-
+    <div class="feature">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        <h3>Structure Zones</h3>
+        <p>Price reacts at invisible market boundaries.</p>
+    </div>
 </div>
 
 <footer>
-gRaviTy Research • Intelligence System
+    gRaviTy Research • Intelligence System
 </footer>
 
 <script>
-
 /* ================= PROTECTION SCRIPT ================= */
 document.onkeydown = function(e) {
     if (e.keyCode == 123 || 
@@ -613,7 +567,7 @@ document.onkeydown = function(e) {
     }
 };
 
-/* ================= PRELOADER & CINEMATIC REVEAL (WITH FAILSAFE) ================= */
+/* ================= PRELOADER ================= */
 let preloaderRemoved = false;
 
 function removePreloader() {
@@ -625,95 +579,91 @@ function removePreloader() {
         preloader.style.opacity = "0";
         setTimeout(() => {
             preloader.style.display = "none";
-            // Trigger Cinematic Reveal
             const mainTitle = document.getElementById("main-title");
             if (mainTitle) mainTitle.classList.add("revealed");
         }, 600); 
     }
 }
 
-// Standard load
 window.addEventListener("load", function() {
     setTimeout(removePreloader, 600);
 });
-
-// Failsafe: Forces the preloader to close after 2.5 seconds regardless of network status
 setTimeout(removePreloader, 2500);
 
 
-/* ================= CUSTOM CURSOR LOGIC ================= */
-const cursorDot = document.getElementById('cursor-dot');
+/* ================= TOUCH DETECTION (MOBILE FIXES) ================= */
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-window.addEventListener('mousemove', (e) => {
-    cursorDot.style.left = e.clientX + 'px';
-    cursorDot.style.top = e.clientY + 'px';
-});
-
-const interactables = document.querySelectorAll('a, button, .menu-icon, .feature, .logo-shimmer');
-interactables.forEach(el => {
-    el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
-    el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
-});
-
-/* ================= MAGNETIC BUTTON ================= */
-const magBtn = document.getElementById('magnetic-btn');
-
-if (magBtn) {
-    magBtn.addEventListener('mousemove', (e) => {
-        const rect = magBtn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        magBtn.style.transition = 'none'; 
-        magBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.4}px)`; 
+/* ================= CUSTOM CURSOR & EFFECTS LOGIC ================= */
+// Only run these intensive mouse-tracking scripts if the user is NOT on a touchscreen
+if (!isTouchDevice) {
+    
+    // 1. Custom Cursor
+    const cursorDot = document.getElementById('cursor-dot');
+    window.addEventListener('mousemove', (e) => {
+        cursorDot.style.left = e.clientX + 'px';
+        cursorDot.style.top = e.clientY + 'px';
     });
 
-    magBtn.addEventListener('mouseleave', () => {
-        magBtn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, color 0.3s';
-        magBtn.style.transform = 'translate(0px, 0px)';
+    const interactables = document.querySelectorAll('a, button, .menu-icon, .feature, .logo-shimmer');
+    interactables.forEach(el => {
+        el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
+        el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
+    });
+
+    // 2. Magnetic Button
+    const magBtn = document.getElementById('magnetic-btn');
+    if (magBtn) {
+        magBtn.addEventListener('mousemove', (e) => {
+            const rect = magBtn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            magBtn.style.transition = 'none'; 
+            magBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.4}px)`; 
+        });
+
+        magBtn.addEventListener('mouseleave', () => {
+            magBtn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, color 0.3s';
+            magBtn.style.transform = 'translate(0px, 0px)';
+        });
+    }
+
+    // 3. Flashlight Effect on Cards
+    document.querySelectorAll('.feature').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
     });
 }
 
-/* ================= FLASHLIGHT EFFECT ================= */
-document.querySelectorAll('.feature').forEach(card => {
-    card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-    });
-});
-
 /* ================= MENU LOGIC ================= */
-function toggleMenu()
-{
+function toggleMenu() {
     document.getElementById("sidebar").classList.toggle("open");
     document.getElementById("overlay").classList.toggle("show");
 }
 
-function go(p)
-{
+function go(p) {
     window.location.href = p;
 }
 
 /* ================= SCROLL LOGIC ================= */
 const features = document.querySelectorAll(".feature");
 
-function update()
-{
+function update() {
     const trigger = window.innerHeight * 0.75;
     const center = window.innerHeight / 2;
 
-    features.forEach((el, i) =>
-    {
+    features.forEach((el, i) => {
         const rect = el.getBoundingClientRect();
 
-        if(rect.top < trigger)
-        {
-            setTimeout(() =>
-            {
+        if(rect.top < trigger) {
+            setTimeout(() => {
                 el.classList.add("show");
             }, i * 120);
         }
@@ -721,12 +671,10 @@ function update()
         const elCenter = rect.top + rect.height / 2;
         const dist = Math.abs(center - elCenter);
 
-        if(dist < 120)
-        {
+        // Adds the subtle gold glow to the card closest to the middle of the screen
+        if(dist < 120) {
             el.classList.add("active");
-        }
-        else
-        {
+        } else {
             el.classList.remove("active");
         }
     });
@@ -736,6 +684,5 @@ window.addEventListener("scroll", update);
 window.addEventListener("load", update);
 
 </script>
-
 </body>
 </html>
