@@ -226,6 +226,30 @@ body
     z-index: 1;
 }
 
+/* HOME BUTTON */
+.home-btn-container {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.btn-home {
+    padding: 12px 30px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-home:hover {
+    background: var(--gold);
+    color: black;
+}
+
 /* FOOTER */
 .footer
 {
@@ -384,6 +408,10 @@ body
 
 </div>
 
+<div class="home-btn-container">
+    <button class="btn-home" onclick="goHome()">← Return Home</button>
+</div>
+
 <div class="footer">
     © 2026 gRaviTy Research
 </div>
@@ -411,7 +439,7 @@ if (!isTouchDevice) {
         cursorDot.style.top = e.clientY + 'px';
     });
 
-    const interactables = document.querySelectorAll('a, .menu-icon, .logo, .card');
+    const interactables = document.querySelectorAll('a, .menu-icon, .logo, .card, .btn-home');
     interactables.forEach(el => {
         el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
         el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
