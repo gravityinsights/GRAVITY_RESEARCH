@@ -6,11 +6,14 @@
 <title>Launch | gRaviTy Research</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@200;300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@100;200;300;400;600&display=swap');
 
 :root {
     --gold: #d4af37;
+    --gold-dim: rgba(212, 175, 55, 0.3);
+    --gold-glow: rgba(212, 175, 55, 0.1);
     --bg: #050505;
+    --selection: rgba(212, 175, 55, 0.15);
 }
 
 /* ================= PROTECTION STYLES ================= */
@@ -21,10 +24,13 @@ body {
     user-select: none;
 }
 
+::selection { background: var(--selection); color: var(--gold); }
+::-moz-selection { background: var(--selection); color: var(--gold); }
+
 /* ================= SEAMLESS PAGE TRANSITIONS ================= */
 body {
     opacity: 1;
-    transition: opacity 0.4s ease-in-out;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body.fade-out {
@@ -43,14 +49,16 @@ body.fade-out {
     pointer-events: none;
     z-index: 10000;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 10px var(--gold);
-    transition: width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 15px var(--gold);
+    transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .cursor-dot.hover-state {
-    width: 12px;
-    height: 12px;
-    box-shadow: 0 0 15px var(--gold);
+    width: 30px;
+    height: 30px;
+    background: rgba(212, 175, 55, 0.05);
+    border: 1px solid var(--gold);
+    box-shadow: 0 0 20px var(--gold-glow);
 }
 
 body {
@@ -59,6 +67,7 @@ body {
     background: var(--bg);
     color: white;
     overflow: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* sidebar */
@@ -68,36 +77,58 @@ body {
     position: fixed;
     left: 0;
     top: 0;
-    background: rgba(5,5,5,0.98);
-    backdrop-filter: blur(15px);
+    background: rgba(3, 3, 3, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     overflow-x: hidden;
-    transition: 0.4s ease;
-    padding-top: 80px;
+    transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    padding-top: 100px;
     z-index: 1000;
-    border-right: 1px solid rgba(212,175,55,0.2);
+    border-right: 1px solid rgba(212, 175, 55, 0.15);
 }
 
-.sidebar.open { width: 260px; }
+.sidebar.open { width: 280px; }
 
 .sidebar a {
     display: block;
-    padding: 15px 30px;
-    color: #888;
+    padding: 18px 40px;
+    color: #999;
     text-decoration: none;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: 300;
+    transition: 0.3s;
+    position: relative;
+}
+
+.sidebar a::before {
+    content: '';
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 1px;
+    background: var(--gold);
     transition: 0.3s;
 }
 
 .sidebar a:hover {
     color: var(--gold);
-    padding-left: 40px;
+    padding-left: 50px;
+}
+
+.sidebar a:hover::before {
+    width: 15px;
 }
 
 .menu-label {
-    padding: 20px 30px 5px;
+    padding: 25px 40px 10px;
     font-size: 10px;
     color: var(--gold);
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
+    opacity: 0.5;
 }
 
 /* nav */
@@ -109,44 +140,60 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 30px;
+    padding: 25px 40px;
     z-index: 10;
     box-sizing: border-box;
 }
 
-.menu-icon { cursor: pointer; }
+.menu-icon { cursor: pointer; padding: 10px; margin:-10px; }
 
 .menu-icon span {
     display: block;
     width: 22px;
-    height: 2px;
+    height: 1px;
     background: var(--gold);
-    margin: 4px 0;
+    margin: 6px 0;
+    transition: 0.3s;
 }
+
+.menu-icon:hover span:nth-child(2) { transform: translateX(4px); }
 
 .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
+    font-size: 22px;
     color: var(--gold);
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     cursor: pointer;
+    position: relative;
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.5;
 }
 
 /* orbs */
 .gold-orb {
     position: fixed;
     border-radius: 50%;
-    filter: blur(140px);
+    filter: blur(160px);
+    -webkit-filter: blur(160px);
     pointer-events: none;
     z-index: 1;
-    opacity: 0.15;
+    opacity: 0.12;
 }
 
-.orb1 { width: 600px; height: 600px; background: var(--gold); animation: move1 25s infinite linear; }
-.orb2 { width: 500px; height: 500px; background: var(--gold); animation: move2 30s infinite linear; }
+.orb1 { width: 700px; height: 700px; background: var(--gold); animation: move1 28s infinite linear; }
+.orb2 { width: 600px; height: 600px; background: #fff; animation: move2 35s infinite linear; }
 
-@keyframes move1 { 0% { top: -10%; left: -10%; } 50% { top: 60%; left: 70%; } 100% { top: -10%; left: -10%; } }
-@keyframes move2 { 0% { bottom: -10%; right: -10%; } 50% { bottom: 60%; right: 70%; } 100% { bottom: -10%; right: -10%; } }
+@keyframes move1 { 0% { top: -15%; left: -15%; } 50% { top: 65%; left: 75%; } 100% { top: -15%; left: -15%; } }
+@keyframes move2 { 0% { bottom: -15%; right: -15%; } 50% { bottom: 65%; right: 75%; } 100% { bottom: -15%; right: -15%; } }
 
 /* main container */
 .container {
@@ -157,18 +204,32 @@ body {
     flex-direction: column;
     position: relative;
     z-index: 2;
+    padding-bottom: 5vh;
 }
 
 .label {
-    font-size: 11px;
-    letter-spacing: 8px;
-    color: var(--gold);
-    margin-bottom: 40px;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 10px;
+    color: white;
     text-transform: uppercase;
-    opacity: 0.8;
+    margin-bottom: 50px;
+    opacity: 0.9;
+    position: relative;
 }
 
-/* ================= TIMER DIVISIONS ================= */
+.label::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+}
+
+/* ================= TIMER STYLING ================= */
 .timer {
     display: flex;
     align-items: center;
@@ -176,68 +237,108 @@ body {
 }
 
 .unit-box {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(212, 175, 55, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 30px 40px;
-    border-radius: 12px;
-    min-width: 120px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 30px 20px;
+    border-radius: 8px;
+    min-width: 130px;
     text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
+.unit-box:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    transform: translateY(-5px);
+}
+
+.unit-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 8px;
+    background: radial-gradient(circle at center, var(--gold-glow), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.unit-box:hover::before { opacity: 1; }
+
 .unit-value {
-    font-size: clamp(40px, 8vw, 80px);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(45px, 8vw, 85px);
     color: var(--gold);
-    font-weight: 200;
+    font-weight: 100; 
     line-height: 1;
+    letter-spacing: -2px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 15px var(--gold-glow);
 }
 
 .unit-label {
     font-size: 10px;
-    color: #666;
+    font-weight: 400;
+    color: #888;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 10px;
+    letter-spacing: 4px;
+    margin-top: 15px;
+    position: relative;
+    z-index: 1;
 }
 
+/* ================= VERTICAL LINES (FIXED & HIGHLY VISIBLE) ================= */
 .separator {
-    font-size: 40px;
-    color: rgba(212, 175, 55, 0.3);
-    padding: 0 20px;
-    font-weight: 100;
+    width: 2px;
+    height: 80px; 
+    background: linear-gradient(to bottom, transparent 0%, var(--gold) 50%, transparent 100%);
+    box-shadow: 0 0 15px var(--gold);
+    margin: 0 25px; /* Adds space between the boxes and the line */
+    opacity: 0.8;
 }
 
 /* launch text */
 .launch-text {
     position: absolute;
-    bottom: 100px;
+    bottom: 120px;
     text-align: center;
     width: 100%;
     font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    letter-spacing: 4px;
-    color: var(--gold);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    color: white;
+    opacity: 0.7;
 }
+
+.launch-text span { color: var(--gold); }
 
 .footer {
     position: absolute;
-    bottom: 40px;
+    bottom: 50px;
 }
 
 .footer-link {
-    color: #555;
+    color: #666;
     text-decoration: none;
-    font-size: 10px;
+    font-size: 11px;
+    font-weight: 300;
     border: 1px solid #222;
-    padding: 10px 25px;
+    padding: 12px 30px;
+    border-radius: 2px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    transition: 0.3s;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .footer-link:hover {
     border-color: var(--gold);
     color: var(--gold);
+    box-shadow: 0 0 15px var(--gold-glow);
+    transform: translateY(-2px);
 }
 
 /* ================= MOBILE RESPONSIVENESS ================= */
@@ -246,20 +347,35 @@ body {
     .cursor-dot { display: none !important; }
     .sidebar.open { width: 100%; }
     
+    .nav { padding: 20px; }
+    .logo { font-size: 18px; }
+
+    .container { padding-bottom: 10vh; }
+    .label { letter-spacing: 6px; font-size: 10px; }
+
     .timer {
         gap: 10px;
+        flex-wrap: wrap;
+        max-width: 300px;
     }
+    
     .unit-box {
-        padding: 15px 20px;
-        min-width: 70px;
+        padding: 20px 10px;
+        min-width: 120px; 
+        backdrop-filter: blur(10px);
     }
+    
+    /* Hide vertical lines on mobile so boxes stack nicely */
     .separator { display: none; }
-    .unit-value { font-size: 32px; }
-}
+    
+    .unit-value { font-size: 40px; letter-spacing: -1px; }
+    .unit-label { font-size: 9px; letter-spacing: 3px; margin-top: 10px; }
 
+    .launch-text { font-size: 12px; letter-spacing: 3px; bottom: 130px; }
+    .footer-link { padding: 10px 20px; font-size: 10px; }
+}
 </style>
 </head>
-
 <body oncontextmenu="return false;">
 
 <div class="cursor-dot" id="cursor-dot"></div>
@@ -296,21 +412,21 @@ body {
             <div class="unit-label">Days</div>
         </div>
         
-        <div class="separator">:</div>
+        <div class="separator"></div>
 
         <div class="unit-box">
             <div id="hours" class="unit-value">00</div>
             <div class="unit-label">Hours</div>
         </div>
 
-        <div class="separator">:</div>
+        <div class="separator"></div>
 
         <div class="unit-box">
             <div id="minutes" class="unit-value">00</div>
             <div class="unit-label">Minutes</div>
         </div>
 
-        <div class="separator">:</div>
+        <div class="separator"></div>
 
         <div class="unit-box">
             <div id="seconds" class="unit-value">00</div>
@@ -320,11 +436,11 @@ body {
 </div>
 
 <div class="launch-text">
-    PAN INDIA — 30 MAY 2026
+    PAN INDIA — <span>30 MAY 2026</span>
 </div>
 
 <div class="footer">
-    <a href="index.html" class="footer-link">Return to Core</a>
+    <a href="index.html" class="footer-link">Return Home</a>
 </div>
 
 <script>
@@ -343,7 +459,9 @@ if (!isTouchDevice) {
         cursorDot.style.left = e.clientX + 'px';
         cursorDot.style.top = e.clientY + 'px';
     });
-    document.querySelectorAll('a, .menu-icon, .logo, .unit-box').forEach(el => {
+    
+    const interactables = document.querySelectorAll('a, button, .menu-icon, .logo, .unit-box, input');
+    interactables.forEach(el => {
         el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
         el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
     });
@@ -354,6 +472,7 @@ const sidebar = document.getElementById("sidebar");
 const menuBtn = document.getElementById("menuBtn");
 menuBtn.addEventListener("click", (e) => { e.stopPropagation(); sidebar.classList.toggle("open"); });
 document.addEventListener("click", () => sidebar.classList.remove("open"));
+sidebar.addEventListener("click", (e) => { e.stopPropagation(); });
 
 /* SEAMLESS PAGE TRANSITIONS */
 function transitionTo(url) {
@@ -365,12 +484,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', function(e) {
             const target = this.getAttribute('href');
-            if (target && !target.startsWith('http') && !target.startsWith('mailto')) {
+            if (target && !target.startsWith('http') && !target.startsWith('mailto') && !target.startsWith('#')) {
                 e.preventDefault();
                 transitionTo(target);
             }
         });
     });
+});
+
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        document.body.classList.remove('fade-out');
+    }
 });
 
 function goHome() { transitionTo('index.html'); }
@@ -383,24 +508,24 @@ function updateClock() {
     const diff = target - now;
 
     if(diff <= 0) {
-        document.querySelector(".timer").innerHTML = "<div class='unit-value' style='letter-spacing:10px'>SYSTEM LIVE</div>";
+        document.querySelector(".container").innerHTML = "<div class='unit-value' style='font-size: clamp(30px, 5vw, 60px); letter-spacing: 10px; font-weight:300;'>SYSTEM LIVE</div>";
+        document.querySelector(".launch-text").style.display = 'none';
         return;
     }
 
-    const d = Math.floor(diff/86400000);
-    const h = Math.floor((diff%86400000)/3600000);
-    const m = Math.floor((diff%3600000)/60000);
-    const s = Math.floor((diff%60000)/1000);
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-    document.getElementById("days").innerText = d < 10 ? "0"+d : d;
-    document.getElementById("hours").innerText = h < 10 ? "0"+h : h;
-    document.getElementById("minutes").innerText = m < 10 ? "0"+m : m;
-    document.getElementById("seconds").innerText = s < 10 ? "0"+s : s;
+    document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+    document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+    document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+    document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
 }
 
 setInterval(updateClock, 1000);
 updateClock();
 </script>
-
 </body>
 </html>
