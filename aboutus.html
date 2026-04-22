@@ -110,11 +110,16 @@ body
     cursor:pointer;
 }
 
+/* Updated Logo Styling */
 .logo
 {
-    font-family:'Playfair Display';
-    color:var(--gold);
-    cursor:pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /* SIDEBAR */
@@ -226,30 +231,6 @@ body
     z-index: 1;
 }
 
-/* HOME BUTTON */
-.home-btn-container {
-    text-align: center;
-    padding: 40px 20px;
-}
-
-.btn-home {
-    padding: 12px 30px;
-    border: 1px solid var(--gold);
-    background: transparent;
-    color: var(--gold);
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-home:hover {
-    background: var(--gold);
-    color: black;
-}
-
 /* FOOTER */
 .footer
 {
@@ -304,7 +285,7 @@ body
         <span></span>
     </div>
 
-    <div class="logo" onclick="goHome()">gRaviTy</div>
+    <a href="index.html" class="logo">gRaviTy</a>
 
 </div>
 
@@ -408,10 +389,6 @@ body
 
 </div>
 
-<div class="home-btn-container">
-    <button class="btn-home" onclick="goHome()">← Return Home</button>
-</div>
-
 <div class="footer">
     © 2026 gRaviTy Research
 </div>
@@ -439,7 +416,7 @@ if (!isTouchDevice) {
         cursorDot.style.top = e.clientY + 'px';
     });
 
-    const interactables = document.querySelectorAll('a, .menu-icon, .logo, .card, .btn-home');
+    const interactables = document.querySelectorAll('a, .menu-icon, .logo, .card');
     interactables.forEach(el => {
         el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
         el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
@@ -477,11 +454,6 @@ window.addEventListener('pageshow', (event) => {
         document.body.classList.remove('fade-out');
     }
 });
-
-function goHome()
-{
-    transitionTo('index.html');
-}
 
 </script>
 
