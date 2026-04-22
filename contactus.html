@@ -16,6 +16,14 @@
     --bg: #050505;
 }
 
+/* ================= PROTECTION STYLES ================= */
+body {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE10+/Edge */
+    user-select: none;         /* Standard */
+}
+
 html
 {
     scroll-behavior: smooth;
@@ -195,9 +203,8 @@ html
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false;">
 
-<!-- nav -->
 <div class="nav">
 
     <a class="home" href="index.html">← HOME</a>
@@ -206,7 +213,6 @@ html
 
 </div>
 
-<!-- main -->
 <div class="container">
 
     <h1>Contact</h1>
@@ -218,7 +224,6 @@ html
 
     <div class="contact-box">
 
-        <!-- EMAIL -->
         <div class="item">
             <div class="label">EMAIL</div>
 
@@ -231,7 +236,6 @@ html
             </div>
         </div>
 
-        <!-- INSTAGRAM -->
         <div class="item">
             <div class="label">INSTAGRAM</div>
 
@@ -257,6 +261,16 @@ html
 </div>
 
 <script>
+
+/* PROTECTION SCRIPT */
+document.onkeydown = function(e) {
+    if (e.keyCode == 123 || 
+        (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || 
+        (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) ||
+        (e.ctrlKey && e.keyCode == 'C'.charCodeAt(0))) {
+        return false;
+    }
+};
 
 function goHome()
 {
