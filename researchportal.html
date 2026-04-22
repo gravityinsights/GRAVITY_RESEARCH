@@ -16,6 +16,14 @@
     --bg: #050505;
 }
 
+/* ================= PROTECTION STYLES ================= */
+body {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE10+/Edge */
+    user-select: none;         /* Standard */
+}
+
 /* base */
 html { scroll-behavior: smooth; }
 
@@ -221,11 +229,10 @@ html
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false;">
 
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-<!-- SIDEBAR -->
 <div id="sidebar" class="sidebar">
 
     <div class="sidebar-content">
@@ -246,7 +253,6 @@ html
 
 </div>
 
-<!-- NAV -->
 <div class="nav">
 
     <div class="menu-icon" onclick="toggleMenu()">
@@ -259,7 +265,6 @@ html
 
 </div>
 
-<!-- MAIN -->
 <div class="container">
 
     <h1>Research Reports</h1>
@@ -296,6 +301,16 @@ html
 </div>
 
 <script>
+
+/* PROTECTION SCRIPT */
+document.onkeydown = function(e) {
+    if (e.keyCode == 123 || 
+        (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || 
+        (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) ||
+        (e.ctrlKey && e.keyCode == 'C'.charCodeAt(0))) {
+        return false;
+    }
+};
 
 /* menu */
 function toggleMenu()
