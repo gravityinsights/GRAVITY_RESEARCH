@@ -46,7 +46,6 @@ body.fade-out {
     border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
-    /* translate(-50%, -50%) centers it. Hardware accelerated via JS */
     transform: translate(-50%, -50%); 
     box-shadow: 0 0 15px var(--gold);
     transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border 0.3s ease;
@@ -127,7 +126,7 @@ body {
     color: var(--gold);
     letter-spacing: 3px;
     cursor: pointer;
-    text-decoration: none; /* Added to prevent underline */
+    text-decoration: none;
 }
 
 /* orbs (HARDWARE ACCELERATED FOR PC SMOOTHNESS) */
@@ -408,7 +407,6 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 if (!isTouchDevice) {
     const cursorDot = document.getElementById('cursor-dot');
     window.addEventListener('mousemove', (e) => {
-        // Using translate3d forces the browser to use GPU acceleration, eliminating lag.
         cursorDot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
     });
     
@@ -425,18 +423,21 @@ menuBtn.addEventListener("click", (e) => { e.stopPropagation(); sidebar.classLis
 document.addEventListener("click", () => sidebar.classList.remove("open"));
 
 /* SEAMLESS PAGE TRANSITIONS */
-function transitionTo(url) {
-    document.body.classList.add('fade-out');
-    setTimeout(() => { window.location.href = url; }, 400);
-}
-
+// We select ALL anchor tags that have an href attribute. 
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', function(e) {
-            const target = this.getAttribute('href');
-            if (target && !target.startsWith('http') && !target.startsWith('mailto')) {
-                e.preventDefault();
-                transitionTo(target);
+            const targetUrl = this.getAttribute('href');
+            
+            // Only run the transition if it's an internal link (not an external website or email)
+            if (targetUrl && !targetUrl.startsWith('http') && !targetUrl.startsWith('mailto')) {
+                e.preventDefault(); // Stop immediate jump
+                document.body.classList.add('fade-out'); // Trigger CSS fade
+                
+                // Wait for the CSS transition (400ms) then force the browser to redirect
+                setTimeout(() => { 
+                    window.location.assign(targetUrl); 
+                }, 400);
             }
         });
     });
