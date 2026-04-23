@@ -357,7 +357,7 @@
 
             <div class="terminal">
                 <div class="term-header">
-                    <span>> gRaviTy AI ANALYST v2.0</span>
+                    <span>> gRaviTy AI ANALYST v2.0 [LIVE LINK ACTIVE]</span>
                     <div>
                         <span style="color: #ff4d4d; font-size: 11px; letter-spacing: 1px; margin-right: 15px; cursor: pointer; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#ff4d4d'" onclick="window.endChat(this)">[END CHAT]</span>
                         <span style="color: #555; cursor: pointer; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#555'" onclick="this.closest('.terminal').style.display='none'">[X]</span>
@@ -366,7 +366,7 @@
                 <div class="term-content">Initializing neural link...</div>
                 
                 <div class="chat-box">
-                    <input type="text" class="chat-input" placeholder="Ask specific questions about this report..." onkeypress="if(event.key==='Enter') window.askQuestion(this.nextElementSibling)">
+                    <input type="text" class="chat-input" placeholder="Ask about the report or live market data..." onkeypress="if(event.key==='Enter') window.askQuestion(this.nextElementSibling)">
                     <button class="btn" onclick="window.askQuestion(this)">Send</button>
                 </div>
             </div>
@@ -428,7 +428,7 @@
             if (event.persisted) document.body.classList.remove('fade-out');
         });
 
-        // ================= UPGRADED TYPEWRITER (FIXED TAB PAUSING) =================
+        // ================= TYPEWRITER (NATURAL TAB PAUSING RESTORED) =================
         window.typeText = function(el, text, callback, scrollContainer = null) {
             // Parses Markdown into clean HTML
             let parsedText = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#fff; font-weight:500;">$1</strong>');
@@ -439,14 +439,6 @@
             let currentHTML = '';
             
             function step() {
-                // TAB PAUSE FIX: If user goes to another tab, finish instantly so it doesn't freeze
-                if (document.hidden) {
-                    el.innerHTML = parsedText.replace(/\n/g, '<br>');
-                    if(scrollContainer) scrollContainer.scrollTop = scrollContainer.scrollHeight;
-                    if(callback) callback();
-                    return;
-                }
-
                 if(i < parsedText.length) {
                     let char = parsedText.charAt(i);
                     if(char === '<') isTag = true;
@@ -464,6 +456,7 @@
                     if(scrollContainer) scrollContainer.scrollTop = scrollContainer.scrollHeight;
                     
                     if(!isTag) {
+                        // Standard setTimeout naturally throttles when you switch tabs
                         setTimeout(step, 10);
                     } else {
                         step();
@@ -492,9 +485,14 @@
     <script type="module">
         import { GoogleGenerativeAI } from "@google/generative-ai";
 
-        const API_KEY = "AIzaSyCIYoGawcDl48X3COFep1aXkxmKSkA2lxM";
+        const API_KEY = "AIzaSyCIYoGawcDl48X3COFep1aXkxmKSkA2lxM"; // Your API Key
         const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+        
+        // ⚡️ THIS MAKES THE AI LIVE! We added Google Search as a tool.
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-3-flash-preview",
+            tools: [{ googleSearch: {} }] 
+        });
 
         window.analyzeReport = async function(btn, content) {
             const terminal = btn.closest('.report-card').querySelector('.terminal');
@@ -508,7 +506,6 @@
             termContent.innerHTML = "Establishing secure link to gRaviTy AI Node...<br>Decrypting structural market data...<br><br>";
             
             try {
-                // 5-SENTENCE LIMIT ENFORCED
                 const prompt = `Provide an executive summary for this report: ${content}\n\n(System Note: Keep it strictly between 1 to 5 sentences maximum. No markdown asterisks.)`;
                 
                 const result = await model.generateContent(prompt);
@@ -533,15 +530,15 @@
             
             if(!question) return;
 
-            termContent.innerHTML += `<br><br><span style="color:#fff">> USER: ${question}</span><br><span style="color:var(--gold)" id="loading-msg">> gRaviTy AI: Processing algorithm...</span>`;
+            termContent.innerHTML += `<br><br><span style="color:#fff">> USER: ${question}</span><br><span style="color:var(--gold)" id="loading-msg">> gRaviTy AI: Processing live search algorithm...</span>`;
             termContent.scrollTop = termContent.scrollHeight;
             input.value = "";
             input.disabled = true;
             btn.disabled = true;
             
             try {
-                // 5-SENTENCE LIMIT ENFORCED
-                const prompt = `Based on this report: ${reportText}\n\nAnswer this: ${question}\n\n(System Note: Answer extremely concisely in exactly 1 to 5 sentences maximum. Do not exceed 5 sentences. Do NOT use markdown asterisks or bullet points. Respond in plain professional text.)`;
+                // Told the AI to prioritize live searching for current stats
+                const prompt = `Report Context: ${reportText}\n\nUser Question: ${question}\n\n(System Note: If the user asks for current prices or current events, use your Google Search tool to find the live, up-to-date information. Answer extremely concisely in exactly 1 to 5 sentences maximum. Do not exceed 5 sentences. Do NOT use markdown asterisks or bullet points. Respond in plain professional text.)`;
                 
                 const result = await model.generateContent(prompt);
                 const responseText = result.response.text();
