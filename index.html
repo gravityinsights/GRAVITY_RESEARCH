@@ -562,31 +562,26 @@
         <h3>Structure</h3>
         <p>Markets follow hidden structural frameworks.</p>
     </div>
-
     <div class="feature">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
         <h3>Behavior</h3>
         <p>Human emotion drives price movement.</p>
     </div>
-
     <div class="feature">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="15.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><circle cx="8.5" cy="15.5" r="1.5"/></svg>
         <h3>Probability</h3>
         <p>Every move has weighted outcomes.</p>
     </div>
-
     <div class="feature">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
         <h3>Liquidity</h3>
         <p>Flow determines direction more than news.</p>
     </div>
-
     <div class="feature">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         <h3>Momentum</h3>
         <p>Trends form through repeated pressure cycles.</p>
     </div>
-
     <div class="feature">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
         <h3>Structure Zones</h3>
@@ -609,26 +604,43 @@
         }
     });
 
-    /* ================= PRELOADER & REVEAL ================= */
-    let preloaderRemoved = false;
-    function removePreloader() {
-        if (preloaderRemoved) return;
-        preloaderRemoved = true;
-        const preloader = document.getElementById("preloader");
-        if (preloader) {
-            preloader.style.opacity = "0";
-            setTimeout(() => {
-                preloader.style.display = "none";
-                document.getElementById("main-title").classList.add("revealed");
-                setTimeout(() => {
-                    document.getElementById("clarity-msg").classList.add("revealed");
-                }, 800);
-            }, 600); 
-        }
-    }
+    /* ================= SMART PRELOADER (SESSION PERSISTENCE) ================= */
+    const preloader = document.getElementById("preloader");
+    const mainTitle = document.getElementById("main-title");
+    const clarityMsg = document.getElementById("clarity-msg");
+    const isFirstVisit = !sessionStorage.getItem('preloaderShown');
 
-    window.addEventListener("load", () => setTimeout(removePreloader, 600));
-    setTimeout(removePreloader, 3000); 
+    if (!isFirstVisit) {
+        // returning from another page in same session - skip preloader
+        preloader.style.display = "none";
+        document.addEventListener("DOMContentLoaded", () => {
+            mainTitle.classList.add("revealed");
+            clarityMsg.classList.add("revealed");
+        });
+    } else {
+        // First time entering the site - show preloader
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                preloader.style.opacity = "0";
+                setTimeout(() => {
+                    preloader.style.display = "none";
+                    mainTitle.classList.add("revealed");
+                    setTimeout(() => {
+                        clarityMsg.classList.add("revealed");
+                    }, 800);
+                    sessionStorage.setItem('preloaderShown', 'true');
+                }, 600);
+            }, 600);
+        });
+        // Fallback for slow connections
+        setTimeout(() => {
+            if (preloader.style.display !== "none") {
+                preloader.style.display = "none";
+                mainTitle.classList.add("revealed");
+                clarityMsg.classList.add("revealed");
+            }
+        }, 4000);
+    }
 
     /* ================= CURSOR & MOUSE EFFECTS ================= */
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -650,11 +662,9 @@
                 const rect = magBtn.getBoundingClientRect();
                 const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
                 const y = (e.clientY - rect.top - rect.height / 2) * 0.4;
-                magBtn.style.transition = 'none';
                 magBtn.style.transform = `translate(${x}px, ${y}px)`;
             });
             magBtn.addEventListener('mouseleave', () => {
-                magBtn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, color 0.3s';
                 magBtn.style.transform = 'translate(0,0)';
             });
         }
@@ -677,10 +687,9 @@
     }
 
     /* ================= SCROLL REVEAL ================= */
-    const featureEls = document.querySelectorAll(".feature");
     function updateScroll() {
         const trigger = window.innerHeight * 0.8;
-        featureEls.forEach((el, i) => {
+        document.querySelectorAll(".feature").forEach((el, i) => {
             if(el.getBoundingClientRect().top < trigger) {
                 setTimeout(() => el.classList.add("show"), i * 100);
             }
