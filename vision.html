@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vision | gRaviTy Research</title>
@@ -148,7 +147,6 @@ body.fade-out {
     transform: translateX(6px);
 }
 
-/* --- ACTIVE LINK STYLES --- */
 .sidebar a.active-link {
     color: var(--gold);
 }
@@ -186,7 +184,6 @@ body.fade-out {
     gap: 25px;
 }
 
-/* Animated Hamburger */
 .menu-icon {
     cursor: pointer;
     position: relative;
@@ -212,7 +209,6 @@ body.fade-out {
 .menu-icon.active span:nth-child(2) { opacity: 0; width: 0; }
 .menu-icon.active span:nth-child(3) { transform: rotate(-45deg); width: 28px; }
 
-/* Standalone Home Button */
 .home-btn {
     display: inline-flex;
     align-items: center;
@@ -358,11 +354,10 @@ body.fade-out {
 <div id="sidebar" class="sidebar">
     <div class="sidebar-content">
         <div class="menu-label">System</div>
-        <a href="index.html">Home</a>
+        <a href="clock.html">Market Clock</a>
 
         <div class="menu-label">Advanced Tools</div>
         <a href="calc.html">Wealth Calculators</a>
-        <a href="clock.html">Market Clock</a>
 
         <div class="menu-label">Research</div>
         <a href="researchportal.html">Research Portal</a>
@@ -399,7 +394,6 @@ body.fade-out {
 </div>
 
 <script>
-/* ================= KEYBOARD SHORTCUT PROTECTION & ESC MENU CLOSE ================= */
 document.addEventListener('keydown', function(e) {
     if (e.key === "Escape" && document.getElementById("sidebar").classList.contains("open")) {
         toggleMenu();
@@ -415,10 +409,8 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-/* ================= TOUCH DETECTION ================= */
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-/* ================= CUSTOM CURSOR (TRANSFORM BASED) ================= */
 if (!isTouchDevice) {
     const cursorDot = document.getElementById('cursor-dot');
     window.addEventListener('mousemove', (e) => {
@@ -432,7 +424,6 @@ if (!isTouchDevice) {
     });
 }
 
-/* ================= MENU LOGIC (WITH OVERLAY & SCROLL LOCK) ================= */
 function toggleMenu() {
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("overlay");
@@ -446,7 +437,6 @@ function toggleMenu() {
     body.style.overflow = isOpen ? "hidden" : "";
 }
 
-/* ================= SEAMLESS PAGE TRANSITIONS ================= */
 function transitionTo(url) {
     document.body.classList.add('fade-out');
     setTimeout(() => {
