@@ -85,29 +85,54 @@
             gap: 25px;
         }
 
-        .menu-icon { cursor: pointer; }
+        /* HAMBURGER TO X ANIMATION */
+        .menu-icon { 
+            cursor: pointer; 
+            z-index: 1002;
+        }
+        
         .menu-icon span {
             display: block;
             width: 22px;
             height: 1px;
             background: var(--gold);
             margin: 6px 0;
+            transition: 0.3s ease-in-out;
         }
 
+        .menu-icon.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        
+        .menu-icon.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-icon.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* TEXT HOME BUTTON */
         .home-btn {
             color: var(--gold);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: 0.3s;
-            opacity: 0.8;
             text-decoration: none;
+            border: 1px solid var(--gold);
+            padding: 8px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.8;
         }
 
         .home-btn:hover {
             opacity: 1;
-            filter: drop-shadow(0 0 8px var(--gold));
-            transform: scale(1.1);
+            background: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
 
         .logo {
@@ -350,12 +375,7 @@
                 <span></span>
                 <span></span>
             </div>
-            <a href="index.html" class="home-btn" title="Return Home">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                    <polyline points="9 22 9 12 15 12 15 22"/>
-                </svg>
-            </a>
+            <a href="index.html" class="home-btn">&larr; HOME</a>
         </div>
         <a href="index.html" class="logo">gRaviTy</a>
     </div>
@@ -403,14 +423,17 @@
         const menuBtn = document.getElementById('menuBtn');
         const sidebar = document.getElementById('sidebar');
         
+        // HAMBURGER TOGGLE LOGIC
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             sidebar.classList.toggle('open');
+            menuBtn.classList.toggle('active');
         });
         
         document.addEventListener('click', (e) => {
             if(!sidebar.contains(e.target) && e.target !== menuBtn) {
                 sidebar.classList.remove('open');
+                menuBtn.classList.remove('active');
             }
         });
 
