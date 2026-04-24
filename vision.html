@@ -29,6 +29,32 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+    /* ================= CUSTOM SCROLLBAR ================= */
+/* WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+    border-left: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0a0a0a; 
+    border: 1px solid var(--gold); 
+    border-radius: 0; /* Changed to 0 for sharp edges */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 175, 55, 0.15); 
+}
+
+/* Firefox support */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) var(--bg);
+}
 
 /* ================= SEAMLESS PAGE TRANSITIONS ================= */
 body {
