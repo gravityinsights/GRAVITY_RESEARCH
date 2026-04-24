@@ -754,65 +754,77 @@ function setupChartInteraction(svgId, trackerId, pointId) {
 
 
 /* ================= CALCULATION CALLS ================= */
+let wealthTimeout;
 function calcWealth() {
-    let p = getValidFloat('p');
-    let m = getValidFloat('m');
-    let r = getValidFloat('r');
-    let y = getValidFloat('y');
+    clearTimeout(wealthTimeout);
+    wealthTimeout = setTimeout(() => {
+        let p = getValidFloat('p');
+        let m = getValidFloat('m');
+        let r = getValidFloat('r');
+        let y = getValidFloat('y');
 
-    if (p === null || m === null || r === null || y === null) {
-        animateValue('res1', 0); return;
-    }
+        if (p === null || m === null || r === null || y === null) {
+            animateValue('res1', 0); return;
+        }
 
-    let i = r / 12 / 100;
-    let n = y * 12;
-    let fv = p * Math.pow(1 + i, n);
-    
-    if (i > 0) {
-        fv += m * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
-    } else {
-        fv += m * n;
-    }
-    animateValue('res1', Math.round(fv));
-    
-    generatePathData(p, m, r, y, 'path-wealth', 'svg-wealth');
+        let i = r / 12 / 100;
+        let n = y * 12;
+        let fv = p * Math.pow(1 + i, n);
+        
+        if (i > 0) {
+            fv += m * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+        } else {
+            fv += m * n;
+        }
+        animateValue('res1', Math.round(fv));
+        
+        generatePathData(p, m, r, y, 'path-wealth', 'svg-wealth');
+    }, 200);
 }
 
+let sipTimeout;
 function calcSIP() {
-    let sip = getValidFloat('sip');
-    let r = getValidFloat('sipr');
-    let y = getValidFloat('sipy');
+    clearTimeout(sipTimeout);
+    sipTimeout = setTimeout(() => {
+        let sip = getValidFloat('sip');
+        let r = getValidFloat('sipr');
+        let y = getValidFloat('sipy');
 
-    if (sip === null || r === null || y === null) {
-        animateValue('res2', 0); return;
-    }
+        if (sip === null || r === null || y === null) {
+            animateValue('res2', 0); return;
+        }
 
-    let i = r / 12 / 100;
-    let n = y * 12;
-    let fv = 0;
-    
-    if (i > 0) {
-        fv = sip * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
-    } else {
-        fv = sip * n;
-    }
-    animateValue('res2', Math.round(fv));
-    
-    generatePathData(0, sip, r, y, 'path-sip', 'svg-sip');
+        let i = r / 12 / 100;
+        let n = y * 12;
+        let fv = 0;
+        
+        if (i > 0) {
+            fv = sip * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+        } else {
+            fv = sip * n;
+        }
+        animateValue('res2', Math.round(fv));
+        
+        generatePathData(0, sip, r, y, 'path-sip', 'svg-sip');
+    }, 200);
 }
 
+let infTimeout;
 function calcInflation() {
-    let fv = getValidFloat('fv');
-    let inf = getValidFloat('inf');
-    let y = getValidFloat('infy');
+    clearTimeout(infTimeout);
+    infTimeout = setTimeout(() => {
+        let fv = getValidFloat('fv');
+        let inf = getValidFloat('inf');
+        let y = getValidFloat('infy');
 
-    if (fv === null || inf === null || y === null) {
-        animateValue('res3', 0); return;
-    }
+        if (fv === null || inf === null || y === null) {
+            animateValue('res3', 0); return;
+        }
 
-    let r = inf / 100;
-    let cost = fv * Math.pow(1 + r, y);
-    animateValue('res3', Math.round(cost));
+        let r = inf / 100;
+        let cost = fv * Math.pow(1 + r, y);
+        animateValue('res3', Math.round(cost));
+    }, 200);
 }
 
 // Initial Calculations on Load
