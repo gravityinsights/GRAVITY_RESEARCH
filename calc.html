@@ -31,7 +31,32 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+/* ================= CUSTOM SCROLLBAR ================= */
+/* WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 12px;
+}
 
+::-webkit-scrollbar-track {
+    background: var(--bg);
+    border-left: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0a0a0a; /* Dark background to match the theme */
+    border: 1px solid var(--gold); /* The gold border you requested */
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 175, 55, 0.15); /* Slight gold glow on hover */
+}
+
+/* Firefox support */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) var(--bg);
+}
 /* ================= SEAMLESS PAGE TRANSITIONS ================= */
 body {
     opacity: 1;
