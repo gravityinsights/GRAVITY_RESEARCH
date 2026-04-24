@@ -8,13 +8,10 @@
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     <meta name="theme-color" content="#050505">
-    <meta name="msapplication-navbutton-color" content="#050505">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@100;300;400;600&display=swap');
 
         :root {
             --gold: #d4af37;
@@ -22,139 +19,99 @@
             --error: #ff4d4d;
         }
 
-        /* ================= PROTECTION STYLES ================= */
+        /* ================= BASE STYLES ================= */
         body {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            opacity: 1;
-            transition: opacity 0.4s ease-in-out;
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: white;
-            overflow-x: hidden;
+            margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: white;
+            overflow-x: hidden; -webkit-user-select: none; user-select: none;
         }
-
-        body.fade-out { opacity: 0; }
 
         /* ================= COLD AF SCROLLBAR ================= */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb {
-            background: #0a0a0a;
-            border: 1px solid var(--gold);
-            box-shadow: inset 0 0 5px rgba(212, 175, 55, 0.2);
+            background: #0a0a0a; border: 1px solid var(--gold);
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--gold);
-            box-shadow: 0 0 15px var(--gold);
-        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); box-shadow: 0 0 15px var(--gold); }
 
         /* ================= CUSTOM CURSOR ================= */
         * { cursor: none !important; }
         .cursor-dot {
-            width: 6px; height: 6px; background: var(--gold);
-            position: fixed; border-radius: 50%; pointer-events: none;
-            z-index: 10000; transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px var(--gold);
-            transition: width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease;
+            width: 6px; height: 6px; background: var(--gold); position: fixed;
+            border-radius: 50%; pointer-events: none; z-index: 10000;
+            transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s;
         }
         .cursor-dot.hover-state { width: 12px; height: 12px; box-shadow: 0 0 15px var(--gold); }
 
-        /* ================= SIDEBAR & NAV ================= */
-        .overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(4px); opacity: 0; pointer-events: none;
-            transition: 0.4s ease; z-index: 1500;
-        }
-        .overlay.show { opacity: 1; pointer-events: all; }
-
-        .sidebar {
-            width: 280px; height: 100%; position: fixed; left: 0; top: 0;
-            background: #0a0a0a; box-shadow: 2px 0 25px rgba(0,0,0,0.8);
-            transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            padding-top: 100px; z-index: 2000; border-right: 1px solid rgba(212, 175, 55, 0.2);
-        }
-        .sidebar.open { transform: translateX(0); }
-        .sidebar-content { padding: 0 30px; }
-        .menu-label { margin-top: 25px; font-size: 10px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; opacity: 0.7; }
-        .sidebar a { display: flex; align-items: center; padding: 12px 0; color: #888; text-decoration: none; transition: 0.25s; font-size: 15px; }
-        .sidebar a.active-link { color: var(--gold); }
-        .active-dot { display: inline-block; width: 6px; height: 6px; background-color: var(--gold); border-radius: 50%; margin-right: 12px; box-shadow: 0 0 8px var(--gold); }
-
+        /* ================= NAV & SIDEBAR ================= */
         .nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; position: fixed; width: 100%; box-sizing: border-box;
             top: 0; background: rgba(5,5,5,0.85); backdrop-filter: blur(12px);
             z-index: 2500; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-
-        .menu-icon { cursor: pointer; position: relative; z-index: 2501; width: 30px; height: 24px; display: flex; flex-direction: column; justify-content: center; }
-        .menu-icon span { display: block; width: 26px; height: 2px; background: var(--gold); margin: 3px 0; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); transform-origin: left center; }
-        .menu-icon.active span:nth-child(1) { transform: rotate(45deg); width: 28px; }
-        .menu-icon.active span:nth-child(2) { opacity: 0; width: 0; }
-        .menu-icon.active span:nth-child(3) { transform: rotate(-45deg); width: 28px; }
-        .logo-text { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-decoration: none; }
-
-        /* ================= CONTAINER & CARDS ================= */
-        .container { max-width: 600px; margin: 100px auto 80px auto; padding: 0 20px; position: relative; z-index: 10; }
+        .logo-text { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); text-decoration: none; letter-spacing: 3px; }
         
-        .home-btn {
-            display: inline-flex; align-items: center; padding: 10px 24px;
-            background: rgba(212, 175, 55, 0.04); border: 1px solid rgba(212, 175, 55, 0.3);
-            color: var(--gold); text-decoration: none; font-size: 11px; text-transform: uppercase;
-            letter-spacing: 2px; transition: all 0.4s ease; margin-bottom: 30px; backdrop-filter: blur(4px);
+        .sidebar {
+            width: 280px; height: 100%; position: fixed; left: 0; top: 0; background: #0a0a0a;
+            z-index: 2000; border-right: 1px solid rgba(212, 175, 55, 0.2);
+            transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding-top: 100px;
         }
-        .home-btn::before { content: '←'; margin-right: 10px; font-size: 14px; }
+        .sidebar.open { transform: translateX(0); }
+        .sidebar a { display: block; padding: 12px 30px; color: #888; text-decoration: none; transition: 0.3s; }
+        .sidebar a.active-link { color: var(--gold); }
+        .menu-icon { cursor: pointer; z-index: 2501; width: 30px; display: flex; flex-direction: column; gap: 6px; }
+        .menu-icon span { width: 100%; height: 2px; background: var(--gold); transition: 0.4s; }
 
-        h1 { font-family: 'Playfair Display', serif; color: var(--gold); text-align: center; font-size: 2.5rem; margin-bottom: 40px; }
-
+        /* ================= CARDS & INPUTS ================= */
+        .container { max-width: 650px; margin: 120px auto 80px; padding: 0 20px; }
+        h1 { font-family: 'Playfair Display', serif; color: var(--gold); text-align: center; font-size: 2.5rem; }
+        
         .card {
             background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
-            padding: 30px; margin-top: 30px; border-radius: 8px; position: relative; overflow: hidden;
+            padding: 30px; margin-top: 30px; border-radius: 12px; position: relative;
         }
-
-        .card h3 { margin-top: 0; font-weight: 400; color: #eee; font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 25px; }
-
-        label { display: block; font-size: 10px; color: #888; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .hint { font-size: 9px; color: var(--gold); opacity: 0.6; text-transform: none; letter-spacing: 0.5px; margin-top: 4px; display: block; }
-
+        label { display: block; font-size: 10px; color: #666; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
         input {
             width: 100%; background: transparent; border: none; border-bottom: 1px solid #333;
-            color: var(--gold); padding: 10px 0; margin-bottom: 5px; font-size: 18px; outline: none;
-            transition: 0.3s ease; font-family: 'Inter', sans-serif;
+            color: var(--gold); padding: 10px 0; font-size: 18px; outline: none; transition: 0.3s;
         }
         input:focus { border-bottom: 1px solid var(--gold); }
-        input.error { border-bottom: 1px solid var(--error) !important; color: var(--error) !important; }
+        .result { font-size: 32px; color: var(--gold); margin-top: 20px; font-family: 'Playfair Display', serif; font-weight: 600; }
+        .hint { font-size: 9px; color: var(--gold); opacity: 0.5; margin-top: 5px; display: block; }
 
-        .result { font-size: 28px; color: var(--gold); margin-top: 25px; font-weight: 600; font-family: 'Playfair Display', serif; }
-
-        /* ================= DYNAMIC SVG CHART ================= */
-        .chart-container {
-            width: 100%; height: 80px; margin-top: 20px;
-            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
+        /* ================= INTERACTIVE GRAPH STYLES ================= */
+        .graph-wrapper {
+            position: relative; width: 100%; height: 150px; margin-top: 30px;
+            background: rgba(0,0,0,0.2); border-radius: 4px; overflow: hidden;
         }
-        .chart-path {
-            fill: none; stroke: var(--gold); stroke-width: 2;
-            stroke-linecap: round; transition: d 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        svg { width: 100%; height: 100%; display: block; }
+        
+        .chart-line { fill: none; stroke: var(--gold); stroke-width: 3; stroke-linecap: round; transition: d 0.4s ease; }
+        .chart-area { fill: url(#grad); transition: d 0.4s ease; pointer-events: none; }
+        
+        /* Tooltip & Tracker */
+        .tracker-line { stroke: rgba(212, 175, 55, 0.2); stroke-width: 1; visibility: hidden; }
+        .tracker-dot { fill: var(--gold); stroke: white; stroke-width: 2; visibility: hidden; filter: drop-shadow(0 0 5px var(--gold)); }
+        
+        .chart-tooltip {
+            position: absolute; pointer-events: none; background: rgba(10,10,10,0.9);
+            border: 1px solid var(--gold); padding: 8px 12px; border-radius: 4px;
+            font-size: 12px; font-family: 'Inter', sans-serif; visibility: hidden;
+            z-index: 100; backdrop-filter: blur(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
+        .chart-tooltip b { color: var(--gold); display: block; font-size: 14px; }
 
         /* ================= DESKTOP HOVER ================= */
         @media (hover: hover) and (pointer: fine) {
-            .sidebar a:hover { color: var(--gold); transform: translateX(6px); }
-            .home-btn:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25); transform: translateY(-2px); }
             .card:hover { border-color: rgba(212, 175, 55, 0.3); }
         }
 
         @media screen and (max-width: 768px) {
-            * { cursor: auto !important; }
-            .cursor-dot { display: none !important; }
-            .sidebar { width: 85%; }
             .nav { padding: 15px 20px; }
-            .container { margin-top: 80px; }
+            .sidebar { width: 85%; }
+            .cursor-dot { display: none; }
+            * { cursor: auto !important; }
         }
     </style>
 </head>
@@ -162,205 +119,234 @@
 <body oncontextmenu="return false;">
 
 <div class="cursor-dot" id="cursor-dot"></div>
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-<div id="sidebar" class="sidebar">
-    <div class="sidebar-content">
-        <div class="menu-label">Advanced Tools</div>
-        <a href="calc.html" class="active-link"><span class="active-dot"></span>Wealth Calculators</a>
-        <a href="clock.html">Market Clock</a>
-        <div class="menu-label">Research</div>
-        <a href="researchportal.html">Research Portal</a>
-        <div class="menu-label">Our Firm</div>
-        <a href="aboutus.html">About Us</a>
-        <a href="vision.html">Our Vision</a>
-        <div class="menu-label">Access</div>
-        <a href="contactus.html">Contact Us</a>
-    </div>
-</div>
 
 <div class="nav">
     <div class="menu-icon" onclick="toggleMenu()"><span></span><span></span><span></span></div>
     <a href="index.html" class="logo-text">gRaviTy</a>
 </div>
 
+<div id="sidebar" class="sidebar">
+    <a href="index.html">Home</a>
+    <a href="calc.html" class="active-link">Wealth Calculators</a>
+    <a href="clock.html">Market Clock</a>
+</div>
+
 <div class="container">
-    <a href="index.html" class="home-btn">Home</a>
-    <h1>Wealth Tools</h1>
+    <h1>Wealth Intelligence</h1>
 
-    <div class="card">
+    <div class="card" id="card1">
         <h3>Wealth Projection</h3>
-        <label>Initial Investment (P)</label>
-        <input id="p" type="number" min="0" value="100000" oninput="calcWealth()">
-        <label>Monthly Addition (M)</label>
-        <input id="m" type="number" min="0" value="10000" oninput="calcWealth()">
+        <label>Initial Investment</label>
+        <input id="p" type="number" min="0" value="100000" oninput="runCalculators()">
+        <label>Monthly Addition</label>
+        <input id="m" type="number" min="0" value="10000" oninput="runCalculators()">
         <label>Annual Return (%)</label>
-        <input id="r" type="number" min="0" value="12" oninput="calcWealth()">
+        <input id="r" type="number" min="0" value="12" oninput="runCalculators()">
         <label>Duration (Years)</label>
-        <input id="y" type="number" min="0" value="10" oninput="calcWealth()">
+        <input id="y" type="number" min="0" value="15" oninput="runCalculators()">
         
-        <div id="res1" class="result" data-val="0">₹ 0</div>
-        <div class="chart-container">
-            <svg viewBox="0 0 100 40" preserveAspectRatio="none" style="width:100%; height:100%;">
-                <path id="path1" class="chart-path" d="M0,40 L100,40" />
+        <div id="res1" class="result">₹ 0</div>
+
+        <div class="graph-wrapper" onmousemove="handleHover(event, 'chart1')" onmouseleave="hideTooltip('chart1')">
+            <div id="tip1" class="chart-tooltip"></div>
+            <svg id="chart1" viewBox="0 0 1000 200" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:var(--gold);stop-opacity:0.3" />
+                        <stop offset="100%" style="stop-color:var(--gold);stop-opacity:0" />
+                    </linearGradient>
+                </defs>
+                <path class="chart-area" id="area1" d="" />
+                <path class="chart-line" id="line1" d="" />
+                <line class="tracker-line" id="trace1" x1="0" y1="0" x2="0" y2="200" />
+                <circle class="tracker-dot" id="dot1" r="6" cx="0" cy="0" />
             </svg>
         </div>
     </div>
 
-    <div class="card">
-        <h3>SIP Calculator</h3>
-        <label>Monthly SIP Amount</label>
-        <input id="sip" type="number" min="0" value="5000" oninput="calcSIP()">
+    <div class="card" id="card2">
+        <h3>SIP Intelligence</h3>
+        <label>Monthly SIP</label>
+        <input id="sip" type="number" min="0" value="5000" oninput="runCalculators()">
         <label>Expected Return (%)</label>
-        <input id="sipr" type="number" min="0" value="12" oninput="calcSIP()">
+        <input id="sipr" type="number" min="0" value="12" oninput="runCalculators()">
         <label>Time Period (Years)</label>
-        <input id="sipy" type="number" min="0" value="10" oninput="calcSIP()">
+        <input id="sipy" type="number" min="0" value="20" oninput="runCalculators()">
         
-        <div id="res2" class="result" data-val="0">₹ 0</div>
-        <div class="chart-container">
-            <svg viewBox="0 0 100 40" preserveAspectRatio="none" style="width:100%; height:100%;">
-                <path id="path2" class="chart-path" d="M0,40 L100,40" />
+        <div id="res2" class="result">₹ 0</div>
+
+        <div class="graph-wrapper" onmousemove="handleHover(event, 'chart2')" onmouseleave="hideTooltip('chart2')">
+            <div id="tip2" class="chart-tooltip"></div>
+            <svg id="chart2" viewBox="0 0 1000 200" preserveAspectRatio="none">
+                <path class="chart-area" id="area2" d="" />
+                <path class="chart-line" id="line2" d="" />
+                <line class="tracker-line" id="trace2" x1="0" y1="0" x2="0" y2="200" />
+                <circle class="tracker-dot" id="dot2" r="6" cx="0" cy="0" />
             </svg>
         </div>
     </div>
 
-    <div class="card">
+    <div class="card" id="card3">
         <h3>Inflation Adjuster</h3>
-        <label>Current Cost</label>
-        <input id="fv" type="number" min="0" value="1000000" oninput="calcInflation()">
+        <label>Current Value</label>
+        <input id="fv" type="number" min="0" value="1000000" oninput="runCalculators()">
         <label>Inflation Rate (%)</label>
-        <input id="inf" type="number" min="0" value="6" oninput="calcInflation()">
-        <span class="hint">Avg. expected inflation in India is ~6%.</span>
+        <input id="inf" type="number" min="0" value="6" oninput="runCalculators()">
+        <span class="hint">Target India Inflation: ~6.0%</span>
         <label>Time Horizon (Years)</label>
-        <input id="infy" type="number" min="0" value="10" oninput="calcInflation()">
+        <input id="infy" type="number" min="0" value="10" oninput="runCalculators()">
         
-        <div id="res3" class="result" data-val="0">₹ 0</div>
-        <div class="chart-container">
-            <svg viewBox="0 0 100 40" preserveAspectRatio="none" style="width:100%; height:100%;">
-                <path id="path3" class="chart-path" d="M0,40 L100,40" />
+        <div id="res3" class="result">₹ 0</div>
+
+        <div class="graph-wrapper" onmousemove="handleHover(event, 'chart3')" onmouseleave="hideTooltip('chart3')">
+            <div id="tip3" class="chart-tooltip"></div>
+            <svg id="chart3" viewBox="0 0 1000 200" preserveAspectRatio="none">
+                <path class="chart-area" id="area3" d="" />
+                <path class="chart-line" id="line3" d="" />
+                <line class="tracker-line" id="trace3" x1="0" y1="0" x2="0" y2="200" />
+                <circle class="tracker-dot" id="dot3" r="6" cx="0" cy="0" />
             </svg>
         </div>
     </div>
 </div>
 
 <script>
-/* ================= UI LOGIC ================= */
-document.addEventListener('keydown', function(e) {
-    if (e.key === "Escape" && document.getElementById("sidebar").classList.contains("open")) toggleMenu();
-    if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) e.preventDefault();
-});
+    const formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    let chartData = { chart1: [], chart2: [], chart3: [] };
 
-const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-if (!isTouchDevice) {
-    const cursorDot = document.getElementById('cursor-dot');
+    /* ================= CORE CALCULATORS ================= */
+    function runCalculators() {
+        calcWealth();
+        calcSIP();
+        calcInflation();
+    }
+
+    function calcWealth() {
+        const p = parseFloat(document.getElementById('p').value) || 0;
+        const m = parseFloat(document.getElementById('m').value) || 0;
+        const r = parseFloat(document.getElementById('r').value) || 0;
+        const y = parseFloat(document.getElementById('y').value) || 0;
+        const i = r / 12 / 100;
+        let points = [];
+        for (let t = 0; t <= y; t++) {
+            const n = t * 12;
+            const val = p * Math.pow(1 + i, n) + (i > 0 ? m * ((Math.pow(1 + i, n) - 1) / i) * (1 + i) : m * n);
+            points.push({ x: t, y: val });
+        }
+        chartData.chart1 = points;
+        draw('chart1', points, 'res1');
+    }
+
+    function calcSIP() {
+        const sip = parseFloat(document.getElementById('sip').value) || 0;
+        const r = parseFloat(document.getElementById('sipr').value) || 0;
+        const y = parseFloat(document.getElementById('sipy').value) || 0;
+        const i = r / 12 / 100;
+        let points = [];
+        for (let t = 0; t <= y; t++) {
+            const n = t * 12;
+            const val = i > 0 ? sip * ((Math.pow(1 + i, n) - 1) / i) * (1 + i) : sip * n;
+            points.push({ x: t, y: val });
+        }
+        chartData.chart2 = points;
+        draw('chart2', points, 'res2');
+    }
+
+    function calcInflation() {
+        const fv = parseFloat(document.getElementById('fv').value) || 0;
+        const inf = parseFloat(document.getElementById('inf').value) || 0;
+        const y = parseFloat(document.getElementById('infy').value) || 0;
+        const r = inf / 100;
+        let points = [];
+        for (let t = 0; t <= y; t++) {
+            const val = fv * Math.pow(1 + r, t);
+            points.push({ x: t, y: val });
+        }
+        chartData.chart3 = points;
+        draw('chart3', points, 'res3');
+    }
+
+    /* ================= SVG RENDERING ================= */
+    function draw(id, points, resId) {
+        const line = document.getElementById('line' + id.slice(-1));
+        const area = document.getElementById('area' + id.slice(-1));
+        const res = document.getElementById(resId);
+        
+        if (!points.length) return;
+        const maxVal = Math.max(...points.map(p => p.y));
+        const minVal = Math.min(...points.map(p => p.y));
+        const range = maxVal - minVal || 1;
+
+        let pathD = "";
+        points.forEach((p, i) => {
+            const x = (i / (points.length - 1)) * 1000;
+            const y = 180 - ((p.y - minVal) / range * 160);
+            pathD += (i === 0 ? "M " : " L ") + x + " " + y;
+        });
+
+        line.setAttribute("d", pathD);
+        area.setAttribute("d", pathD + " L 1000 200 L 0 200 Z");
+        res.innerHTML = formatter.format(points[points.length - 1].y);
+    }
+
+    /* ================= INTERACTION LOGIC ================= */
+    function handleHover(e, chartId) {
+        const svg = document.getElementById(chartId);
+        const rect = svg.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const percentX = mouseX / rect.width;
+        
+        const data = chartData[chartId];
+        const index = Math.round(percentX * (data.length - 1));
+        const point = data[index];
+        
+        if (!point) return;
+
+        const idNum = chartId.slice(-1);
+        const trace = document.getElementById('trace' + idNum);
+        const dot = document.getElementById('dot' + idNum);
+        const tip = document.getElementById('tip' + idNum);
+
+        // Position Marker
+        const svgX = (index / (data.length - 1)) * 1000;
+        const maxVal = Math.max(...data.map(p => p.y));
+        const minVal = Math.min(...data.map(p => p.y));
+        const svgY = 180 - ((point.y - minVal) / (maxVal - minVal || 1) * 160);
+
+        trace.setAttribute("x1", svgX); trace.setAttribute("x2", svgX);
+        dot.setAttribute("cx", svgX); dot.setAttribute("cy", svgY);
+        
+        trace.style.visibility = "visible";
+        dot.style.visibility = "visible";
+
+        // Position Tooltip
+        tip.style.visibility = "visible";
+        tip.style.left = (percentX * 100) + "%";
+        tip.style.top = "10px";
+        tip.style.transform = percentX > 0.7 ? "translateX(-110%)" : "translateX(10%)";
+        tip.innerHTML = `Year ${point.x}<b>${formatter.format(point.y)}</b>`;
+    }
+
+    function hideTooltip(chartId) {
+        const idNum = chartId.slice(-1);
+        document.getElementById('trace' + idNum).style.visibility = "hidden";
+        document.getElementById('dot' + idNum).style.visibility = "hidden";
+        document.getElementById('tip' + idNum).style.visibility = "hidden";
+    }
+
+    function toggleMenu() {
+        document.getElementById("sidebar").classList.toggle("open");
+    }
+
+    // Cursor Movement
     window.addEventListener('mousemove', (e) => {
-        cursorDot.style.left = e.clientX + 'px';
-        cursorDot.style.top = e.clientY + 'px';
+        const dot = document.getElementById('cursor-dot');
+        dot.style.left = e.clientX + 'px';
+        dot.style.top = e.clientY + 'px';
     });
-    document.querySelectorAll('a, button, input, .menu-icon').forEach(el => {
-        el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
-        el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
-    });
-}
 
-function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("open");
-    document.getElementById("overlay").classList.toggle("show");
-    document.querySelector(".menu-icon").classList.toggle("active");
-}
-
-/* ================= CALCULATOR ENGINE & CHARTING ================= */
-const formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
-const animationState = {};
-
-function animateValue(objId, endVal) {
-    const obj = document.getElementById(objId);
-    let startVal = parseFloat(obj.getAttribute("data-val")) || 0;
-    if (startVal === endVal) return;
-    obj.setAttribute("data-val", endVal);
-    let startTime = null;
-    const duration = 500; 
-
-    const step = (timestamp) => {
-        if (!startTime) startTime = timestamp;
-        const progress = Math.min((timestamp - startTime) / duration, 1);
-        const easeOut = progress * (2 - progress);
-        const currentVal = startVal + (endVal - startVal) * easeOut;
-        obj.innerHTML = formatter.format(currentVal);
-        if (progress < 1) requestAnimationFrame(step);
-        else obj.innerHTML = formatter.format(endVal);
-    };
-    requestAnimationFrame(step);
-}
-
-function updateChart(pathId, dataPoints) {
-    const path = document.getElementById(pathId);
-    if (!dataPoints.length) return;
-
-    const max = Math.max(...dataPoints);
-    const min = Math.min(...dataPoints);
-    const range = max - min || 1;
-    
-    let pathData = `M 0 ${40 - ((dataPoints[0] - min) / range * 35)}`;
-    
-    dataPoints.forEach((val, i) => {
-        const x = (i / (dataPoints.length - 1)) * 100;
-        const y = 38 - ((val - min) / range * 35); // Keep padding from edges
-        pathData += ` L ${x} ${y}`;
-    });
-    
-    path.setAttribute("d", pathData);
-}
-
-function getValidFloat(id) {
-    const el = document.getElementById(id);
-    const val = parseFloat(el.value);
-    if (isNaN(val) || val < 0) { el.classList.add('error'); return null; }
-    else { el.classList.remove('error'); return val; }
-}
-
-function calcWealth() {
-    let p = getValidFloat('p'), m = getValidFloat('m'), r = getValidFloat('r'), y = getValidFloat('y');
-    if (p === null || m === null || r === null || y === null) return;
-
-    let i = r / 12 / 100, n = y * 12, points = [];
-    for(let t=0; t<=y; t++) {
-        let nt = t * 12;
-        let fvt = p * Math.pow(1 + i, nt) + (i > 0 ? m * ((Math.pow(1 + i, nt) - 1) / i) * (1 + i) : m * nt);
-        points.push(fvt);
-    }
-    animateValue('res1', Math.round(points[points.length-1]));
-    updateChart('path1', points);
-}
-
-function calcSIP() {
-    let sip = getValidFloat('sip'), r = getValidFloat('sipr'), y = getValidFloat('sipy');
-    if (sip === null || r === null || y === null) return;
-
-    let i = r / 12 / 100, points = [];
-    for(let t=0; t<=y; t++) {
-        let nt = t * 12;
-        let fvt = i > 0 ? sip * ((Math.pow(1 + i, nt) - 1) / i) * (1 + i) : sip * nt;
-        points.push(fvt);
-    }
-    animateValue('res2', Math.round(points[points.length-1]));
-    updateChart('path2', points);
-}
-
-function calcInflation() {
-    let fv = getValidFloat('fv'), inf = getValidFloat('inf'), y = getValidFloat('infy');
-    if (fv === null || inf === null || y === null) return;
-
-    let r = inf / 100, points = [];
-    for(let t=0; t<=y; t++) {
-        points.push(fv * Math.pow(1 + r, t));
-    }
-    animateValue('res3', Math.round(points[points.length-1]));
-    updateChart('path3', points);
-}
-
-// Initial Run
-calcWealth(); calcSIP(); calcInflation();
+    // Initial Run
+    runCalculators();
 </script>
 
 </body>
