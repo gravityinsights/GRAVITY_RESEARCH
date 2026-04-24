@@ -133,11 +133,6 @@ body.fade-out {
     font-size: 15px;
 }
 
-.sidebar a:hover {
-    color: var(--gold);
-    transform: translateX(6px);
-}
-
 /* --- ACTIVE LINK STYLES --- */
 .sidebar a.active-link {
     color: var(--gold);
@@ -165,7 +160,7 @@ body.fade-out {
     top: 0;
     background: rgba(5,5,5,0.85);
     backdrop-filter: blur(12px);
-    z-index: 2500; /* Kept above sidebar for the close animation */
+    z-index: 2500; 
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
@@ -236,18 +231,6 @@ body.fade-out {
     transition: transform 0.4s ease;
 }
 
-.home-btn:hover {
-    background: var(--gold);
-    color: var(--bg);
-    border-color: var(--gold);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
-    transform: translateY(-2px);
-}
-
-.home-btn:hover::before {
-    transform: translateX(-4px);
-}
-
 h1 {
     font-family: 'Playfair Display', serif;
     color: var(--gold);
@@ -263,10 +246,6 @@ h1 {
     margin-top: 30px;
     border-radius: 8px;
     transition: border-color 0.3s ease;
-}
-
-.card:hover {
-    border-color: rgba(212, 175, 55, 0.3);
 }
 
 .card h3 {
@@ -316,6 +295,30 @@ input.error {
     margin-top: 25px;
     font-weight: 600;
     font-family: 'Playfair Display', serif;
+}
+
+/* ================= DESKTOP HOVER PROTECTIONS ================= */
+@media (hover: hover) and (pointer: fine) {
+    .sidebar a:hover {
+        color: var(--gold);
+        transform: translateX(6px);
+    }
+    
+    .home-btn:hover {
+        background: var(--gold);
+        color: var(--bg);
+        border-color: var(--gold);
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+        transform: translateY(-2px);
+    }
+
+    .home-btn:hover::before {
+        transform: translateX(-4px);
+    }
+
+    .card:hover {
+        border-color: rgba(212, 175, 55, 0.3);
+    }
 }
 
 /* ================= MOBILE RESPONSIVENESS ================= */
