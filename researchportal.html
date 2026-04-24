@@ -1,474 +1,572 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Launch | gRaviTy Research</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Portal | gRaviTy Research</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@100;200;300;400;600&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap');
 
-:root {
-    --gold: #d4af37;
-    --gold-dim: rgba(212, 175, 55, 0.3);
-    --gold-glow: rgba(212, 175, 55, 0.15);
-    --bg: #050505;
-}
+        :root {
+            --gold: #d4af37;
+            --bg: #050505;
+        }
 
-/* ================= PROTECTION STYLES ================= */
-body {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
+        /* ================= PROTECTION STYLES ================= */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: white;
+            overflow-x: hidden;
+            opacity: 1;
+            transition: opacity 0.4s ease-in-out;
+        }
 
-/* ================= SEAMLESS PAGE TRANSITIONS ================= */
-body {
-    opacity: 1;
-    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
+        body.fade-out {
+            opacity: 0;
+        }
 
-body.fade-out {
-    opacity: 0;
-}
+        /* ================= CUSTOM CURSOR ================= */
+        * { cursor: none !important; }
+        
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--gold);
+            transition: width 0.2s, height 0.2s, box-shadow 0.2s;
+        }
+        
+        .cursor-dot.hover-state {
+            width: 12px;
+            height: 12px;
+            box-shadow: 0 0 15px var(--gold);
+        }
 
-/* ================= CUSTOM CURSOR (GPU ACCELERATED) ================= */
-* { cursor: none !important; }
+        /* ================= BACKGROUND GLOW ================= */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(212,175,55,0.06), transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(212,175,55,0.04), transparent 60%);
+            z-index: 0;
+        }
 
-.cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--gold);
-    position: fixed;
-    top: 0;
-    left: 0;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10000;
-    transform: translate(-50%, -50%); 
-    box-shadow: 0 0 15px var(--gold);
-    transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
-    will-change: transform;
-}
+        /* ================= NAVIGATION ================= */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5,5,5,0.9);
+            backdrop-filter: blur(8px);
+            z-index: 1001;
+            box-sizing: border-box;
+        }
 
-.cursor-dot.hover-state {
-    width: 30px;
-    height: 30px;
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid var(--gold);
-}
+        .menu-icon { cursor: pointer; }
+        .menu-icon span {
+            display: block;
+            width: 22px;
+            height: 1px;
+            background: var(--gold);
+            margin: 6px 0;
+        }
 
-body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: white;
-    overflow: hidden;
-    -webkit-font-smoothing: antialiased;
-}
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-/* ================= SIDEBAR & MENU ================= */
-.sidebar {
-    width: 0;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
-    background: #0a0a0a;
-    overflow-x: hidden;
-    transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    padding-top: 100px;
-    z-index: 2000;
-    border-right: 1px solid var(--gold-dim);
-}
+        /* ================= SIDEBAR ================= */
+        .sidebar {
+            width: 0;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: rgba(3, 3, 3, 0.98);
+            backdrop-filter: blur(20px);
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            padding-top: 100px;
+            z-index: 1000;
+            border-right: 1px solid rgba(212, 175, 55, 0.15);
+            overflow-x: hidden;
+        }
+        
+        .sidebar.open { width: 280px; }
+        .sidebar-content { padding: 0 30px; }
+        
+        .menu-label {
+            margin-top: 25px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--gold);
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+        
+        .sidebar a {
+            display: block;
+            padding: 18px 0;
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        
+        .sidebar a:hover {
+            color: var(--gold);
+            padding-left: 10px;
+        }
 
-.sidebar.open {
-    width: 270px;
-}
+        /* ================= MAIN CONTAINER ================= */
+        .container {
+            padding: 140px 20px 60px;
+            max-width: 900px;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+        }
 
-.sidebar-content { 
-    min-width: 270px;
-    padding: 0 40px; 
-}
+        h1 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            font-size: clamp(32px, 5vw, 48px);
+            margin-bottom: 50px;
+        }
 
-.menu-label {
-    margin-top: 25px;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--gold);
-    text-transform: uppercase;
-    opacity: 0.7;
-}
+        /* ================= REPORT CARD ================= */
+        .report-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 35px;
+            transition: 0.4s ease;
+            border-radius: 8px;
+        }
+        
+        .report-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+        
+        .report-title {
+            font-size: 22px;
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .report-desc {
+            color: #888;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
 
-.sidebar a {
-    display: block;
-    position: relative;
-    padding: 14px 0;
-    color: #888;
-    text-decoration: none;
-    transition: 0.25s;
-    font-size: 14px;
-}
+        /* ================= BUTTONS ================= */
+        .actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: 1px solid var(--gold);
+            background: transparent;
+            color: var(--gold);
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: var(--gold);
+            color: black;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
 
-.sidebar a:hover {
-    color: var(--gold);
-    transform: translateX(6px);
-}
+        /* ================= AI TERMINAL ================= */
+        .terminal {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            background: #080808;
+            border-left: 2px solid var(--gold);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
 
-/* "You Are Here" Active Indicator */
-.sidebar a.active {
-    color: var(--gold);
-    padding-left: 12px;
-}
+        /* NORMAL CURSOR ALLOWED INSIDE TERMINAL FOR SCROLLING */
+        .terminal * {
+            cursor: auto !important; 
+        }
+        
+        .term-header {
+            color: var(--gold);
+            margin-bottom: 15px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .term-content {
+            max-height: 350px;
+            overflow-y: auto;
+            padding-bottom: 15px;
+            padding-right: 15px;
+            color: #ccc;
+        }
+        
+        .chat-box {
+            display: none;
+            margin-top: 15px;
+            border-top: 1px solid #222;
+            padding-top: 20px;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            background: #111;
+            border: 1px solid #333;
+            color: white;
+            padding: 12px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: 0.3s;
+        }
+        
+        .chat-input:focus {
+            border-color: var(--gold);
+        }
 
-.sidebar a.active::before {
-    content: '';
-    position: absolute;
-    left: -4px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 4px;
-    background: var(--gold);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--gold);
-}
+        /* Custom Scrollbar for Terminal */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fff; }
 
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.3s;
-    z-index: 1500;
-}
+        .footer {
+            text-align: center;
+            padding: 60px;
+            color: #444;
+            font-size: 11px;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
 
-.overlay.show {
-    opacity: 1;
-    pointer-events: all;
-}
+        @media screen and (max-width: 768px) {
+            * { cursor: auto !important; }
+            .cursor-dot { display: none !important; }
+            .sidebar.open { width: 100%; }
+            .actions { flex-direction: column; width: 100%; }
+            .btn { width: 100%; box-sizing: border-box; }
+            .chat-box { flex-direction: column; }
+        }
+    </style>
 
-/* ================= NAV & HOME BUTTON ================= */
-.nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px 40px;
-    z-index: 2100;
-    box-sizing: border-box;
-    background: rgba(5,5,5,0.8);
-    backdrop-filter: blur(8px);
-}
-
-.nav-left {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-/* PREMIUM HOME BUTTON */
-.home-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 20px;
-    background: rgba(212, 175, 55, 0.04);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    color: var(--gold);
-    text-decoration: none;
-    font-size: 10px;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    backdrop-filter: blur(4px);
-}
-
-.home-btn::before {
-    content: '←';
-    margin-right: 8px;
-    font-size: 12px;
-    transition: transform 0.4s ease;
-}
-
-.home-btn:hover {
-    background: var(--gold);
-    color: var(--bg);
-    border-color: var(--gold);
-    transform: translateY(-2px);
-}
-
-.home-btn:hover::before { transform: translateX(-3px); }
-
-/* Animated Hamburger */
-.menu-icon { 
-    position: relative;
-    cursor: pointer; 
-    z-index: 2200;
-}
-
-.menu-icon span {
-    display: block;
-    width: 22px;
-    height: 1px;
-    background: var(--gold);
-    margin: 6px 0;
-    transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-    transform-origin: left center;
-}
-
-.menu-icon.active span:nth-child(1) { transform: rotate(45deg); width: 24px; }
-.menu-icon.active span:nth-child(2) { opacity: 0; }
-.menu-icon.active span:nth-child(3) { transform: rotate(-45deg); width: 24px; }
-
-.logo-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--gold);
-    letter-spacing: 3px;
-    text-decoration: none;
-}
-
-/* ORBS */
-.gold-orb {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(160px);
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.12;
-    will-change: transform;
-}
-
-.orb1 { width: 700px; height: 700px; background: var(--gold); animation: move1 28s infinite linear; }
-.orb2 { width: 600px; height: 600px; background: #fff; animation: move2 35s infinite linear; }
-
-@keyframes move1 { 0% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(90vw, 80vh, 0); } 100% { transform: translate3d(0, 0, 0); } }
-@keyframes move2 { 0% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(-90vw, -80vh, 0); } 100% { transform: translate3d(0, 0, 0); } }
-
-/* Main Container */
-.container {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
-    z-index: 2;
-}
-
-.label {
-    font-size: 12px;
-    font-weight: 300;
-    letter-spacing: 10px;
-    color: white;
-    text-transform: uppercase;
-    margin-bottom: 60px;
-    opacity: 0.8;
-}
-
-/* ================= TIMER STYLING ================= */
-.timer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.unit-box {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    backdrop-filter: blur(10px);
-    padding: 35px 25px;
-    border-radius: 4px;
-    min-width: 140px;
-    text-align: center;
-    transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    will-change: transform;
-}
-
-.unit-box:hover {
-    border-color: var(--gold);
-    transform: translateY(-5px);
-}
-
-.unit-value {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(45px, 8vw, 85px);
-    color: var(--gold);
-    font-weight: 100;
-    line-height: 1;
-    letter-spacing: -2px;
-}
-
-.unit-label {
-    font-size: 10px;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-top: 15px;
-}
-
-.separator {
-    width: 1px;
-    height: 100px;
-    background: var(--gold);
-    box-shadow: 0 0 20px var(--gold);
-    margin: 0 40px;
-    opacity: 0.7;
-}
-
-.launch-text {
-    position: absolute;
-    bottom: 120px;
-    text-align: center;
-    width: 100%;
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    letter-spacing: 5px;
-}
-
-.launch-text span { color: var(--gold); }
-
-/* ================= MOBILE OPTIMIZATION ================= */
-@media screen and (max-width: 768px) {
-    * { cursor: auto !important; }
-    .cursor-dot { display: none !important; }
-    .sidebar.open { width: 100%; }
-    .nav { padding: 20px; }
-    .nav-left { gap: 15px; }
-    .timer { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 90%; }
-    .separator { display: none; } 
-    .unit-box { min-width: auto; padding: 20px 10px; }
-}
-</style>
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
 </head>
 <body oncontextmenu="return false;">
 
-<div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
 
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-<div id="sidebar" class="sidebar">
-    <div class="sidebar-content">
-        <div class="menu-label">System</div>
-        <a href="clock.html" class="active">Market Clock</a> <div class="menu-label">Advanced Tools</div>
-        <a href="calc.html">Wealth Calculators</a>
-
-        <div class="menu-label">Research</div>
-        <a href="researchportal.html">Research Portal</a>
-
-        <div class="menu-label">Our Firm</div>
-        <a href="aboutus.html">About Us</a>
-        <a href="vision.html">Our Vision</a>
-
-        <div class="menu-label">Access</div>
-        <a href="contactus.html">Contact Us</a>
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-content">
+            <div class="menu-label">Navigation</div>
+            <a href="index.html">Home</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="vision.html">Our Vision</a>
+            
+            <div class="menu-label">Tools</div>
+            <a href="calc.html">Wealth Calculators</a>
+            <a href="clock.html">Market Clock</a>
+            
+            <div class="menu-label">Access</div>
+            <a href="contactus.html">Contact Us</a>
+            <a href="researchportal.html" style="color: var(--gold);">Research Portal</a>
+        </div>
     </div>
-</div>
 
-<div class="nav">
-    <div class="nav-left">
-        <div class="menu-icon" onclick="toggleMenu()">
+    <div class="nav">
+        <div class="menu-icon" id="menuBtn">
             <span></span>
             <span></span>
             <span></span>
         </div>
-        <a href="index.html" class="home-btn">Home</a>
+        <a href="index.html" class="logo">gRaviTy</a>
     </div>
-    <a href="index.html" class="logo-text">gRaviTy</a>
-</div>
 
-<div class="gold-orb orb1"></div>
-<div class="gold-orb orb2"></div>
+    <div class="container">
+        <h1>Research Reports</h1>
 
-<div class="container">
-    <div class="label">System Launch</div>
-    <div class="timer">
-        <div class="unit-box"><div id="days" class="unit-value">00</div><div class="unit-label">Days</div></div>
-        <div class="separator"></div>
-        <div class="unit-box"><div id="hours" class="unit-value">00</div><div class="unit-label">Hours</div></div>
-        <div class="separator"></div>
-        <div class="unit-box"><div id="minutes" class="unit-value">00</div><div class="unit-label">Minutes</div></div>
-        <div class="separator"></div>
-        <div class="unit-box"><div id="seconds" class="unit-value">00</div><div class="unit-label">Seconds</div></div>
+        <div class="report-card">
+            <div class="report-title">Tata Motors — 2026 Depth Analysis</div>
+            <div class="report-desc">
+                A high-conviction structural breakdown. We analyze the 2026 expansion cycle, EV dominance, 
+                and key institutional liquidity zones for the upcoming fiscal years.
+            </div>
+            
+            <div class="actions">
+                <a href="tatamotors2026depthanalysis.pdf" target="_blank" class="btn">View Report</a>
+                <a href="tatamotors2026depthanalysis.pdf" download class="btn">Download</a>
+                
+                <button class="btn" onclick="window.analyzeReport(this, 'Tata Motors Depth Analysis 2026. Focus: EV segment growth, JLR margin recovery, and structural support at 850. Major resistance at 1150. Outlook: Bullish above structural pivots. Institutional holding remains strong.')">AI Analysis</button>
+            </div>
+
+            <div class="terminal">
+                <div class="term-header">
+                    <span>> gRaviTy AI ANALYST v2.0 [LIVE LINK ACTIVE]</span>
+                    <div>
+                        <span style="color: #ff4d4d; font-size: 11px; letter-spacing: 1px; margin-right: 15px; cursor: pointer; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#ff4d4d'" onclick="window.endChat(this)">[END CHAT]</span>
+                        <span style="color: #555; cursor: pointer; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#555'" onclick="this.closest('.terminal').style.display='none'">[X]</span>
+                    </div>
+                </div>
+                <div class="term-content">Initializing neural link...</div>
+                
+                <div class="chat-box">
+                    <input type="text" class="chat-input" placeholder="Ask about the report or live market data..." onkeypress="if(event.key==='Enter') window.askQuestion(this.nextElementSibling)">
+                    <button class="btn" onclick="window.askQuestion(this)">Send</button>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
-<div class="launch-text">
-    PAN INDIA — <span>30 MAY 2026</span>
-</div>
+    <div class="footer">
+        © 2026 gRaviTy RESEARCH — ALL RIGHTS RESERVED
+    </div>
 
-<script>
-/* PROTECTION SCRIPT */
-document.onkeydown = function(e) {
-    if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) return false;
-};
-
-/* TOUCH DETECTION */
-const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-/* CUSTOM CURSOR - GPU ACCELERATED */
-if (!isTouchDevice) {
-    const cursorDot = document.getElementById('cursor-dot');
-    window.addEventListener('mousemove', (e) => {
-        cursorDot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
-    });
-    
-    document.querySelectorAll('a, button, .menu-icon, .logo-text, .unit-box').forEach(el => {
-        el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
-        el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
-    });
-}
-
-/* MENU LOGIC */
-function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("open");
-    document.getElementById("overlay").classList.toggle("show");
-    document.querySelector(".menu-icon").classList.toggle("active");
-}
-
-/* SEAMLESS PAGE TRANSITIONS */
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll('a[href]').forEach(link => {
-        link.addEventListener('click', function(e) {
-            const targetUrl = this.getAttribute('href');
-            if (targetUrl && !targetUrl.startsWith('http') && !targetUrl.startsWith('mailto')) {
-                e.preventDefault(); 
-                document.body.classList.add('fade-out'); 
-                setTimeout(() => { window.location.assign(targetUrl); }, 400);
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('open');
+        });
+        
+        document.addEventListener('click', (e) => {
+            if(!sidebar.contains(e.target) && e.target !== menuBtn) {
+                sidebar.classList.remove('open');
             }
         });
-    });
-});
 
-/* TIMER LOGIC */
-const target = new Date("2026-05-30T00:00:00+05:30").getTime();
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        if (!isTouchDevice) {
+            const cursorDot = document.getElementById('cursor-dot');
+            window.addEventListener('mousemove', (e) => {
+                cursorDot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+            });
+            
+            const interactables = document.querySelectorAll('a, button, .menu-icon, .logo, input');
+            interactables.forEach(el => {
+                el.addEventListener('mouseenter', () => cursorDot.classList.add('hover-state'));
+                el.addEventListener('mouseleave', () => cursorDot.classList.remove('hover-state'));
+            });
+        }
 
-function updateClock() {
-    const now = new Date().getTime();
-    const diff = target - now;
-    if(diff <= 0) {
-        document.querySelector(".container").innerHTML = "<div class='unit-value' style='letter-spacing: 10px;'>SYSTEM LIVE</div>";
-        return;
-    }
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((diff % (1000 * 60)) / 1000);
-    document.getElementById("days").innerText = d < 10 ? "0" + d : d;
-    document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
-    document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
-    document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
-}
+        function transitionTo(url) {
+            document.body.classList.add('fade-out');
+            setTimeout(() => { window.location.href = url; }, 400);
+        }
 
-setInterval(updateClock, 1000);
-updateClock();
-</script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('a[href]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const target = this.getAttribute('href');
+                    if (target && !target.endsWith('.pdf') && !target.startsWith('http') && !target.startsWith('mailto') && target !== '#') {
+                        e.preventDefault();
+                        transitionTo(target);
+                    }
+                });
+            });
+        });
+
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) document.body.classList.remove('fade-out');
+        });
+
+        // ================= TYPEWRITER (NATURAL TAB PAUSING RESTORED) =================
+        window.typeText = function(el, text, callback, scrollContainer = null) {
+            // Parses Markdown into clean HTML
+            let parsedText = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#fff; font-weight:500;">$1</strong>');
+            parsedText = parsedText.replace(/\*(.*?)\*/g, '<em style="color:#e0c870;">$1</em>');
+            
+            let i = 0;
+            let isTag = false;
+            let currentHTML = '';
+            
+            function step() {
+                if(i < parsedText.length) {
+                    let char = parsedText.charAt(i);
+                    if(char === '<') isTag = true;
+                    
+                    currentHTML += (char === '\n' && !isTag) ? '<br>' : char;
+                    i++;
+                    
+                    if(isTag && char === '>') {
+                        isTag = false;
+                        step(); 
+                        return;
+                    }
+                    
+                    el.innerHTML = currentHTML;
+                    if(scrollContainer) scrollContainer.scrollTop = scrollContainer.scrollHeight;
+                    
+                    if(!isTag) {
+                        // Standard setTimeout naturally throttles when you switch tabs
+                        setTimeout(step, 10);
+                    } else {
+                        step();
+                    }
+                } else if(callback) {
+                    callback();
+                }
+            }
+            step();
+        }
+
+        // ================= END CHAT FUNCTION =================
+        window.endChat = function(btn) {
+            const terminal = btn.closest('.terminal');
+            const termContent = terminal.querySelector('.term-content');
+            const chatBox = terminal.querySelector('.chat-box');
+            
+            termContent.innerHTML += `<br><span style="color:#ff4d4d">> SYSTEM: Session manually terminated. Connection closed.</span><br>`;
+            termContent.scrollTop = termContent.scrollHeight;
+            
+            chatBox.style.display = 'none';
+            terminal.querySelector('.chat-input').value = "";
+        }
+    </script>
+
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        const API_KEY = "AIzaSyCIYoGawcDl48X3COFep1aXkxmKSkA2lxM"; // Your API Key
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        
+        // ⚡️ THIS MAKES THE AI LIVE! We added Google Search as a tool.
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-3-flash-preview",
+            tools: [{ googleSearch: {} }] 
+        });
+
+        window.analyzeReport = async function(btn, content) {
+            const terminal = btn.closest('.report-card').querySelector('.terminal');
+            const termContent = terminal.querySelector('.term-content');
+            const chatBox = terminal.querySelector('.chat-box');
+            
+            terminal.style.display = 'block';
+            chatBox.style.display = 'none'; 
+            terminal.setAttribute('data-report', content); 
+            
+            termContent.innerHTML = "Establishing secure link to gRaviTy AI Node...<br>Decrypting structural market data...<br><br>";
+            
+            try {
+                const prompt = `Provide an executive summary for this report: ${content}\n\n(System Note: Keep it strictly between 1 to 5 sentences maximum. No markdown asterisks.)`;
+                
+                const result = await model.generateContent(prompt);
+                const responseText = result.response.text();
+                
+                termContent.innerHTML = "";
+                window.typeText(termContent, responseText, () => {
+                    chatBox.style.display = 'flex';
+                });
+                
+            } catch (e) {
+                termContent.innerHTML = `<span style='color:#ff4d4d'>[SYSTEM ERROR: AI CONNECTION REFUSED]</span><br>Details: ${e.message}`;
+            }
+        };
+
+        window.askQuestion = async function(btn) {
+            const terminal = btn.closest('.terminal');
+            const input = terminal.querySelector('.chat-input');
+            const termContent = terminal.querySelector('.term-content');
+            const question = input.value.trim();
+            const reportText = terminal.getAttribute('data-report');
+            
+            if(!question) return;
+
+            termContent.innerHTML += `<br><br><span style="color:#fff">> USER: ${question}</span><br><span style="color:var(--gold)" id="loading-msg">> gRaviTy AI: Processing live search algorithm...</span>`;
+            termContent.scrollTop = termContent.scrollHeight;
+            input.value = "";
+            input.disabled = true;
+            btn.disabled = true;
+            
+            try {
+                // Told the AI to prioritize live searching for current stats
+                const prompt = `Report Context: ${reportText}\n\nUser Question: ${question}\n\n(System Note: If the user asks for current prices or current events, use your Google Search tool to find the live, up-to-date information. Answer extremely concisely in exactly 1 to 5 sentences maximum. Do not exceed 5 sentences. Do NOT use markdown asterisks or bullet points. Respond in plain professional text.)`;
+                
+                const result = await model.generateContent(prompt);
+                const responseText = result.response.text();
+                
+                if(document.getElementById('loading-msg')) {
+                    document.getElementById('loading-msg').remove();
+                }
+                
+                const answerSpan = document.createElement('span');
+                answerSpan.style.color = 'var(--gold)';
+                answerSpan.innerHTML = '> gRaviTy AI: ';
+                termContent.appendChild(answerSpan);
+                
+                window.typeText(answerSpan, responseText, () => {
+                    input.disabled = false;
+                    btn.disabled = false;
+                    input.focus();
+                }, termContent);
+                
+            } catch (e) {
+                if(document.getElementById('loading-msg')) {
+                    document.getElementById('loading-msg').remove();
+                }
+                termContent.innerHTML += `<br><span style='color:#ff4d4d'>[ERROR COMMUNICATING WITH AI NODE: ${e.message}]</span>`;
+                input.disabled = false;
+                btn.disabled = false;
+            }
+        };
+    </script>
 </body>
 </html>
