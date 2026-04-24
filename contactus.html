@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400&display=swap');
 
 :root {
     --gold: #d4af37;
@@ -200,7 +200,6 @@ body.fade-out {
 /* ================= NAV ================= */
 .nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
     position: fixed;
@@ -280,13 +279,18 @@ body.fade-out {
 
 .home-btn:hover::before { transform: translateX(-3px); }
 
+/* Logo - Absolute Centered */
 .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 22px;
+    font-size: 24px;
+    font-weight: 700;
     color: var(--gold);
     text-decoration: none;
     letter-spacing: 3px;
-    font-weight: 600;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* ================= CONTACT SECTION ================= */
@@ -420,7 +424,8 @@ body.fade-out {
     * { cursor: auto !important; }
     .cursor-dot { display: none !important; }
     .sidebar { width: 85%; }
-    .nav { padding: 15px 20px; }
+    .nav { justify-content: space-between; padding: 15px 20px; }
+    .logo { position: relative; left: auto; top: auto; transform: none; font-size: 20px; }
     .nav-left { gap: 15px; }
     .contact-container { flex-direction: column; margin-top: 100px; gap: 20px; }
     .contact-info, .contact-form { padding: 30px 20px; }
@@ -455,10 +460,11 @@ body.fade-out {
 <div id="sidebar" class="sidebar">
     <div class="sidebar-content">
         <div class="menu-label">System</div>
-        <a href="clock.html">Market Clock</a>
+        <a href="index.html">Home</a>
 
         <div class="menu-label">Advanced Tools</div>
         <a href="calc.html">Wealth Calculators</a>
+        <a href="clock.html">Market Clock</a>
 
         <div class="menu-label">Research</div>
         <a href="researchportal.html">Research Portal</a>
